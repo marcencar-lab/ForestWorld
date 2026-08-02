@@ -10,7 +10,19 @@ imported models, textures or audio files, so the project runs straight from a cl
 
 ## Running it
 
-Open `project.godot` in Godot 4.7 and press **F5**, or from a terminal:
+Requires **Godot 4.7** (Forward+ / Vulkan). No add-ons, no downloads.
+
+Open `project.godot` in the Godot editor and press **F5**. That's it.
+
+To run from a terminal instead, a freshly cloned copy needs one import pass
+first — the `class_name` registry lives in the gitignored `.godot/` folder, so
+until the project has been scanned once, the scripts can't see each other:
+
+```bash
+godot --path . --headless --import
+```
+
+After that, this launches it directly and every time after:
 
 ```bash
 godot --path .
