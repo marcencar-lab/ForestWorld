@@ -1,0 +1,326 @@
+class_name WildlifeManager
+extends Node3D
+
+## Owns every creature: spawning, the shared "who can see whom" queries,
+## corpse cleanup and repopulation.
+
+const CORPSE_TIME := 18.0
+const RESPAWN_DELAY := 6.0
+const MIN_RESPAWN_DIST_FROM_BEAR := 90.0
+
+const TROUT_SCHOOLS := 7
+const TROUT_PER_SCHOOL := 12
+const PIKE_COUNT := 6
+
+var terrain: ForestTerrain
+var audio: AudioDirector
+var bear: Bear
+var animals: Array[Animal] = []
+var fish: Array[Fish] = []
+var player: Node3D
+
+# Each school is {anchor, target, timer, speed, members}; fish steer to a
+# personal slot around their school's anchor instead of true boid flocking.
+var _schools: Array = []
+
+var kills := 0
+var last_kill_label := ""
+
+var _rng := RandomNumberGenerator.new()
+var _corpses: Array = []   # [animal, timer]
+var _respawns: Array = []  # [species, timer]
+
+
+func setup(t: ForestTerrain, world_seed: int) -> void:
+	terrain = t
+	_rng.seed = world_seed + 7717
+
+
+func populate() -> void:
+	for species_name in Species.PREY:
+		var cfg: Dictionary = Species.get_cfg(species_name)
+		for i in int(cfg.count):
+			_spawn_animal(species_name, _random_spawn())
+
+	var bear_pos := _random_spawn()
+	bear = Bear.new()
+	bear.name = "Bear"
+	add_child(bear)
+	bear.setup(terrain, self, bear_pos)
+	bear.struck.connect(_on_bear_struck)
+	bear.made_kill.connect(_on_bear_kill)
+
+	_populate_lake()
+
+
+func _populate_lake() -> void:
+	for s in TROUT_SCHOOLS:
+		var sid := _new_school(_rng.randf_range(0.9, 1.35))
+		if sid < 0:
+			continue
+		for i in TROUT_PER_SCHOOL:
+			_spawn_fish("trout", sid)
+
+	# Pike are loners: one "school" each, drifting slowly through deep water.
+	for i in PIKE_COUNT:
+		var sid := _new_school(_rng.randf_range(0.5, 0.8), 2.2)
+		if sid < 0:
+			continue
+		_spawn_fish("pike", sid)
+
+
+func _new_school(speed: float, min_depth := 1.6) -> int:
+	var start := terrain.random_lake_point(_rng, min_depth, 90)
+	if start == Vector3.ZERO:
+		return -1
+	_schools.append({
+		"anchor": start,
+		"target": start,
+		"timer": _rng.randf_range(2.0, 12.0),
+		"speed": speed,
+		"min_depth": min_depth,
+		"members": [],
+	})
+	return _schools.size() - 1
+
+
+func _spawn_fish(kind: String, sid: int) -> void:
+	var anchor: Vector3 = _schools[sid].anchor
+	var jitter := Vector3(_rng.randf_range(-2.0, 2.0), _rng.randf_range(-0.6, 0.6), _rng.randf_range(-2.0, 2.0))
+	var pos := anchor + jitter
+	if terrain.water_depth(pos.x, pos.z) < Fish.MIN_DEPTH:
+		pos = anchor
+	var f := Fish.new()
+	f.name = "%s_%d_%d" % [kind, sid, fish.size()]
+	add_child(f)
+	f.setup(kind, terrain, self, sid, pos)
+	fish.append(f)
+	_schools[sid].members.append(f)
+
+
+func school_anchor(sid: int) -> Vector3:
+	if sid < 0 or sid >= _schools.size():
+		return Vector3.ZERO
+	return _schools[sid].anchor
+
+
+func school_members(sid: int) -> Array:
+	if sid < 0 or sid >= _schools.size():
+		return []
+	return _schools[sid].members
+
+
+func _update_schools(delta: float) -> void:
+	for s in _schools:
+		s.timer -= delta
+		if s.timer <= 0.0 or s.anchor.distance_to(s.target) < 1.5:
+			var p := terrain.random_lake_point(_rng, s.min_depth, 40)
+			if p != Vector3.ZERO:
+				s.target = p
+			s.timer = _rng.randf_range(9.0, 24.0)
+		s.anchor = s.anchor.move_toward(s.target, s.speed * delta)
+
+
+func _random_spawn() -> Vector3:
+	var p := terrain.random_walkable_point(_rng, 60)
+	if p == Vector3.ZERO:
+		p = Vector3(0.0, terrain.sample_height(0.0, 0.0), 0.0)
+	return p
+
+
+func _spawn_animal(species_name: String, pos: Vector3) -> Animal:
+	var a := Animal.new()
+	a.name = "%s_%d" % [species_name, animals.size()]
+	add_child(a)
+	a.setup(species_name, terrain, self, pos)
+	a.died.connect(_on_animal_died)
+	animals.append(a)
+	return a
+
+
+# --- shared queries -----------------------------------------------------------
+
+## Nearest living prey to `from`, or null.
+func nearest_prey(from: Vector3, max_dist: float) -> Animal:
+	var best: Animal = null
+	var best_d := max_dist * max_dist
+	for a in animals:
+		if not is_instance_valid(a) or not a.is_alive():
+			continue
+		var d := from.distance_squared_to(a.global_position)
+		if d < best_d:
+			best_d = d
+			best = a
+	return best
+
+
+## Position of whatever is scaring an animal at `pos`, or Vector3.INF.
+func threat_position(pos: Vector3, radius: float) -> Vector3:
+	if radius <= 0.0:
+		return Vector3.INF
+	var best := Vector3.INF
+	var best_d := radius * radius
+	if bear != null and is_instance_valid(bear):
+		var db := pos.distance_squared_to(bear.global_position)
+		if db < best_d:
+			best_d = db
+			best = bear.global_position
+	if player != null and is_instance_valid(player):
+		var pr := radius * 0.45
+		var dp := pos.distance_squared_to(player.global_position)
+		if dp < pr * pr and dp < best_d:
+			best = player.global_position
+	return best
+
+
+# --- audio passthrough --------------------------------------------------------
+# Creatures route their voices through here so nothing else needs to know
+# whether an AudioDirector exists.
+
+func animal_voice(a: Animal, kind: String) -> void:
+	if audio != null:
+		audio.animal_voice(a.species, kind, a.global_position)
+
+
+func bear_voice(kind: String, pos: Vector3) -> void:
+	if audio != null:
+		audio.bear_voice(kind, pos)
+
+
+func rustle(pos: Vector3) -> void:
+	if audio != null:
+		audio.rustle_at(pos)
+
+
+func fish_count() -> int:
+	var n := 0
+	for f in fish:
+		if is_instance_valid(f):
+			n += 1
+	return n
+
+
+func alive_count() -> int:
+	var n := 0
+	for a in animals:
+		if is_instance_valid(a) and a.is_alive():
+			n += 1
+	return n
+
+
+# --- lifecycle ----------------------------------------------------------------
+
+func _on_animal_died(a: Animal) -> void:
+	kills += 1
+	last_kill_label = Species.get_cfg(a.species).label
+	_corpses.append([a, CORPSE_TIME])
+	_respawns.append([a.species, CORPSE_TIME + RESPAWN_DELAY])
+
+
+func _on_bear_struck(_victim: Animal, at: Vector3) -> void:
+	_impact_burst(at)
+
+
+func _on_bear_kill(_victim: Animal) -> void:
+	pass
+
+
+func _process(delta: float) -> void:
+	_update_schools(delta)
+
+	for i in range(_corpses.size() - 1, -1, -1):
+		_corpses[i][1] -= delta
+		if _corpses[i][1] <= 0.0:
+			var a: Animal = _corpses[i][0]
+			if is_instance_valid(a):
+				animals.erase(a)
+				a.queue_free()
+			_corpses.remove_at(i)
+
+	for i in range(_respawns.size() - 1, -1, -1):
+		_respawns[i][1] -= delta
+		if _respawns[i][1] <= 0.0:
+			_respawn(_respawns[i][0])
+			_respawns.remove_at(i)
+
+
+func _respawn(species_name: String) -> void:
+	var pos := Vector3.ZERO
+	for attempt in 24:
+		var p := terrain.random_walkable_point(_rng, 30)
+		if p == Vector3.ZERO:
+			continue
+		if bear != null and is_instance_valid(bear):
+			if p.distance_to(bear.global_position) < MIN_RESPAWN_DIST_FROM_BEAR:
+				continue
+		pos = p
+		break
+	if pos == Vector3.ZERO:
+		pos = _random_spawn()
+	_spawn_animal(species_name, pos)
+
+
+# --- feedback -----------------------------------------------------------------
+
+func _impact_burst(at: Vector3) -> void:
+	var p := CPUParticles3D.new()
+	p.emitting = false
+	p.one_shot = true
+	p.amount = 26
+	p.lifetime = 0.9
+	p.explosiveness = 1.0
+	p.mesh = _burst_mesh()
+	p.direction = Vector3.UP
+	p.spread = 70.0
+	p.initial_velocity_min = 2.0
+	p.initial_velocity_max = 5.5
+	p.gravity = Vector3(0, -9.0, 0)
+	p.scale_amount_min = 0.4
+	p.scale_amount_max = 1.2
+	p.color = Color(0.42, 0.33, 0.22)
+	add_child(p)
+	p.global_position = at + Vector3.UP * 0.5
+	p.emitting = true
+	get_tree().create_timer(2.4).timeout.connect(p.queue_free)
+
+
+## Ring of droplets where a fish breaks the surface.
+func splash(at: Vector3) -> void:
+	var p := CPUParticles3D.new()
+	p.emitting = false
+	p.one_shot = true
+	p.amount = 22
+	p.lifetime = 1.1
+	p.explosiveness = 0.95
+	p.mesh = _burst_mesh()
+	p.direction = Vector3.UP
+	p.spread = 48.0
+	p.initial_velocity_min = 1.6
+	p.initial_velocity_max = 4.0
+	p.gravity = Vector3(0, -12.0, 0)
+	p.scale_amount_min = 0.3
+	p.scale_amount_max = 0.9
+	p.color = Color(0.82, 0.92, 0.96, 0.9)
+	add_child(p)
+	p.global_position = Vector3(at.x, ForestTerrain.WATER_LEVEL + 0.05, at.z)
+	p.emitting = true
+	get_tree().create_timer(2.4).timeout.connect(p.queue_free)
+	if audio != null:
+		audio.splash_at(p.global_position)
+
+
+static var _burst_mesh_cache: Mesh = null
+
+static func _burst_mesh() -> Mesh:
+	if _burst_mesh_cache == null:
+		var q := QuadMesh.new()
+		q.size = Vector2(0.09, 0.09)
+		var m := StandardMaterial3D.new()
+		m.vertex_color_use_as_albedo = true
+		m.albedo_color = Color(0.45, 0.35, 0.24)
+		m.billboard_mode = BaseMaterial3D.BILLBOARD_PARTICLES
+		m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		m.cull_mode = BaseMaterial3D.CULL_DISABLED
+		q.material = m
+		_burst_mesh_cache = q
+	return _burst_mesh_cache

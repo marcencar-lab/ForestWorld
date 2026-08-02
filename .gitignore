@@ -1,0 +1,25 @@
+# Godot 4 -----------------------------------------------------------------
+# Import cache, shader cache and editor state. All of it is regenerated the
+# first time someone opens the project, so it must never be committed.
+.godot/
+
+# IMPORTANT: the .uid files sitting next to each .gd / .gdshader ARE tracked.
+# Godot 4.4+ uses them to resolve script and shader references, and dropping
+# them breaks the project for anyone who clones it.
+
+# Exported builds ---------------------------------------------------------
+/build/
+/export/
+*.pck
+*.exe
+*.apk
+*.aab
+*.dmg
+*.zip
+
+# OS / editor noise -------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~

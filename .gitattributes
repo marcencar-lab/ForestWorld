@@ -1,0 +1,11 @@
+# Normalise line endings to LF in the repository so the project doesn't
+# produce spurious whole-file diffs between Windows and Linux/macOS clones.
+* text=auto eol=lf
+
+# Godot text formats
+*.gd        text
+*.gdshader  text
+*.tscn      text
+*.tres      text
+*.godot     text
+*.uid       text
