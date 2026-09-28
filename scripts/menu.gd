@@ -74,6 +74,28 @@ func _ready() -> void:
 	if Session.menu_message != "":
 		_status.text = Session.menu_message
 		Session.menu_message = ""
+	else:
+		_quick_start.call_deferred()
+
+
+## Command-line shortcuts, e.g.  ForestWorld.exe -- --host --name=Marc
+## or  --join=203.0.113.5  or  --single
+func _quick_start() -> void:
+	var mode := ""
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--name="):
+			_name.text = arg.substr(7)
+		elif arg == "--single":
+			mode = "single"
+		elif arg == "--host":
+			mode = "host"
+		elif arg.begins_with("--join="):
+			_addr.text = arg.substr(7)
+			mode = "join"
+	match mode:
+		"single": _on_single()
+		"host": _on_host()
+		"join": _on_join()
 
 
 func _caption(t: String) -> Label:

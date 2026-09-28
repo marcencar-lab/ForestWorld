@@ -84,6 +84,7 @@ func start() -> void:
 
 
 func _set_status(t: String) -> void:
+	print("[net] " + t)
 	status = t
 	status_changed.emit(t)
 
@@ -168,6 +169,7 @@ func _add_peer(id: int, pname: String) -> void:
 	world.add_child(av)
 	av.setup(id, pname, self)
 	peers[id] = {"name": pname, "avatar": av}
+	print("[net] %s joined (peer %d)" % [pname, id])
 	world.hud.toast("%s joined the game" % pname)
 
 
