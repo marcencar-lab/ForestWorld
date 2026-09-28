@@ -481,3 +481,89 @@ static func rustle(rng: RandomNumberGenerator) -> AudioStreamWAV:
 		out[i] *= sin(PI * u) * burst
 	_normalize(out, 0.7)
 	return _wav(out, rate, false)
+
+
+# --- weather, fire and woodwork -----------------------------------------------
+
+## Steady hiss of rain on leaves with a scatter of close drips on top.
+static func rain(rng: RandomNumberGenerator) -> AudioStreamWAV:
+	var rate := LOOP_RATE
+	var dur := 5.0
+	var fade := int(rate * 0.5)
+	var n := int(rate * dur) + fade
+
+	var hiss := _noise(n, rng)
+	_highpass(hiss, rate, 900.0)
+	_lowpass(hiss, rate, 6500.0)
+	var body := _noise(n, rng)
+	_bandpass(body, rate, 420.0, 0.8)
+
+	var out := PackedFloat32Array()
+	out.resize(n)
+	for i in n:
+		var t := float(i) / float(rate)
+		var swell := 0.80 + 0.20 * sin(TAU * 2.0 * t / dur + 0.4)
+		out[i] = hiss[i] * 0.75 * swell + body[i] * 0.45
+	# Individual drips: short decaying ticks at random points.
+	for k in int(dur * 38.0):
+		var at := rng.randi_range(0, n - 400)
+		var f := rng.randf_range(1800.0, 4200.0)
+		var amp := rng.randf_range(0.15, 0.55)
+		for j in 380:
+			out[at + j] += sin(TAU * f * float(j) / float(rate)) * amp * pow(1.0 - float(j) / 380.0, 6.0)
+	var res := _seamless(out, fade)
+	_normalize(res, 0.7)
+	return _wav(res, rate, true)
+
+
+## Crackling campfire loop: low roar plus random pops.
+static func fire(rng: RandomNumberGenerator) -> AudioStreamWAV:
+	var rate := LOOP_RATE
+	var dur := 4.0
+	var fade := int(rate * 0.4)
+	var n := int(rate * dur) + fade
+	var roar := _noise(n, rng)
+	_lowpass(roar, rate, 500.0)
+	var out := PackedFloat32Array()
+	out.resize(n)
+	for i in n:
+		var t := float(i) / float(rate)
+		out[i] = roar[i] * (0.55 + 0.25 * sin(TAU * 3.0 * t / dur))
+	for k in int(dur * 22.0):
+		var at := rng.randi_range(0, n - 200)
+		var amp := rng.randf_range(0.3, 1.0)
+		for j in 180:
+			out[at + j] += rng.randf_range(-1.0, 1.0) * amp * pow(1.0 - float(j) / 180.0, 8.0)
+	var res := _seamless(out, fade)
+	_normalize(res, 0.7)
+	return _wav(res, rate, true)
+
+
+## Blade or stone biting into wood: a knock with a woody resonance.
+static func chop(rng: RandomNumberGenerator) -> AudioStreamWAV:
+	var rate := SFX_RATE
+	var n := int(rate * 0.22)
+	var out := _noise(n, rng)
+	_bandpass(out, rate, 1400.0, 1.6)
+	var phase := 0.0
+	for i in n:
+		var u := float(i) / float(n)
+		phase += TAU * lerpf(420.0, 300.0, u) / float(rate)
+		out[i] = out[i] * pow(1.0 - u, 9.0) + sin(phase) * pow(1.0 - u, 4.0) * 0.8
+	_normalize(out, 0.85)
+	return _wav(out, rate, false)
+
+
+## A felled tree hitting the ground.
+static func thud(rng: RandomNumberGenerator) -> AudioStreamWAV:
+	var rate := SFX_RATE
+	var n := int(rate * 1.1)
+	var out := _noise(n, rng)
+	_lowpass(out, rate, 700.0)
+	var phase := 0.0
+	for i in n:
+		var u := float(i) / float(n)
+		phase += TAU * lerpf(85.0, 45.0, u) / float(rate)
+		out[i] = out[i] * pow(1.0 - u, 3.0) * 0.6 + sin(phase) * pow(1.0 - u, 2.5)
+	_normalize(out, 0.9)
+	return _wav(out, rate, false)

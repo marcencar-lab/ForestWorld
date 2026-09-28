@@ -11,24 +11,35 @@ const MIN_RESPAWN_DIST_FROM_BEAR := 90.0
 const TROUT_SCHOOLS := 7
 const TROUT_PER_SCHOOL := 12
 const PIKE_COUNT := 6
+const FISH_RESTOCK_TIME := 40.0   # a caught fish is replaced after this long
+const BEAR_CORPSE_TIME := 90.0
+const BEAR_RESPAWN_TIME := 300.0  # a new bear wanders in after the last one dies
+const BEAR_RESPAWN_DIST := 150.0  # ...this far from the player
+
+signal bear_spawned(bear)
+signal player_killed(animal)
 
 var terrain: ForestTerrain
 var audio: AudioDirector
 var bear: Bear
 var animals: Array[Animal] = []
 var fish: Array[Fish] = []
-var player: Node3D
+var player: PlayerController
+var build: BuildSystem
 
 # Each school is {anchor, target, timer, speed, members}; fish steer to a
 # personal slot around their school's anchor instead of true boid flocking.
 var _schools: Array = []
 
 var kills := 0
+var player_kills := 0
+var _bear_respawn := -1.0
 var last_kill_label := ""
 
 var _rng := RandomNumberGenerator.new()
 var _corpses: Array = []   # [animal, timer]
 var _respawns: Array = []  # [species, timer]
+var _restocks: Array = []  # [fish kind, timer]
 
 
 func setup(t: ForestTerrain, world_seed: int) -> void:
@@ -42,20 +53,41 @@ func populate() -> void:
 		for i in int(cfg.count):
 			_spawn_animal(species_name, _random_spawn())
 
-	var bear_pos := _random_spawn()
-	bear = Bear.new()
-	bear.name = "Bear"
-	add_child(bear)
-	bear.setup(terrain, self, bear_pos)
-	bear.struck.connect(_on_bear_struck)
-	bear.made_kill.connect(_on_bear_kill)
+	_spawn_bear(_random_spawn())
 
 	_populate_lake()
 
 
+func _spawn_bear(pos: Vector3) -> void:
+	bear = Bear.new()
+	bear.name = "Bear"
+	add_child(bear)
+	bear.setup(terrain, self, pos)
+	bear.struck.connect(_on_bear_struck)
+	bear.made_kill.connect(_on_bear_kill)
+	bear.died.connect(_on_bear_died)
+	bear_spawned.emit(bear)
+
+
+func _on_bear_died(b: Bear) -> void:
+	_bear_respawn = BEAR_RESPAWN_TIME
+	get_tree().create_timer(BEAR_CORPSE_TIME).timeout.connect(func() -> void:
+		if is_instance_valid(b):
+			b.queue_free())
+
+
+## Every living thing that fights back, for weapons and future enemies.
+func hostiles() -> Array:
+	var out := []
+	for h in get_tree().get_nodes_in_group("hostile"):
+		if is_instance_valid(h) and h.is_alive():
+			out.append(h)
+	return out
+
+
 func _populate_lake() -> void:
 	for s in TROUT_SCHOOLS:
-		var sid := _new_school(_rng.randf_range(0.9, 1.35))
+		var sid := _new_school("trout", _rng.randf_range(0.9, 1.35))
 		if sid < 0:
 			continue
 		for i in TROUT_PER_SCHOOL:
@@ -63,17 +95,18 @@ func _populate_lake() -> void:
 
 	# Pike are loners: one "school" each, drifting slowly through deep water.
 	for i in PIKE_COUNT:
-		var sid := _new_school(_rng.randf_range(0.5, 0.8), 2.2)
+		var sid := _new_school("pike", _rng.randf_range(0.5, 0.8), 2.2)
 		if sid < 0:
 			continue
 		_spawn_fish("pike", sid)
 
 
-func _new_school(speed: float, min_depth := 1.6) -> int:
+func _new_school(kind: String, speed: float, min_depth := 1.6) -> int:
 	var start := terrain.random_lake_point(_rng, min_depth, 90)
 	if start == Vector3.ZERO:
 		return -1
 	_schools.append({
+		"kind": kind,
 		"anchor": start,
 		"target": start,
 		"timer": _rng.randf_range(2.0, 12.0),
@@ -154,13 +187,53 @@ func nearest_prey(from: Vector3, max_dist: float) -> Animal:
 	return best
 
 
+## Nearest fish to `from` (not mid-breach), or null.
+func nearest_fish(from: Vector3, max_dist: float) -> Fish:
+	var best: Fish = null
+	var best_d := max_dist * max_dist
+	for f in fish:
+		if not is_instance_valid(f):
+			continue
+		var d := from.distance_squared_to(f.global_position)
+		if d < best_d:
+			best_d = d
+			best = f
+	return best
+
+
+## Take a fish out of the lake for good; the lake restocks after a while.
+func catch_fish(f: Fish) -> void:
+	if not is_instance_valid(f):
+		return
+	fish.erase(f)
+	if f.school_id >= 0 and f.school_id < _schools.size():
+		_schools[f.school_id].members.erase(f)
+	_restocks.append([f.kind, FISH_RESTOCK_TIME])
+	f.queue_free()
+
+
+func _restock(kind: String) -> void:
+	# Refill the emptiest school of that kind so the lake evens back out.
+	var best := -1
+	var fewest := 1 << 30
+	for sid in _schools.size():
+		var s: Dictionary = _schools[sid]
+		if s.kind != kind:
+			continue
+		if s.members.size() < fewest:
+			fewest = s.members.size()
+			best = sid
+	if best >= 0:
+		_spawn_fish(kind, best)
+
+
 ## Position of whatever is scaring an animal at `pos`, or Vector3.INF.
 func threat_position(pos: Vector3, radius: float) -> Vector3:
 	if radius <= 0.0:
 		return Vector3.INF
 	var best := Vector3.INF
 	var best_d := radius * radius
-	if bear != null and is_instance_valid(bear):
+	if bear != null and is_instance_valid(bear) and bear.is_alive():
 		var db := pos.distance_squared_to(bear.global_position)
 		if db < best_d:
 			best_d = db
@@ -211,17 +284,21 @@ func alive_count() -> int:
 # --- lifecycle ----------------------------------------------------------------
 
 func _on_animal_died(a: Animal) -> void:
-	kills += 1
-	last_kill_label = Species.get_cfg(a.species).label
+	if a.get_meta("player_hit", false):
+		player_kills += 1
+		player_killed.emit(a)
+	else:
+		kills += 1
+		last_kill_label = Species.get_cfg(a.species).label
 	_corpses.append([a, CORPSE_TIME])
 	_respawns.append([a.species, CORPSE_TIME + RESPAWN_DELAY])
 
 
-func _on_bear_struck(_victim: Animal, at: Vector3) -> void:
+func _on_bear_struck(_victim: Node3D, at: Vector3) -> void:
 	_impact_burst(at)
 
 
-func _on_bear_kill(_victim: Animal) -> void:
+func _on_bear_kill(_victim: Node3D) -> void:
 	pass
 
 
@@ -242,6 +319,25 @@ func _process(delta: float) -> void:
 		if _respawns[i][1] <= 0.0:
 			_respawn(_respawns[i][0])
 			_respawns.remove_at(i)
+
+	if _bear_respawn > 0.0:
+		_bear_respawn -= delta
+		if _bear_respawn <= 0.0:
+			var pos := Vector3.ZERO
+			for attempt in 40:
+				var q := terrain.random_walkable_point(_rng, 30)
+				if q != Vector3.ZERO and (player == null or q.distance_to(player.global_position) > BEAR_RESPAWN_DIST):
+					pos = q
+					break
+			if pos == Vector3.ZERO:
+				pos = _random_spawn()
+			_spawn_bear(pos)
+
+	for i in range(_restocks.size() - 1, -1, -1):
+		_restocks[i][1] -= delta
+		if _restocks[i][1] <= 0.0:
+			_restock(_restocks[i][0])
+			_restocks.remove_at(i)
 
 
 func _respawn(species_name: String) -> void:

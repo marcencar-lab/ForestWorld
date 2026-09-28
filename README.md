@@ -1,12 +1,13 @@
 # Forest World
 
-A procedurally generated 3D open-world forest for **Godot 4.7** — hills, a lake with
-fish, a low-poly conifer/broadleaf forest, native wildlife that wanders and grazes,
-and a brown bear that hunts them.
+A procedurally generated 3D open-world survival game for **Godot 4.7**: hills, a
+lake full of fish, a low-poly forest, native wildlife, and a brown bear that hunts
+anything it can hear or smell, including you. Gather, craft, build a cabin, search
+abandoned ruins for supplies and weapons, and see how long you last.
 
-Everything is generated in code at startup — geometry *and* sound. There are no
+Everything is generated in code at startup, geometry *and* sound. There are no
 imported models, textures or audio files, so the project runs straight from a clone
-(~1.2 s of generation on a mid-range machine).
+(~1.3 s of generation on a mid-range machine).
 
 ## Running it
 
@@ -15,7 +16,7 @@ Requires **Godot 4.7** (Forward+ / Vulkan). No add-ons, no downloads.
 Open `project.godot` in the Godot editor and press **F5**. That's it.
 
 To run from a terminal instead, a freshly cloned copy needs one import pass
-first — the `class_name` registry lives in the gitignored `.godot/` folder, so
+first. The `class_name` registry lives in the gitignored `.godot/` folder, so
 until the project has been scanned once, the scripts can't see each other:
 
 ```bash
@@ -28,117 +29,187 @@ After that, this launches it directly and every time after:
 godot --path .
 ```
 
+## Playing
+
+You start by the lake with a fishing rod and nothing else. Five bars keep you
+alive: **health**, **stamina** (sprinting, swimming), **food**, **water** and
+**warmth**. Any of the last three reaching zero starts costing health. The game ends
+when you die, and your best survival time is saved.
+
+**The progression loop**
+
+1. Pick up loose **rocks** from the ground (`E`).
+2. Hold a rock and hit a tree (left click) to knock **branches** off.
+3. Craft a **stone axe** (`Tab`, 1 rock + 3 branches).
+4. Fell trees for **logs**. They topple away from you.
+5. Saw logs into **planks** (`Tab`, needs an axe).
+6. Build (`B`): a lean-to and campfire early on, then floors, walls, a door and a roof.
+
+**The bear** notices you at a distance that depends on how much noise you make
+(crouch with `C` to sneak, sprinting is loud) and how much fish or meat you're
+carrying. Your sprint is slower than its charge. It wades only into the shallows,
+so deep water is a refuge, but swimming drains stamina and you drown when it runs out.
+It can't walk through walls: it will claw at a wall between you and it, then lose
+interest. A branch lean-to won't stop it, but plank walls will. Damaged pieces can
+be repaired (`R`). Hurt it badly enough and it flees; kill it and another bear
+wanders in later.
+
+**Weather**: rain showers roll in every few minutes. Rain and cold nights drain
+warmth; a roof, lean-to or campfire warms you back up. Rain particles stop at roofs.
+
+**Abandoned cabins**: five weathered, half-collapsed ruins are scattered through
+the forest (the compass at the top points to the nearest one you haven't searched).
+Their crates hold canned food, bandages, water bottles, planks, arrows, and weapons:
+hunting knife, steel hatchet, wooden spear, hunting bow. A ruin is built from the
+same pieces as your own buildings, so you can repair one into a base.
+
+**Survival mechanics**
+
+- **Food**: fish with the rod, or hunt deer, boar, foxes and hares for meat.
+  Cook it on a lit campfire (`E`); raw food fills you less and can give you
+  food poisoning (hunger and thirst drain faster, no healing).
+- **Water**: drink at the lake (`E`, or `C`+`E` while holding the rod). Water
+  bottles from loot carry four sips each (`X` to drink).
+- **Bleeding**: bear claws open wounds that keep draining health until you use
+  a bandage (`Z`).
+- **Sleep**: build a bedroll under a roof and sleep through the night (`E`),
+  as long as nothing dangerous is near.
+- **Durability**: tools and weapons wear out with use.
+
 ## Controls
 
 | Key | Action |
 | --- | --- |
 | Mouse | Look |
 | `W` `A` `S` `D` | Move (hold `Shift` to sprint) |
-| `Space` | Jump / fly up |
-| `Ctrl` | Fly down |
-| `F` | Toggle fly mode |
-| `Tab` | Cycle camera: player → bear → the bear's current prey |
-| `R` | Teleport next to the bear |
-| `T` | Toggle the day–night cycle (starts paused at mid-afternoon) |
-| `V` | Toggle volumetric fog |
+| `C` | Crouch / sneak |
+| `Space` | Jump |
+| Left click | Use the held item (hit, chop, attack, shoot) / place a piece in build mode |
+| `E` | Interact: pick up, open, search, cook, fuel a fire, sleep, drink, cast / reel |
+| `R` | Repair the building piece you're looking at |
+| `1`-`9` | Choose held item (or pick a recipe / build piece when those menus are open) |
+| `Tab` | Crafting menu |
+| `B` | Build mode (mouse wheel changes piece, right click exits) |
+| `Q` | Eat (best food first) |
+| `X` | Drink from a water bottle |
+| `Z` | Use a bandage |
+| `T` | Toggle the day-night cycle |
 | `M` | Mute / unmute audio |
-| `H` | Hide the controls panel |
+| `H` | Cycle the HUD: compact → controls → hidden |
+| `P` | Switch to sandbox mode (and back, which restarts) |
 | `Esc` | Release the mouse (click to recapture) |
+
+**Sandbox mode** (`P`) turns you into an invulnerable observer with free building.
+Extra keys there: `F` fly (`Space`/`Ctrl` up/down), `Tab` cycles the camera
+between you, the bear and its prey, `R` teleports to the bear, `G` toggles rain,
+`V` toggles volumetric fog.
 
 ## What's in the world
 
-**Terrain** — a 440 × 440 m heightmap from layered, domain-warped simplex noise, with
+**Terrain**: a 440 × 440 m heightmap from layered, domain-warped simplex noise, with
 a lake basin carved into it and a mountain rim to enclose the playfield. Height is
 defined analytically in `ForestTerrain.sample_height()`, so animals, props and spawn
 points query the ground directly instead of raycasting. The visual mesh is 220 × 220
 quads with vertex colours (grass / dry meadow / rock / sand / silt); collision uses a
 separate half-resolution trimesh.
 
-**Lake** — a custom shader with vertex waves, depth-based colour, shoreline foam and
+**Lake**: a custom shader with vertex waves, depth-based colour, shoreline foam and
 screen-space refraction, plus a belt of reeds in the shallows.
 
-**Forest** — ~1500 trees in three species (pine, broadleaf, birch) plus bushes, rocks,
-stumps and 22 000 grass tufts. All of it is baked into per-chunk `MultiMesh`
-instances with visibility ranges, so the ground cover culls with distance. Trees have
-cylinder colliders you can walk into.
+**Forest**: ~1500 trees in three species (pine, broadleaf, birch) plus bushes, rocks,
+stumps and 22 000 grass tufts, all baked into per-chunk `MultiMesh` instances with
+visibility ranges. `TreeRegistry` remembers which MultiMesh slot and collider belong
+to each tree, so a single tree can lose its branches, be chopped down and replaced
+with a falling trunk and a stump.
 
-**Wildlife** — 39 prey animals across four species (roe deer, hare, red fox, wild
-boar). Each has a state machine: wander → graze → flee. They avoid water and steep
-ground, follow the terrain slope with their bodies, and animate their legs, neck and
-tail from their own gait. They tire while sprinting, which is what eventually lets the
-bear catch one.
+**Wildlife**: 39 prey animals across four species (roe deer, hare, red fox, wild
+boar). Each has a state machine: wander → graze → flee. They avoid water, steep
+ground and buildings, follow the terrain slope with their bodies, and animate their
+legs, neck and tail from their own gait.
 
-**The bear** — roams, then locks onto the nearest prey within 105 m, stalks, charges,
-and swipes when it gets within range. After a kill it feeds on the carcass for a few
-seconds before hunting again. Killed animals are removed after a while and the
-population is topped back up away from the bear.
+**The bear**: roams, then locks onto the nearest prey within 105 m (or you, if it
+senses you), stalks, charges, and swipes when it gets within range. It feeds after
+a kill, heals while calm, flees below 35 % health, and can be killed. It belongs
+to the `hostile` group, which is what weapons, arrows and the kill/reward logic
+look for, so future enemies only need to join that group and implement
+`is_alive()` / `take_damage(amount, from)`.
 
-**Fish** — 84 trout in seven loose schools plus 6 solitary pike. Trout steer toward a
-personal slot around a slowly drifting school anchor with separation from their
-neighbours; they scatter if the bear or the player comes to the water's edge, and
-occasionally breach the surface with a splash.
+**Fish**: 84 trout in seven loose schools plus 6 solitary pike. Trout steer toward a
+personal slot around a slowly drifting school anchor; they scatter from the shore
+when something big comes near, and occasionally breach. A caught fish leaves the
+lake for real, and the lake restocks slowly.
 
-**Audio** — 20 sounds, all synthesised into `AudioStreamWAV` buffers at startup
-(~0.5 s); no sample files. Four looping ambience beds (wind, lake wash, daytime
-insects, night crickets) are mixed live against time of day, your altitude and your
-distance to the shoreline. Everything else is positional: birdsong dropped randomly in
-the canopy around you (owls after dark), per-species idle calls and alarm calls, pain
-and death cries, the bear's growls, roars and swipes, undergrowth rustling as animals
-bolt past, splashes when a trout breaches, and your own footsteps — which change when
-you're wading.
+**Buildings**: pieces snap to a 3 m grid (walls and doors to cell edges). Each piece
+is a `Structure` with health; walls and doors also keep 2D segments that the bear
+and animals test against, since they move kinematically rather than through physics.
 
-The synthesis is in `AudioSynth`: filtered noise beds for ambience, swept-oscillator
-chirps for birds, and a shared "glottal buzz through a formant filter" voice model that
-every land animal is a preset of. Voices route through an SFX bus with a light reverb.
+**Audio**: about 25 sounds, all synthesised into `AudioStreamWAV` buffers at startup;
+no sample files. Looping ambience beds (wind, lake wash, daytime insects, night
+crickets, rain) are mixed live against time of day, weather, shelter, altitude and
+distance to the shoreline. Everything else is positional: birdsong, animal calls,
+the bear, splashes, chopping, falling trees, campfire crackle and your footsteps.
 
 ## Source layout
 
 ```
-scenes/main.tscn        empty Node3D + world.gd — everything else is built at runtime
-scripts/world.gd        orchestrator: terrain, lighting, scattering, cameras, HUD
+scenes/main.tscn            empty Node3D + world.gd; everything else is built at runtime
+scripts/world.gd            orchestrator: world build, survival rules, input, crafting, interaction
 scripts/forest_terrain.gd   heightmap, colouring, mesh + collision, ground queries
-scripts/flora.gd        low-poly tree / bush / rock / grass mesh builders
-scripts/species.gd      body plan + AI tuning tables for every land animal
+scripts/flora.gd            low-poly tree / bush / rock / grass mesh builders
+scripts/tree_registry.gd    per-tree state: branches, chopping, felling
+scripts/loose_rocks.gd      pick-up stones on the forest floor
+scripts/species.gd          body plan + AI tuning tables for every land animal
 scripts/critter_builder.gd  assembles a quadruped from primitives
-scripts/animal.gd       prey AI, movement, procedural gait
-scripts/bear.gd         predator AI: patrol / stalk / chase / attack / feed
-scripts/fish.gd         fish body, schooling, breaching
+scripts/animal.gd           prey AI, movement, procedural gait
+scripts/bear.gd             predator AI: patrol / stalk / chase / attack / feed / flee
+scripts/fish.gd             fish body, schooling, breaching
 scripts/wildlife_manager.gd spawning, shared queries, corpses, respawns, effects
-scripts/audio_synth.gd  DSP: filters, oscillators, every sound in the game
+scripts/player_controller.gd  movement, vitals, inventory
+scripts/fishing_rod.gd      cast, bite, catch
+scripts/tool_hand.gd        first-person held items and swing animations
+scripts/arrow.gd            bow projectiles
+scripts/items.gd            item, food, weapon and loot-table data
+scripts/build_system.gd     grid placement, ghost preview, piece geometry, shelter queries
+scripts/structure.gd        one placed piece: health, door, campfire, crate
+scripts/ruins.gd            abandoned cabins and their crates
+scripts/weather.gd          rain showers
+scripts/audio_synth.gd      DSP: filters, oscillators, every sound in the game
 scripts/audio_director.gd   buses, ambience mixing, positional one-shots
-scripts/player_controller.gd  walk + fly observer camera
-scripts/forest_hud.gd   controls panel, live stats, event toasts
-shaders/sky.gdshader    gradient sky with drifting procedural clouds
-shaders/water.gdshader  lake surface
+scripts/forest_hud.gd       vitals, prompts, compass, menus, toasts, game over
+shaders/sky.gdshader        gradient sky with drifting procedural clouds
+shaders/water.gdshader      lake surface
 ```
 
 ## Tuning
 
 Most of the feel lives in constants at the top of the relevant script:
 
+- Player speeds, vitals drain rates, warmth, bleeding: `PlayerController`
+- Food values, weapon damage / reach / durability, loot tables: `Items`
+- Recipes, tool cooldowns, sleep hour: the constants above `_unhandled_input` in `world.gd`
+- Building costs and health: `BuildSystem.PIECES`
+- Bear aggression, hearing, wall behaviour and fleeing: constants in `bear.gd`
+- Rain timing: `Weather`
 - World size, lake position/radius and water level: `ForestTerrain`
 - Vegetation counts and view distances: the `*_TARGET` / `*_VIEW` constants in `world.gd`
 - Animal speeds, health, flee radius and stamina: `Species.DATA`
-- Bear aggression (hunt radius, damage, cooldown, feed time): constants in `bear.gd`
-- Fish counts and school sizes: constants in `wildlife_manager.gd`
-- Sound design: the generator functions in `AudioSynth`; per-species call pitch and
-  audible range in `AudioDirector.VOICES`; bus levels in `AudioDirector._setup_buses()`
+- Fish counts, restocking and bear respawns: constants in `wildlife_manager.gd`
 
-`WORLD_SEED` in `world.gd` regenerates the entire map — terrain, forest layout and
-spawn points are all derived from it.
+`WORLD_SEED` in `world.gd` regenerates the entire map: terrain, forest layout,
+ruins and spawn points are all derived from it.
 
 ## Known limitations
 
-- Animals move kinematically over the heightmap rather than through the physics
-  engine. This is deliberate (it is far cheaper for dozens of agents and never jitters
-  on slopes), but it means they walk through trees and through each other.
+- Animals and the bear move kinematically over the heightmap rather than through
+  the physics engine. They respect buildings, but walk through trees and each other.
+- The bear heads straight for you; it claws at a wall rather than pathing round to
+  an open door.
 - Corpses fade out on a timer rather than being eaten away.
-- The synthesised audio is deliberately stylised — it reads as "forest", but it is
-  oscillators and filtered noise, not recordings.
+- The synthesised audio is deliberately stylised.
 - Forward+ only. A web export would need the Compatibility renderer, which has no
-  volumetric fog, no SSAO, and no depth texture — the last of which the lake shader
-  relies on for its depth tinting and shoreline foam.
+  volumetric fog, no SSAO, no depth texture (the lake shader needs it) and no GPU
+  particle collision (the rain needs it).
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT (see [LICENSE](LICENSE)).

@@ -205,7 +205,16 @@ func _move(delta: float) -> void:
 
 	var next := global_position + velocity * delta
 	# Keep them on dry land and inside the playfield.
-	if not terrain.in_bounds(next.x, next.z) or not terrain.is_land(next.x, next.z, 0.4):
+	var walled := false
+	if manager.build != null:
+		var q := Vector2(next.x, next.z)
+		walled = manager.build.blocking(q, q, 0.6) != null
+	if walled:
+		velocity = velocity.rotated(Vector3.UP, PI * 0.5 * _flank) * 0.6
+		next = global_position + velocity * delta
+		if manager.build.blocking(Vector2(next.x, next.z), Vector2(next.x, next.z), 0.6) != null:
+			next = global_position
+	elif not terrain.in_bounds(next.x, next.z) or not terrain.is_land(next.x, next.z, 0.4):
 		velocity = velocity.rotated(Vector3.UP, PI * 0.5) * 0.6
 		next = global_position + velocity * delta
 		if not terrain.in_bounds(next.x, next.z):

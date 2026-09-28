@@ -227,6 +227,11 @@ func _animate(delta: float, boost: float) -> void:
 		_pectorals[i].rotation.y = sin(_phase * 0.8 + i * PI) * 0.22 * s
 
 
+## Bolt for a moment - used when a hooked fish throws the line.
+func scare() -> void:
+	_dart = 1.6
+
+
 # --- breaching ----------------------------------------------------------------
 
 func _start_breach() -> void:

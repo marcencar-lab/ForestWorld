@@ -23,12 +23,15 @@ var world: Node3D
 
 var muted := false
 var day_factor := 1.0
+var rain_level := 0.0      # 0..1, set by Weather
+var sheltered := false     # listener is under a roof: rain sounds muffled
 
 var _bank := {}
 var _wind: AudioStreamPlayer
 var _day: AudioStreamPlayer
 var _night: AudioStreamPlayer
 var _water: AudioStreamPlayer
+var _rain: AudioStreamPlayer
 
 var _bird_timer := 2.0
 var _live := 0                       # active one-shot players, for a hard cap
@@ -100,6 +103,10 @@ func _build_bank() -> void:
 	_bank["rustle"] = AudioSynth.rustle(r)
 	_bank["step"] = AudioSynth.footstep(r, false)
 	_bank["step_wet"] = AudioSynth.footstep(r, true)
+	_bank["rain"] = AudioSynth.rain(r)
+	_bank["fire"] = AudioSynth.fire(r)
+	_bank["chop"] = AudioSynth.chop(r)
+	_bank["thud"] = AudioSynth.thud(r)
 
 
 func _start_ambience() -> void:
@@ -107,12 +114,13 @@ func _start_ambience() -> void:
 	_day = _bed("day", -14.0)
 	_night = _bed("night", -60.0)
 	_water = _bed("lake", -60.0)
+	_rain = _bed("rain", -60.0)
 
 
 ## Release the looping playbacks on shutdown, otherwise the AudioServer is still
 ## holding them when the engine does its leaked-instance check.
 func _exit_tree() -> void:
-	for p in [_wind, _day, _night, _water]:
+	for p in [_wind, _day, _night, _water, _rain]:
 		if is_instance_valid(p):
 			p.stop()
 			p.stream = null
@@ -207,8 +215,42 @@ func rustle_at(pos: Vector3) -> void:
 	play_at("rustle", pos, -12.0, _rng.randf_range(0.85, 1.2), 55.0)
 
 
-func footstep_at(pos: Vector3, wet: bool) -> void:
-	play_at("step_wet" if wet else "step", pos, -16.0, _rng.randf_range(0.88, 1.14), 25.0)
+func footstep_at(pos: Vector3, wet: bool, db_offset := 0.0) -> void:
+	play_at("step_wet" if wet else "step", pos, -16.0 + db_offset, _rng.randf_range(0.88, 1.14), 25.0)
+
+
+## The player's own grunt when the bear lands a hit.
+func player_hurt(pos: Vector3) -> void:
+	play_at("pain", pos, -4.0, _rng.randf_range(0.42, 0.50), 40.0)
+
+
+func bobber_plop(pos: Vector3) -> void:
+	play_at("splash", pos, -14.0, _rng.randf_range(1.5, 1.8), 40.0)
+
+
+func chop_at(pos: Vector3, stone := false) -> void:
+	play_at("chop", pos, -3.0, _rng.randf_range(1.25, 1.45) if stone else _rng.randf_range(0.9, 1.08), 70.0)
+
+
+func thud_at(pos: Vector3) -> void:
+	play_at("thud", pos, 3.0, _rng.randf_range(0.85, 1.05), 160.0)
+
+
+func build_at(pos: Vector3) -> void:
+	play_at("chop", pos, -2.0, _rng.randf_range(0.7, 0.8), 60.0)
+	play_at("thud", pos, -10.0, 1.6, 60.0)
+
+
+## A looping positional crackle for a campfire; the caller parents and frees it.
+func make_fire_player() -> AudioStreamPlayer3D:
+	var p := AudioStreamPlayer3D.new()
+	p.stream = _bank["fire"]
+	p.bus = "SFX"
+	p.volume_db = -6.0
+	p.unit_size = 5.0
+	p.max_distance = 35.0
+	p.autoplay = true
+	return p
 
 
 func toggle_mute() -> bool:
@@ -239,8 +281,13 @@ func _process(delta: float) -> void:
 	var to_shore := Vector2(ear.x, ear.z).distance_to(terrain.lake_center) - terrain.lake_radius
 	_water.volume_db = lerpf(-7.0, -60.0, clampf(to_shore / 55.0, 0.0, 1.0))
 
+	# Rain drowns out the insects and gets duller under a roof.
+	var r := clampf(rain_level, 0.0, 1.0)
+	_rain.volume_db = -60.0 if r < 0.01 else lerpf(-30.0, -3.0, r) - (7.0 if sheltered else 0.0)
+	_day.volume_db -= r * 12.0
+
 	_bird_timer -= delta
-	if _bird_timer <= 0.0:
+	if _bird_timer <= 0.0 and r < 0.4:
 		_schedule_bird(ear)
 
 
