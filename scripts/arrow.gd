@@ -18,6 +18,8 @@ var terrain: ForestTerrain
 var manager: WildlifeManager
 var trees: TreeRegistry
 var shooter_pos := Vector3.ZERO
+## Set by the world: applies the hit (via the host when online).
+var on_hit: Callable
 
 var _age := 0.0
 var _stuck := -1.0
@@ -93,11 +95,14 @@ func _physics_process(delta: float) -> void:
 			best_t = t
 			best = c
 	if best != null:
-		if best is Animal:
-			best.set_meta("player_hit", true)
-		best.call("take_damage", damage, shooter_pos)
-		var killed: bool = not best.call("is_alive")
-		hit.emit(best, killed)
+		if on_hit.is_valid():
+			on_hit.call(best, damage)
+			hit.emit(best, false)
+		else:
+			if best is Animal:
+				best.set_meta("player_hit", true)
+			best.call("take_damage", damage, shooter_pos)
+			hit.emit(best, not best.call("is_alive"))
 		queue_free()
 		return
 

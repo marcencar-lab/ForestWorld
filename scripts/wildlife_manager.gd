@@ -18,6 +18,8 @@ const BEAR_RESPAWN_DIST := 150.0  # ...this far from the player
 
 signal bear_spawned(bear)
 signal player_killed(animal)
+## Sounds and particles, so a host can echo them to other players.
+signal fx(kind, a, pos)
 
 var terrain: ForestTerrain
 var audio: AudioDirector
@@ -32,6 +34,10 @@ var build: BuildSystem
 var _schools: Array = []
 
 var kills := 0
+## On a client the host runs the wildlife; we only mirror its snapshots.
+var puppet_mode := false
+var _next_id := 1
+var _bear_target_peer := 0
 var player_kills := 0
 var _bear_respawn := -1.0
 var last_kill_label := ""
@@ -58,9 +64,15 @@ func populate() -> void:
 	_populate_lake()
 
 
-func _spawn_bear(pos: Vector3) -> void:
+func _new_id() -> int:
+	_next_id += 1
+	return _next_id
+
+
+func _spawn_bear(pos: Vector3, id := 0) -> void:
 	bear = Bear.new()
 	bear.name = "Bear"
+	bear.net_id = id if id > 0 else _new_id()
 	add_child(bear)
 	bear.setup(terrain, self, pos)
 	bear.struck.connect(_on_bear_struck)
@@ -74,6 +86,29 @@ func _on_bear_died(b: Bear) -> void:
 	get_tree().create_timer(BEAR_CORPSE_TIME).timeout.connect(func() -> void:
 		if is_instance_valid(b):
 			b.queue_free())
+
+
+## Everyone playing (this machine's player and remote players).
+func players() -> Array:
+	var out := []
+	for p in get_tree().get_nodes_in_group("players"):
+		if is_instance_valid(p):
+			out.append(p)
+	return out
+
+
+## The closest living player within `radius` of `pos`, or null.
+func nearest_player(pos: Vector3, radius: float) -> Node3D:
+	var best: Node3D = null
+	var best_d := radius
+	for p in players():
+		if not p.alive:
+			continue
+		var d := pos.distance_to(p.global_position)
+		if d < best_d:
+			best_d = d
+			best = p
+	return best
 
 
 ## Every living thing that fights back, for weapons and future enemies.
@@ -125,6 +160,7 @@ func _spawn_fish(kind: String, sid: int) -> void:
 		pos = anchor
 	var f := Fish.new()
 	f.name = "%s_%d_%d" % [kind, sid, fish.size()]
+	f.net_id = _new_id()
 	add_child(f)
 	f.setup(kind, terrain, self, sid, pos)
 	fish.append(f)
@@ -164,6 +200,7 @@ func _random_spawn() -> Vector3:
 func _spawn_animal(species_name: String, pos: Vector3) -> Animal:
 	var a := Animal.new()
 	a.name = "%s_%d" % [species_name, animals.size()]
+	a.net_id = _new_id()
 	add_child(a)
 	a.setup(species_name, terrain, self, pos)
 	a.died.connect(_on_animal_died)
@@ -238,11 +275,12 @@ func threat_position(pos: Vector3, radius: float) -> Vector3:
 		if db < best_d:
 			best_d = db
 			best = bear.global_position
-	if player != null and is_instance_valid(player):
-		var pr := radius * 0.45
-		var dp := pos.distance_squared_to(player.global_position)
+	var pr := radius * 0.45
+	for p in players():
+		var dp := pos.distance_squared_to(p.global_position)
 		if dp < pr * pr and dp < best_d:
-			best = player.global_position
+			best_d = dp
+			best = p.global_position
 	return best
 
 
@@ -253,16 +291,19 @@ func threat_position(pos: Vector3, radius: float) -> Vector3:
 func animal_voice(a: Animal, kind: String) -> void:
 	if audio != null:
 		audio.animal_voice(a.species, kind, a.global_position)
+	fx.emit("voice", "%s:%s" % [a.species, kind], a.global_position)
 
 
 func bear_voice(kind: String, pos: Vector3) -> void:
 	if audio != null:
 		audio.bear_voice(kind, pos)
+	fx.emit("bear", kind, pos)
 
 
 func rustle(pos: Vector3) -> void:
 	if audio != null:
 		audio.rustle_at(pos)
+	fx.emit("rustle", "", pos)
 
 
 func fish_count() -> int:
@@ -303,6 +344,8 @@ func _on_bear_kill(_victim: Node3D) -> void:
 
 
 func _process(delta: float) -> void:
+	if puppet_mode:
+		return
 	_update_schools(delta)
 
 	for i in range(_corpses.size() - 1, -1, -1):
@@ -359,6 +402,11 @@ func _respawn(species_name: String) -> void:
 # --- feedback -----------------------------------------------------------------
 
 func _impact_burst(at: Vector3) -> void:
+	fx.emit("impact", "", at)
+	impact_local(at)
+
+
+func impact_local(at: Vector3) -> void:
 	var p := CPUParticles3D.new()
 	p.emitting = false
 	p.one_shot = true
@@ -382,6 +430,11 @@ func _impact_burst(at: Vector3) -> void:
 
 ## Ring of droplets where a fish breaks the surface.
 func splash(at: Vector3) -> void:
+	fx.emit("splash", "", at)
+	splash_local(at)
+
+
+func splash_local(at: Vector3) -> void:
 	var p := CPUParticles3D.new()
 	p.emitting = false
 	p.one_shot = true
@@ -420,3 +473,123 @@ static func _burst_mesh() -> Mesh:
 		q.material = m
 		_burst_mesh_cache = q
 	return _burst_mesh_cache
+
+
+# --- online: snapshots ----------------------------------------------------------
+
+const SPECIES_ORDER := ["deer", "rabbit", "fox", "boar"]
+
+
+func find_entity(id: int) -> Node3D:
+	if bear != null and is_instance_valid(bear) and bear.net_id == id:
+		return bear
+	for a in animals:
+		if is_instance_valid(a) and a.net_id == id:
+			return a
+	for f in fish:
+		if is_instance_valid(f) and f.net_id == id:
+			return f
+	return null
+
+
+## Host: pack every creature's position and state for the clients.
+func snapshot() -> Array:
+	var an := PackedFloat32Array()
+	for a in animals:
+		if not is_instance_valid(a):
+			continue
+		var p := a.global_position
+		an.append_array([a.net_id, SPECIES_ORDER.find(a.species), p.x, p.y, p.z, a.rotation.y,
+			a.state + (100 if not a.alive else 0)])
+	var br := PackedFloat32Array()
+	if bear != null and is_instance_valid(bear):
+		var bp := bear.global_position
+		var tp := 0
+		if bear.target != null and is_instance_valid(bear.target) and bear.target.is_in_group("players"):
+			tp = bear.target.peer_id if bear.target is RemotePlayer else 1
+		br.append_array([bear.net_id, bp.x, bp.y, bp.z, bear.rotation.y, bear.state, tp])
+	var fs := PackedFloat32Array()
+	for f in fish:
+		if not is_instance_valid(f):
+			continue
+		var fp := f.global_position
+		fs.append_array([f.net_id, 0 if f.kind == "trout" else 1, fp.x, fp.y, fp.z, f.rotation.y, f.rotation.x])
+	return [an, br, fs]
+
+
+## Client: make the local puppets match the host's snapshot.
+func apply_snapshot(an: PackedFloat32Array, br: PackedFloat32Array, fs: PackedFloat32Array, me: int) -> void:
+	# Animals
+	var seen := {}
+	var by_id := {}
+	for a in animals:
+		if is_instance_valid(a):
+			by_id[a.net_id] = a
+	for i in range(0, an.size(), 7):
+		var id := int(an[i])
+		seen[id] = true
+		var pos := Vector3(an[i + 2], an[i + 3], an[i + 4])
+		var st := int(an[i + 6])
+		var a: Animal = by_id.get(id)
+		if a == null:
+			a = Animal.new()
+			a.net_id = id
+			a.puppet = true
+			add_child(a)
+			a.setup(SPECIES_ORDER[int(an[i + 1])], terrain, self, pos)
+			animals.append(a)
+		a.net_update(pos, an[i + 5], st % 100, st >= 100)
+	for id in by_id:
+		if not seen.has(id):
+			var gone: Animal = by_id[id]
+			animals.erase(gone)
+			gone.queue_free()
+
+	# Bear
+	if br.size() >= 7:
+		var bid := int(br[0])
+		if bear == null or not is_instance_valid(bear) or bear.net_id != bid:
+			if bear != null and is_instance_valid(bear):
+				bear.queue_free()
+			bear = Bear.new()
+			bear.name = "Bear"
+			bear.net_id = bid
+			bear.puppet = true
+			add_child(bear)
+			bear.setup(terrain, self, Vector3(br[1], br[2], br[3]))
+			bear_spawned.emit(bear)
+		bear.net_update(Vector3(br[1], br[2], br[3]), br[4], int(br[5]))
+		_bear_target_peer = int(br[6])
+	elif bear != null and is_instance_valid(bear):
+		bear.queue_free()
+		bear = null
+
+	# Fish
+	var fseen := {}
+	var fby := {}
+	for f in fish:
+		if is_instance_valid(f):
+			fby[f.net_id] = f
+	for i in range(0, fs.size(), 7):
+		var id := int(fs[i])
+		fseen[id] = true
+		var pos2 := Vector3(fs[i + 2], fs[i + 3], fs[i + 4])
+		var f: Fish = fby.get(id)
+		if f == null:
+			f = Fish.new()
+			f.net_id = id
+			f.puppet = true
+			add_child(f)
+			f.setup("trout" if int(fs[i + 1]) == 0 else "pike", terrain, self, -1, pos2)
+			fish.append(f)
+		f.net_update(pos2, fs[i + 5], fs[i + 6])
+	for id in fby:
+		if not fseen.has(id):
+			var gf: Fish = fby[id]
+			fish.erase(gf)
+			gf.queue_free()
+
+
+## Client: is the bear after this machine's player?
+func bear_hunting_peer(me: int) -> bool:
+	return _bear_target_peer == me

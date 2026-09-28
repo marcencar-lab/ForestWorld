@@ -18,6 +18,7 @@ var status_label: Label
 var game_over: PanelContainer
 var game_over_label: Label
 var compass_label: Label
+var net_label: Label
 var fade: ColorRect
 var inv_label: Label
 var hotbar_label: Label
@@ -188,6 +189,22 @@ func _ready() -> void:
 
 	compass_label = _centred_label(8, 15, Color(0.95, 0.95, 0.90))
 	compass_label.modulate.a = 0.8
+
+	net_label = Label.new()
+	net_label.anchor_left = 1.0
+	net_label.anchor_right = 1.0
+	net_label.anchor_top = 1.0
+	net_label.anchor_bottom = 1.0
+	net_label.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	net_label.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	net_label.offset_right = -16
+	net_label.offset_bottom = -12
+	net_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	net_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	net_label.add_theme_color_override("font_color", Color(0.75, 0.92, 1.0))
+	net_label.add_theme_font_size_override("font_size", 13)
+	_outline(net_label)
+	add_child(net_label)
 
 	_build_vitals()
 	_build_game_over()
@@ -482,6 +499,11 @@ func _set_bar(key: String, value: float, alarm: bool) -> void:
 func set_side_panel(text: String) -> void:
 	side_label.text = text
 	side_panel.visible = text != ""
+
+
+func set_net(text: String) -> void:
+	net_label.text = text
+	net_label.visible = hud_mode != 2
 
 
 func set_compass(text: String) -> void:

@@ -34,6 +34,12 @@ const MIN_DEPTH := 0.9
 const FLEE_RADIUS := 10.0
 
 var kind := "trout"
+var net_id := 0
+## Mirrors the host's fish instead of swimming for itself (online clients).
+var puppet := false
+var _net_pos := Vector3.ZERO
+var _net_yaw := 0.0
+var _net_pitch := 0.0
 var cfg: Dictionary
 var terrain: ForestTerrain
 var manager: WildlifeManager
@@ -68,6 +74,7 @@ func setup(kind_name: String, t: ForestTerrain, m: WildlifeManager, sid: int, sp
 
 	_build()
 	position = spawn
+	_net_pos = spawn
 	rotation.y = _rng.randf_range(0.0, TAU)
 	velocity = -global_transform.basis.z * float(cfg.cruise)
 
@@ -129,6 +136,15 @@ func _build() -> void:
 # --- swimming -----------------------------------------------------------------
 
 func _physics_process(delta: float) -> void:
+	if puppet:
+		var prev := global_position
+		var k := clampf(delta * 10.0, 0.0, 1.0)
+		global_position = global_position.lerp(_net_pos, k)
+		rotation.y = lerp_angle(rotation.y, _net_yaw, k)
+		rotation.x = lerpf(rotation.x, _net_pitch, k)
+		velocity = velocity.lerp((global_position - prev) / maxf(delta, 0.0001), 0.3)
+		_animate(delta, 1.0)
+		return
 	if _breach > 0.0:
 		_breach_step(delta)
 		_animate(delta, 2.0)
@@ -225,6 +241,12 @@ func _animate(delta: float, boost: float) -> void:
 	for i in _pectorals.size():
 		var s := -1.0 if i == 0 else 1.0
 		_pectorals[i].rotation.y = sin(_phase * 0.8 + i * PI) * 0.22 * s
+
+
+func net_update(pos: Vector3, yaw: float, pitch: float) -> void:
+	_net_pos = pos
+	_net_yaw = yaw
+	_net_pitch = pitch
 
 
 ## Bolt for a moment - used when a hooked fish throws the line.

@@ -22,6 +22,8 @@ const CAST_TIME := 0.55
 const LEASH := 2.5            # walk further than this and the line comes in
 const ROD_LENGTH := 1.3
 
+## Set by the world so a catch can be confirmed by the host when online.
+var catch_handler: Callable
 var player: PlayerController
 var terrain: ForestTerrain
 var manager: WildlifeManager
@@ -197,11 +199,14 @@ func _try_cast() -> void:
 
 func _land() -> void:
 	if _hooked != null and is_instance_valid(_hooked):
-		var kind := _hooked.kind
-		manager.catch_fish(_hooked)
-		manager.splash(_bob)
-		player.add_fish(kind)
-		caught.emit(kind)
+		if catch_handler.is_valid():
+			catch_handler.call(_hooked, _bob)
+		else:
+			var kind := _hooked.kind
+			manager.catch_fish(_hooked)
+			manager.splash(_bob)
+			player.add_fish(kind)
+			caught.emit(kind)
 	cancel()
 
 

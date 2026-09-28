@@ -8,6 +8,8 @@ extends Node3D
 
 enum Kind { PINE, BROADLEAF, BIRCH }
 
+signal felled(id, from)
+
 const BRANCH_STOCK := 3          # branches a tree can drop before it is bare
 const BRANCH_CHANCE := 0.45      # per rock hit
 const TREE_HP := 100.0
@@ -167,20 +169,36 @@ func health_of(id: int) -> float:
 	return trees[id].hp / TREE_HP
 
 
-func _fell(id: int, from: Vector3) -> void:
-	var t: Dictionary = trees[id]
-	t.alive = false
-	var xf: Transform3D = t.xf
+## Bring a tree down (also used to replay a fall another player caused).
+func fell(id: int, from: Vector3) -> void:
+	if trees[id].alive:
+		_fell(id, from)
 
-	# Hide the baked instance and drop its collider.
+
+## Felled ids, for players joining late.
+func felled_ids() -> PackedInt32Array:
+	var out := PackedInt32Array()
+	for i in trees.size():
+		if not trees[i].alive:
+			out.append(i)
+	return out
+
+
+## Remove a tree that was already down before we joined: stump, no fall.
+func remove_felled(id: int) -> void:
+	var t: Dictionary = trees[id]
+	if not t.alive:
+		return
+	t.alive = false
 	if t.mm != null:
-		var mm: MultiMesh = t.mm
-		mm.set_instance_transform(t.idx, Transform3D(Basis().scaled(Vector3.ONE * 0.0001), xf.origin))
+		t.mm.set_instance_transform(t.idx, Transform3D(Basis().scaled(Vector3.ONE * 0.0001), t.xf.origin))
 	if t.collider != null and is_instance_valid(t.collider):
 		t.collider.queue_free()
 		t.collider = null
+	_add_stump(t)
 
-	# Stump left behind.
+
+func _add_stump(t: Dictionary) -> void:
 	var stump := MeshInstance3D.new()
 	var cyl := CylinderMesh.new()
 	var r: float = t.radius
@@ -191,7 +209,24 @@ func _fell(id: int, from: Vector3) -> void:
 	stump.mesh = cyl
 	stump.material_override = _bark_mat
 	add_child(stump)
-	stump.global_position = xf.origin + Vector3(0, 0.2, 0)
+	stump.global_position = t.xf.origin + Vector3(0, 0.2, 0)
+
+
+func _fell(id: int, from: Vector3) -> void:
+	var t: Dictionary = trees[id]
+	t.alive = false
+	felled.emit(id, from)
+	var xf: Transform3D = t.xf
+
+	# Hide the baked instance and drop its collider.
+	if t.mm != null:
+		var mm: MultiMesh = t.mm
+		mm.set_instance_transform(t.idx, Transform3D(Basis().scaled(Vector3.ONE * 0.0001), xf.origin))
+	if t.collider != null and is_instance_valid(t.collider):
+		t.collider.queue_free()
+		t.collider = null
+
+	_add_stump(t)
 
 	# The trunk topples away from whoever cut it.
 	var away := xf.origin - from

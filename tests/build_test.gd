@@ -228,7 +228,7 @@ func _run() -> void:
 	stand(center)
 	await wait(0.3)
 	var lost := [""]
-	bear.lost_player.connect(func(r: String) -> void: lost[0] = r)
+	bear.lost_player.connect(func(r: String, _p: Node3D) -> void: lost[0] = r)
 	bear._ignore_player_t = 0.0
 	var bp := center + Vector3(10, 0, 0)
 	bear.global_position = Vector3(bp.x, ter.sample_height(bp.x, bp.z), bp.z)

@@ -10,6 +10,7 @@ extends Node3D
 
 signal placed(structure)
 signal destroyed(structure)
+signal hp_changed(structure)
 
 const CELL := 3.0
 const WALL_H := 2.6
@@ -329,6 +330,9 @@ func spawn_piece(kind: String, p: Dictionary) -> Structure:
 	add_child(s)
 	s.global_transform = p.xf
 	_weathered = p.get("ruined", false)
+	s.ruined = _weathered
+	if p.has("seg"):
+		s.seg_ab = p.seg
 	_build_visual(kind, s, null)
 	_weathered = false
 	_build_collision(kind, s)
@@ -419,6 +423,8 @@ func damage(s: Structure, amount: float) -> void:
 	s.hp -= amount
 	if s.hp <= 0.0:
 		remove(s)
+	else:
+		hp_changed.emit(s)
 
 
 func remove(s: Structure) -> void:
@@ -438,6 +444,7 @@ func repair(s: Structure, amount: float) -> bool:
 	s.hp = minf(s.hp + amount, s.max_hp)
 	if audio != null:
 		audio.build_at(s.global_position)
+	hp_changed.emit(s)
 	return true
 
 
@@ -657,3 +664,50 @@ func _build_collision(kind: String, s: Structure) -> void:
 			_shape(s, Vector3(0.9, 0.25, 2.0), Vector3(0, 0.12, 0))
 		"crate":
 			_shape(s, Vector3(0.95, 0.58, 0.6), Vector3(0, 0.29, 0))
+
+
+# --- online ------------------------------------------------------------------
+
+## Everything needed to rebuild a piece on another machine.
+static func describe(s: Structure) -> Dictionary:
+	var d := {"kind": s.kind, "key": s.slot_key, "cell": s.cell, "base": s.base_y,
+		"xf": s.global_transform, "hp": s.hp, "open": s.open, "fuel": s.fuel,
+		"looted": s.looted, "ruined": s.ruined, "silent": true}
+	if not s.seg_ab.is_empty():
+		d.seg = s.seg_ab
+	return d
+
+
+## Rebuild a piece from describe(); replaces whatever holds that slot.
+func spawn_described(d: Dictionary) -> Structure:
+	if slots.has(d.key):
+		var old: Structure = slots[d.key]
+		structures.erase(old)
+		slots.erase(d.key)
+		old.queue_free()
+	var s: Structure
+	if d.kind == "crate":
+		s = spawn_crate(d.xf.origin, 0.0, [])
+		# spawn_crate made its own key; re-key it to the host's.
+		slots.erase(s.slot_key)
+		s.slot_key = d.key
+		slots[d.key] = s
+		s.global_transform = d.xf
+	else:
+		s = spawn_piece(d.kind, d)
+	s.hp = d.hp
+	if d.open:
+		s.set_open(true)
+	if s.kind == "campfire":
+		s.fuel = d.fuel
+		s._update_fire()
+	if d.looted:
+		s.open_crate()
+	return s
+
+
+func clear_all() -> void:
+	for s in structures:
+		s.queue_free()
+	structures.clear()
+	slots.clear()

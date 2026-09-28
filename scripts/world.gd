@@ -34,6 +34,7 @@ var rocks: LooseRocks
 var build: BuildSystem
 var weather: Weather
 var ruins: Ruins
+var net: NetSync
 
 var sun: DirectionalLight3D
 var fill: DirectionalLight3D
@@ -54,6 +55,7 @@ var night_factor := 0.0
 var craft_open := false
 var _use_cd := 0.0
 var _player_hit_bear := false
+var _bears_seen := 0
 var _spec_pos := Vector3.ZERO
 var _stat_timer := 0.0
 var _last_kills := 0
@@ -88,7 +90,15 @@ func _ready() -> void:
 	add_child(wildlife)
 	wildlife.setup(terrain, WORLD_SEED)
 	wildlife.audio = audio
-	wildlife.populate()
+	# Online clients mirror the host's wildlife instead of running their own.
+	wildlife.puppet_mode = not Session.authority()
+	if Session.authority():
+		wildlife.populate()
+
+	net = NetSync.new()
+	net.name = "Net"
+	net.world = self
+	add_child(net)
 
 	_build_player()
 	wildlife.player = player
@@ -135,16 +145,33 @@ func _ready() -> void:
 	player.ate.connect(_on_player_ate)
 	player.rod.caught.connect(_on_fish_caught)
 	player.rod.message.connect(hud.toast)
-	_hook_bear(wildlife.bear)
+	player.rod.catch_handler = _catch
+	if wildlife.bear != null:
+		_hook_bear(wildlife.bear)
 	wildlife.bear_spawned.connect(_hook_bear)
 	wildlife.player_killed.connect(_on_player_killed_animal)
 	player.status.connect(hud.toast)
 	weather.rain_started.connect(func() -> void: hud.toast("It's starting to rain. Find shelter."))
 	weather.rain_stopped.connect(func() -> void: hud.toast("The rain is easing off."))
 
+	# Online: the host echoes world changes to everyone; clients take orders.
+	trees.felled.connect(func(id: int, from: Vector3) -> void: net.broadcast("tree_felled", [id, from]))
+	rocks.respawned.connect(func(i: int, p: Vector3) -> void: net.broadcast("rock_placed", [i, p]))
+	build.placed.connect(func(st: Structure) -> void: net.broadcast("piece", [BuildSystem.describe(st)]))
+	build.hp_changed.connect(func(st: Structure) -> void: net.broadcast("piece_hp", [st.slot_key, st.hp]))
+	build.destroyed.connect(func(st: Structure) -> void: net.broadcast("piece_removed", [st.slot_key]))
+	wildlife.fx.connect(net.broadcast_fx)
+	if net.is_client():
+		weather.auto = false
+		rocks.authority = false
+	net.start()
+
 	_load_best()
 	hud.set_mode(true)
-	hud.toast("Survive. Fish the lake to eat (E), and stay away from the bear.")
+	if net.is_client():
+		hud.toast("Joining %s..." % Session.address)
+	else:
+		hud.toast("Survive. Fish the lake to eat (E), and stay away from the bear.")
 
 	_update_sun()
 	print("Forest World generated in %d ms" % (Time.get_ticks_msec() - t0))
@@ -606,7 +633,10 @@ const FUEL_LOG := 300.0
 func _unhandled_input(event: InputEvent) -> void:
 	if game_over:
 		if event is InputEventKey and event.pressed and (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER):
-			get_tree().reload_current_scene()
+			if net.is_online():
+				_respawn()
+			else:
+				get_tree().reload_current_scene()
 		return
 
 	var captured := Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
@@ -646,7 +676,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	match event.keycode:
 		KEY_P:
-			if survival:
+			if net.is_online():
+				hud.toast("Sandbox mode isn't available in online games")
+			elif survival:
 				_enter_sandbox()
 			else:
 				# Back to survival means a fresh, fair start.
@@ -710,66 +742,6 @@ func _view() -> Array:
 
 # --- tools, crafting & interaction --------------------------------------------
 
-func _use_tool() -> void:
-	if _use_cd > 0.0:
-		return
-	var v := _view()
-	var held := player.held
-	if held == "rod":
-		return
-	if held == "rock":
-		_use_cd = ROCK_COOLDOWN
-		player.hand.swing()
-		var victim := _melee_target(v[0], v[1], 2.2)
-		if victim != null:
-			_strike(victim, ROCK_DAMAGE)
-			return
-		var id := trees.find_target(v[0], v[1], USE_REACH)
-		if id < 0:
-			return
-		if trees.hit_with_rock(id, _rng):
-			player.inv.branch += 1
-			hud.toast("A branch fell  (+1 branch)")
-		elif trees.branches_left(id) == 0:
-			hud.toast("No reachable branches left on this tree")
-		return
-
-	var stats: Dictionary = Items.TOOLS[held]
-	_use_cd = float(stats.cooldown)
-	player.hand.swing()
-
-	if held == "bow":
-		if int(player.inv.arrow) <= 0:
-			hud.toast("No arrows. Craft some from branches and rocks")
-			return
-		player.inv.arrow -= 1
-		var arrow := Arrow.new()
-		arrow.terrain = terrain
-		arrow.manager = wildlife
-		arrow.trees = trees
-		arrow.damage = float(stats.damage)
-		add_child(arrow)
-		arrow.fire(v[0] + v[1] * 0.6 + Vector3.DOWN * 0.05, v[1])
-		arrow.hit.connect(_on_arrow_hit)
-		audio.play_at("swipe", v[0], -8.0, 1.6, 30.0)
-		_wear()
-		return
-
-	var victim2 := _melee_target(v[0], v[1], float(stats.reach))
-	if victim2 != null:
-		_strike(victim2, float(stats.damage))
-		_wear()
-		return
-	if float(stats.wood) > 0.0:
-		var tid := trees.find_target(v[0], v[1], USE_REACH)
-		if tid >= 0:
-			var logs := trees.chop(tid, float(stats.wood), player.global_position)
-			if logs > 0:
-				player.inv.log += logs
-				hud.toast("Timber!  (+%d logs)" % logs)
-			_wear()
-
-
 func _wear() -> void:
 	var name := Items.label(player.held)
 	if player.wear_tool():
@@ -800,22 +772,6 @@ func _melee_target(eye: Vector3, dir: Vector3, reach: float) -> Node3D:
 			best_d = d
 			best = c
 	return best
-
-
-func _strike(victim: Node3D, damage: float) -> void:
-	if victim is Animal:
-		victim.set_meta("player_hit", true)
-	if victim is Bear:
-		_player_hit_bear = true
-	victim.call("take_damage", damage, player.global_position)
-	audio.chop_at(victim.global_position + Vector3.UP * 0.8)
-	wildlife._impact_burst(victim.global_position + Vector3.UP * 0.6)
-
-
-func _on_arrow_hit(target: Node3D, _killed: bool) -> void:
-	if target is Bear:
-		_player_hit_bear = true
-	hud.toast("Hit!")
 
 
 func _craft(i: int) -> void:
@@ -857,15 +813,6 @@ static func _cost_text(cost: Dictionary) -> String:
 	return ", ".join(parts)
 
 
-func _place_piece() -> void:
-	var s := build.try_place(player.inv)
-	if s == null:
-		if not build.plan.is_empty() and build.plan.reason != "":
-			hud.toast(build.plan.reason)
-		return
-	hud.toast("Built: %s" % BuildSystem.PIECES[s.kind].label)
-
-
 ## The building piece under the crosshair, via a physics ray on the structure layer.
 func _structure_target(reach := 3.4) -> Structure:
 	var v := _view()
@@ -900,19 +847,239 @@ func _raw_food() -> int:
 	return n
 
 
+func _use_tool() -> void:
+	if _use_cd > 0.0:
+		return
+	var v := _view()
+	var held := player.held
+	if held == "rod":
+		return
+	if held == "rock":
+		_use_cd = ROCK_COOLDOWN
+		player.hand.swing()
+		var victim := _melee_target(v[0], v[1], 2.2)
+		if victim != null:
+			_hit(victim, ROCK_DAMAGE)
+			return
+		var id := trees.find_target(v[0], v[1], USE_REACH)
+		if id < 0:
+			return
+		if net.is_client():
+			audio.chop_at(trees.position_of(id) + Vector3.UP * 1.5, true)
+		_act("tree_rock", [id])
+		return
+
+	var stats: Dictionary = Items.TOOLS[held]
+	_use_cd = float(stats.cooldown)
+	player.hand.swing()
+
+	if held == "bow":
+		if int(player.inv.arrow) <= 0:
+			hud.toast("No arrows. Craft some from branches and rocks")
+			return
+		player.inv.arrow -= 1
+		var arrow := Arrow.new()
+		arrow.terrain = terrain
+		arrow.manager = wildlife
+		arrow.trees = trees
+		arrow.damage = float(stats.damage)
+		arrow.on_hit = _arrow_hit
+		add_child(arrow)
+		arrow.fire(v[0] + v[1] * 0.6 + Vector3.DOWN * 0.05, v[1])
+		audio.play_at("swipe", v[0], -8.0, 1.6, 30.0)
+		_wear()
+		return
+
+	var victim2 := _melee_target(v[0], v[1], float(stats.reach))
+	if victim2 != null:
+		_hit(victim2, float(stats.damage))
+		_wear()
+		return
+	if float(stats.wood) > 0.0:
+		var tid := trees.find_target(v[0], v[1], USE_REACH)
+		if tid >= 0:
+			if net.is_client():
+				audio.chop_at(trees.position_of(tid) + Vector3.UP * 1.2)
+			_act("chop", [tid, float(stats.wood)])
+			_wear()
+
+
+## Local feedback for a blow, then let the authority apply it.
+func _hit(victim: Node3D, damage: float) -> void:
+	audio.chop_at(victim.global_position + Vector3.UP * 0.8)
+	wildlife.impact_local(victim.global_position + Vector3.UP * 0.6)
+	_act("hit", [victim.net_id, damage])
+
+
+func _arrow_hit(target: Node3D, damage: float) -> void:
+	hud.toast("Hit!")
+	_act("hit", [target.net_id, damage])
+
+
+func _catch(f: Fish, bob: Vector3) -> void:
+	_act("catch", [f.net_id, bob])
+
+
+# --- the shared-world action layer --------------------------------------------
+
+## Change the shared world: straight away in single player or on the host,
+## via the host when we're a client.
+func _act(action: String, args: Array) -> void:
+	if net.is_client():
+		net.request(action, args)
+	else:
+		_do(net.my_id(), action, args)
+
+
+## Runs where the world is simulated. `peer` is who asked.
+func _do(peer: int, action: String, args: Array) -> void:
+	match action:
+		"rock":
+			var i: int = args[0]
+			if i < 0 or i >= rocks.taken.size() or rocks.taken[i] == 1:
+				return
+			rocks.take(i)
+			net.broadcast("rock_taken", [i])
+			_give(peer, "rock", 1, "Picked up a rock")
+		"tree_rock":
+			var id: int = args[0]
+			if not trees.trees[id].alive:
+				return
+			if trees.hit_with_rock(id, _rng):
+				_give(peer, "branch", 1, "A branch fell  (+1 branch)")
+			elif trees.branches_left(id) == 0:
+				_msg(peer, "No reachable branches left on this tree")
+		"chop":
+			var tid: int = args[0]
+			var from := net.position_of(peer)
+			if from == Vector3.INF or not trees.trees[tid].alive:
+				return
+			var logs := trees.chop(tid, float(args[1]), from)
+			if logs > 0:
+				_give(peer, "log", logs, "Timber!  (+%d logs)" % logs)
+		"hit":
+			var e := wildlife.find_entity(int(args[0]))
+			if e == null or e is Fish or not e.call("is_alive"):
+				return
+			_apply_hit(peer, e, float(args[1]))
+		"catch":
+			var f := wildlife.find_entity(int(args[0]))
+			if not (f is Fish):
+				_msg(peer, "It got away...")
+				return
+			var kind: String = f.kind
+			wildlife.catch_fish(f)
+			wildlife.splash(args[1])
+			_give(peer, "fish:" + kind, 1, "Caught a %s!" % kind)
+		"place":
+			var plan: Dictionary = args[0]
+			if build.slots.has(plan.key):
+				if peer != net.my_id() and not build.free_build:
+					var cost: Dictionary = BuildSystem.PIECES[plan.kind].cost
+					for k in cost:
+						_give(peer, k, int(cost[k]), "")
+				_msg(peer, "Someone already built there")
+				return
+			var s := build.spawn_piece(plan.kind, plan)
+			_msg(peer, "Built: %s" % BuildSystem.PIECES[s.kind].label)
+		"door":
+			var d: Structure = build.slots.get(args[0])
+			if d == null or not d.is_door:
+				return
+			d.set_open(not d.open)
+			audio.build_at(d.global_position)
+			net.broadcast("door", [d.slot_key, d.open])
+		"fuel":
+			var fire: Structure = build.slots.get(args[0])
+			if fire == null:
+				return
+			fire.add_fuel(float(args[1]))
+			net.broadcast("fuel", [fire.slot_key, fire.fuel])
+		"crate":
+			var c: Structure = build.slots.get(args[0])
+			if c == null:
+				return
+			if c.looted:
+				_msg(peer, "Empty")
+				return
+			var got := c.open_crate()
+			var parts := []
+			for e in got:
+				_give(peer, e[0], e[1], "")
+				parts.append(Items.label(e[0]) if Items.TOOLS.has(e[0]) else Items.count_label(e[0], e[1]))
+			audio.build_at(c.global_position)
+			net.broadcast("crate", [c.slot_key])
+			_msg(peer, "Found: " + (", ".join(parts) if not parts.is_empty() else "nothing"))
+		"repair":
+			var r: Structure = build.slots.get(args[0])
+			if r == null:
+				return
+			build.repair(r, float(args[1]))
+			_msg(peer, "Repaired  (%d%%)" % int(100.0 * r.hp / r.max_hp))
+
+
+func _apply_hit(peer: int, e: Node3D, damage: float) -> void:
+	var from := net.position_of(peer)
+	if from == Vector3.INF:
+		return
+	if e is Animal:
+		e.set_meta("player_hit", true)
+		e.set_meta("attacker_peer", peer)
+	if e is Bear:
+		e.set_meta("last_attacker", peer)
+		if peer == net.my_id():
+			_player_hit_bear = true
+	e.call("take_damage", damage, from)
+	if peer != net.my_id():
+		wildlife.impact_local(e.global_position + Vector3.UP * 0.6)
+
+
+## Hand a reward (or just a message) to whoever earned it.
+func _give(peer: int, item: String, n: int, msg: String) -> void:
+	if peer == net.my_id():
+		receive(item, n, msg)
+	else:
+		net.give(peer, item, n, msg)
+
+
+func _msg(peer: int, text: String) -> void:
+	_give(peer, "", 0, text)
+
+
+## Something arrived for this player (locally or from the host).
+func receive(item: String, n: int, msg: String) -> void:
+	if item.begins_with("fish:"):
+		player.add_fish(item.substr(5))
+	elif item != "":
+		player.add_item(item, n)
+	if msg != "":
+		hud.toast(msg)
+
+
+func _place_piece() -> void:
+	var plan := build.plan
+	if plan.is_empty() or not plan.ok:
+		if not plan.is_empty() and plan.reason != "":
+			hud.toast(plan.reason)
+		return
+	if not build.free_build:
+		var cost: Dictionary = BuildSystem.PIECES[plan.kind].cost
+		for k in cost:
+			player.inv[k] = int(player.inv.get(k, 0)) - int(cost[k])
+	build.plan = {}
+	_act("place", [plan])
+
+
 func _interact() -> void:
 	var v := _view()
 	var ri := rocks.find_target(v[0], v[1], USE_REACH)
 	if ri >= 0:
-		rocks.take(ri)
-		player.inv.rock += 1
-		hud.toast("Picked up a rock")
+		_act("rock", [ri])
 		return
 	var s := _structure_target()
 	if s != null:
 		if s.is_door:
-			s.set_open(not s.open)
-			audio.build_at(s.global_position)
+			_act("door", [s.slot_key])
 			return
 		match s.kind:
 			"campfire":
@@ -927,17 +1094,20 @@ func _interact() -> void:
 					hud.toast("Cooked %d %s over the fire" % [n, "item" if n == 1 else "items"])
 				elif int(player.inv.log) > 0:
 					player.inv.log -= 1
-					s.add_fuel(FUEL_LOG)
+					_act("fuel", [s.slot_key, FUEL_LOG])
 					hud.toast("Added a log to the fire")
 				elif int(player.inv.branch) > 0:
 					player.inv.branch -= 1
-					s.add_fuel(FUEL_BRANCH)
+					_act("fuel", [s.slot_key, FUEL_BRANCH])
 					hud.toast("Added a branch to the fire")
 				else:
 					hud.toast("You need branches or logs to fuel the fire")
 				return
 			"crate":
-				_loot(s)
+				if s.looted:
+					hud.toast("Empty")
+				else:
+					_act("crate", [s.slot_key])
 				return
 			"bedroll":
 				_try_sleep(s)
@@ -949,19 +1119,6 @@ func _interact() -> void:
 		return
 	if player.held == "rod":
 		player.rod.use()
-
-
-func _loot(s: Structure) -> void:
-	if s.looted:
-		hud.toast("Empty")
-		return
-	var got := s.open_crate()
-	var parts := []
-	for e in got:
-		player.add_item(e[0], e[1])
-		parts.append(Items.count_label(e[0], e[1]) if not Items.TOOLS.has(e[0]) else Items.label(e[0]))
-	audio.build_at(s.global_position)
-	hud.toast("Found: " + (", ".join(parts) if not parts.is_empty() else "nothing"))
 
 
 ## Night, under a roof, nothing hunting you: sleep until morning.
@@ -977,6 +1134,14 @@ func _try_sleep(bed: Structure) -> void:
 		if h.global_position.distance_to(player.global_position) < 40.0:
 			hud.toast("You can't sleep with danger this close")
 			return
+	if net.is_online() and net.player_count() > 1:
+		# The night can't be skipped for everyone; a rest still helps.
+		player.health = minf(player.health + 15.0, PlayerController.MAX_HEALTH)
+		player.warmth = PlayerController.MAX_WARMTH
+		player.bleeding = 0.0
+		hud.fade_sleep()
+		hud.toast("You rest a while. (Others are still awake, so the night goes on.)")
+		return
 	if tod_hours >= 20.0:
 		day += 1
 	tod_hours = SLEEP_WAKE_HOUR
@@ -997,21 +1162,21 @@ func _repair() -> void:
 	if s.hp >= s.max_hp:
 		hud.toast("%s is in good shape" % BuildSystem.PIECES[s.kind].label)
 		return
+	var amount := REPAIR_WOOD
 	if s.kind == "leanto" or s.kind == "bedroll":
 		if not build.free_build and int(player.inv.branch) < 2:
 			hud.toast("Need 2 branches to patch it")
 			return
 		if not build.free_build:
 			player.inv.branch -= 2
-		build.repair(s, REPAIR_BRANCH)
+		amount = REPAIR_BRANCH
 	else:
 		if not build.free_build and int(player.inv.plank) < 1:
 			hud.toast("Need a plank to repair it")
 			return
 		if not build.free_build:
 			player.inv.plank -= 1
-		build.repair(s, REPAIR_WOOD)
-	hud.toast("Repaired  (%d%%)" % int(100.0 * s.hp / s.max_hp))
+	_act("repair", [s.slot_key, amount])
 
 
 ## What the crosshair is on, for the prompt line.
@@ -1176,7 +1341,7 @@ func _process(delta: float) -> void:
 		_stat_timer = 0.2
 		_update_stats()
 
-	if wildlife.kills != _last_kills:
+	if wildlife.kills != _last_kills and Session.authority():
 		_last_kills = wildlife.kills
 		hud.toast("The bear brought down a %s" % wildlife.last_kill_label.to_lower())
 
@@ -1207,7 +1372,8 @@ func _update_warning() -> void:
 		hud.set_warning("")
 		return
 	var d := player.global_position.distance_to(bear.global_position)
-	if bear.target == player:
+	var hunting := wildlife.bear_hunting_peer(net.my_id()) if net.is_client() else bear.target == player
+	if hunting:
 		hud.set_warning("THE BEAR IS HUNTING YOU   %.0f m" % d)
 	elif d < 45.0:
 		hud.set_warning("You can hear the bear nearby")
@@ -1224,7 +1390,12 @@ func _update_stats() -> void:
 		lines += "fish caught: %d\n" % player.fish_caught
 		lines += "fish in lake: %d\n" % wildlife.fish_count()
 		lines += "best: %s" % (_fmt_time(best_time) if best_time > 0.0 else "-")
+		if net.is_online():
+			lines += "\n\n%d player%s online" % [net.player_count(), "" if net.player_count() == 1 else "s"]
+			for pid in net.peers:
+				lines += "\n" + str(net.peers[pid].name)
 		hud.set_stats(lines)
+		hud.set_net(net.status if net.is_online() else "")
 		return
 
 	var bear_state := "-"
@@ -1264,45 +1435,54 @@ func _on_player_ate(kind: String, got_sick: bool) -> void:
 
 
 func _hook_bear(b: Bear) -> void:
+	if b == null:
+		return
 	b.noticed_player.connect(_on_bear_noticed)
 	b.lost_player.connect(_on_bear_lost)
 	b.died.connect(_on_bear_died)
-	if b != wildlife.bear or survived > 1.0:
+	_bears_seen += 1
+	if _bears_seen > 1 and survival and not game_over:
+		hud.toast("You hear a new bear moving through the forest...")
+
+
+## Tell a particular player something about the bear.
+func _bear_msg(p: Node3D, text: String) -> void:
+	if p == player:
 		if survival and not game_over:
-			hud.toast("You hear a new bear moving through the forest...")
+			hud.toast(text)
+	elif p is RemotePlayer and net.is_host():
+		net.send_msg(p.peer_id, text)
 
 
-func _on_bear_died(_b: Bear) -> void:
-	if not survival or game_over:
-		return
-	if _player_hit_bear:
-		player.add_item("raw_meat", BEAR_MEAT)
-		hud.toast("You killed the bear!  (+%d raw meat)" % BEAR_MEAT)
+func _on_bear_noticed(p: Node3D) -> void:
+	_bear_msg(p, "The bear has caught your scent!")
+
+
+func _on_bear_lost(reason: String, p: Node3D) -> void:
+	match reason:
+		"water": _bear_msg(p, "The bear can't reach you out here")
+		"walls": _bear_msg(p, "The bear gave up on your walls")
+		"fled": _bear_msg(p, "The bear is running away!")
+		_: _bear_msg(p, "You lost the bear... for now")
+
+
+func _on_bear_died(b: Bear) -> void:
+	var peer := int(b.get_meta("last_attacker", 0))
+	if peer == 0 and _player_hit_bear:
+		peer = net.my_id()
 	_player_hit_bear = false
+	if peer != 0:
+		_give(peer, "raw_meat", BEAR_MEAT, "You killed the bear!  (+%d raw meat)" % BEAR_MEAT)
 
 
 func _on_player_killed_animal(a: Animal) -> void:
 	var n: int = MEAT.get(a.species, 1)
-	player.add_item("raw_meat", n)
-	hud.toast("You killed a %s  (+%d raw meat)" % [Species.get_cfg(a.species).label.to_lower(), n])
+	var peer := int(a.get_meta("attacker_peer", net.my_id()))
+	_give(peer, "raw_meat", n, "You killed a %s  (+%d raw meat)" % [Species.get_cfg(a.species).label.to_lower(), n])
 
 
 func _on_fish_caught(kind: String) -> void:
 	hud.toast("Caught a %s!" % kind)
-
-
-func _on_bear_noticed() -> void:
-	if survival and not game_over:
-		hud.toast("The bear has caught your scent!")
-
-
-func _on_bear_lost(reason: String) -> void:
-	if not survival or game_over:
-		return
-	if reason == "water":
-		hud.toast("The bear can't reach you out here")
-	else:
-		hud.toast("You lost the bear... for now")
 
 
 func _on_player_died(cause: String) -> void:
@@ -1326,10 +1506,24 @@ func _on_player_died(cause: String) -> void:
 	text += "Survived  %s   (day %d)\n" % [_fmt_time(survived), day]
 	text += "Fish caught  %d\n\n" % player.fish_caught
 	text += "NEW BEST TIME!\n\n" if record else "Best  %s\n\n" % _fmt_time(best_time)
-	text += "Press Enter to try again"
+	if net.is_online():
+		text += "Press Enter to respawn  (you lose what you were carrying)"
+	else:
+		text += "Press Enter to try again"
 	get_tree().create_timer(1.6).timeout.connect(func() -> void:
-		hud.show_game_over(text)
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE)
+		if game_over:
+			hud.show_game_over(text)
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE)
+
+
+## Online: back into the running world with empty pockets.
+func _respawn() -> void:
+	game_over = false
+	survived = 0.0
+	hud.game_over.visible = false
+	player.respawn_at(_shore_spawn())
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	hud.toast("You wake up by the lake with nothing but your rod.")
 
 
 func _load_best() -> void:
@@ -1344,3 +1538,110 @@ func _save_best() -> void:
 	cf.set_value("survival", "best_time", best_time)
 	cf.set_value("survival", "best_fish", best_fish)
 	cf.save(SAVE_PATH)
+
+
+# --- online: world state ------------------------------------------------------
+
+## Host: everything a player joining late needs to catch up.
+func snapshot_world() -> Dictionary:
+	var pieces := []
+	for s in build.structures:
+		pieces.append(BuildSystem.describe(s))
+	return {
+		"tod": tod_hours, "day": day, "raining": weather.raining,
+		"felled": trees.felled_ids(),
+		"rock_pos": rocks.positions, "rock_taken": rocks.taken,
+		"pieces": pieces,
+	}
+
+
+## Client: catch up with the host's world.
+func apply_world(state: Dictionary) -> void:
+	apply_env(state.tod, state.day, state.raining)
+	for id in state.felled:
+		trees.remove_felled(id)
+	var pos: PackedVector3Array = state.rock_pos
+	var taken: PackedByteArray = state.rock_taken
+	for i in mini(pos.size(), rocks.positions.size()):
+		if taken[i] == 1:
+			rocks.take(i)
+		elif pos[i] != rocks.positions[i]:
+			rocks.place_at(i, pos[i])
+	# Rebuild every piece from the host's copy, then re-link the ruins' crates
+	# (same keys on both machines, since ruins come from the shared seed).
+	var crate_keys := []
+	for site in ruins.sites:
+		var keys := []
+		for c in site.crates:
+			keys.append(c.slot_key)
+		crate_keys.append(keys)
+	build.clear_all()
+	for d in state.pieces:
+		build.spawn_described(d)
+	for i in ruins.sites.size():
+		var relinked: Array[Structure] = []
+		for k in crate_keys[i]:
+			if build.slots.has(k):
+				relinked.append(build.slots[k])
+		ruins.sites[i].crates = relinked
+
+
+func apply_env(tod: float, d: int, raining: bool) -> void:
+	tod_hours = tod
+	day = d
+	if raining != weather.raining:
+		if raining:
+			weather.start_rain()
+		else:
+			weather.stop_rain()
+
+
+## Client: the host says the world changed.
+func _on_net_event(event: String, args: Array) -> void:
+	match event:
+		"rock_taken":
+			rocks.take(args[0])
+		"rock_placed":
+			rocks.place_at(args[0], args[1])
+		"tree_felled":
+			trees.fell(args[0], args[1])
+		"piece":
+			build.spawn_described(args[0])
+		"piece_hp":
+			var s: Structure = build.slots.get(args[0])
+			if s != null:
+				s.hp = args[1]
+		"piece_removed":
+			var r: Structure = build.slots.get(args[0])
+			if r != null:
+				build.remove(r)
+		"door":
+			var d: Structure = build.slots.get(args[0])
+			if d != null and d.open != args[1]:
+				d.set_open(args[1])
+		"fuel":
+			var f: Structure = build.slots.get(args[0])
+			if f != null:
+				f.fuel = args[1]
+				f._update_fire()
+		"crate":
+			var c: Structure = build.slots.get(args[0])
+			if c != null:
+				c.open_crate()
+
+
+## Client: a sound or effect from the host's simulation.
+func _on_net_fx(kind: String, a: String, pos: Vector3) -> void:
+	match kind:
+		"voice":
+			var parts := a.split(":")
+			if parts.size() == 2:
+				audio.animal_voice(parts[0], parts[1], pos)
+		"bear":
+			audio.bear_voice(a, pos)
+		"rustle":
+			audio.rustle_at(pos)
+		"impact":
+			wildlife.impact_local(pos)
+		"splash":
+			wildlife.splash_local(pos)

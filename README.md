@@ -3,7 +3,15 @@
 A procedurally generated 3D open-world survival game for **Godot 4.7**: hills, a
 lake full of fish, a low-poly forest, native wildlife, and a brown bear that hunts
 anything it can hear or smell, including you. Gather, craft, build a cabin, search
-abandoned ruins for supplies and weapons, and see how long you last.
+abandoned ruins for supplies and weapons, and see how long you last, alone or
+online with friends.
+
+## Download and play
+
+Grab the latest Windows build from the
+[Releases page](../../releases/latest), unzip it anywhere and run
+`ForestWorld.exe`. No install needed. It needs a graphics card with Vulkan
+support (most from the last ~8 years).
 
 Everything is generated in code at startup, geometry *and* sound. There are no
 imported models, textures or audio files, so the project runs straight from a clone
@@ -13,7 +21,8 @@ imported models, textures or audio files, so the project runs straight from a cl
 
 Requires **Godot 4.7** (Forward+ / Vulkan). No add-ons, no downloads.
 
-Open `project.godot` in the Godot editor and press **F5**. That's it.
+Open `project.godot` in the Godot editor and press **F5**. The start menu offers
+single player, hosting and joining.
 
 To run from a terminal instead, a freshly cloned copy needs one import pass
 first. The `class_name` registry lives in the gitignored `.godot/` folder, so
@@ -28,6 +37,37 @@ After that, this launches it directly and every time after:
 ```bash
 godot --path .
 ```
+
+## Playing online with friends
+
+Up to 8 players can share one world. From the start menu:
+
+- **Host a game**: your copy of the game runs the world. The bottom-right corner
+  shows the address friends should use once it's ready.
+- **Join**: type the host's address (for example `203.0.113.5`, or
+  `203.0.113.5:24517` for a non-default port) and press Join.
+
+**Getting connected.** The game uses **UDP port 24517**.
+
+- **Same house / same Wi-Fi**: join with the host's local address (shown on the
+  host's screen, looks like `192.168.x.x`). Nothing else to set up.
+- **Over the internet**: when you host, the game asks your router to open the port
+  automatically (UPnP). If that works, the host's screen shows the public address to
+  share. If the router refuses, either forward UDP port 24517 to the host's PC in
+  your router settings, or have everyone install a free virtual-LAN tool such as
+  [Tailscale](https://tailscale.com) and join with the host's Tailscale address.
+- The first time you host, Windows may ask whether Forest World may use the
+  network; allow it on private networks.
+
+**What's shared:** the world itself. Wildlife, the bear, fish, weather and time of
+day come from the host, so everyone sees the same thing. Felled trees, picked-up
+rocks, buildings, doors, campfires and looted crates are shared too, including
+for players who join later. The bear hunts whoever it senses, and you can see each
+other walking around with name tags.
+
+**What's yours:** your own inventory, tools and vitals. If you die online you
+respawn by the lake with empty pockets while the world carries on. Sleeping can't
+skip the night while others are playing; it just gives you a rest.
 
 ## Playing
 
@@ -96,7 +136,8 @@ same pieces as your own buildings, so you can repair one into a base.
 | `T` | Toggle the day-night cycle |
 | `M` | Mute / unmute audio |
 | `H` | Cycle the HUD: compact → controls → hidden |
-| `P` | Switch to sandbox mode (and back, which restarts) |
+| `P` | Switch to sandbox mode (and back, which restarts); single player only |
+| `Enter` | After dying: try again (single player) / respawn (online) |
 | `Esc` | Release the mouse (click to recapture) |
 
 **Sandbox mode** (`P`) turns you into an invulnerable observer with free building.
@@ -152,8 +193,13 @@ the bear, splashes, chopping, falling trees, campfire crackle and your footsteps
 ## Source layout
 
 ```
+scenes/menu.tscn            start menu (menu.gd): single player / host / join
 scenes/main.tscn            empty Node3D + world.gd; everything else is built at runtime
-scripts/world.gd            orchestrator: world build, survival rules, input, crafting, interaction
+scripts/world.gd            orchestrator: world build, survival rules, input, crafting, interaction,
+                            and the shared-world action layer (_act / _do) used online
+scripts/session.gd          how the game was started (mode, address, name), saved settings
+scripts/net_sync.gd         online play: ENet host/join, UPnP, snapshots, requests, events
+scripts/remote_player.gd    other players as seen on your screen
 scripts/forest_terrain.gd   heightmap, colouring, mesh + collision, ground queries
 scripts/flora.gd            low-poly tree / bush / rock / grass mesh builders
 scripts/tree_registry.gd    per-tree state: branches, chopping, felling
@@ -198,6 +244,17 @@ Most of the feel lives in constants at the top of the relevant script:
 `WORLD_SEED` in `world.gd` regenerates the entire map: terrain, forest layout,
 ruins and spawn points are all derived from it.
 
+## Tests
+
+Headless playtests live in `tests/`. From the project folder:
+
+```bash
+godot --path . --headless --fixed-fps 60 -s tests/survival_test.gd
+```
+
+`build_test.gd` and `loot_test.gd` run the same way. The multiplayer pair needs two
+terminals: start `tests/mp_host.gd` first, then `tests/mp_client.gd`.
+
 ## Known limitations
 
 - Animals and the bear move kinematically over the heightmap rather than through
@@ -206,6 +263,8 @@ ruins and spawn points are all derived from it.
   an open door.
 - Corpses fade out on a timer rather than being eaten away.
 - The synthesised audio is deliberately stylised.
+- Online play has no host migration: when the host quits, the game ends for
+  everyone. There's no server browser; you share the host's address yourself.
 - Forward+ only. A web export would need the Compatibility renderer, which has no
   volumetric fog, no SSAO, no depth texture (the lake shader needs it) and no GPU
   particle collision (the rain needs it).

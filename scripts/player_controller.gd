@@ -114,6 +114,7 @@ const HEAD_CROUCH := 1.0
 
 
 func _ready() -> void:
+	add_to_group("players")
 	var shape := CollisionShape3D.new()
 	var cap := CapsuleShape3D.new()
 	cap.radius = 0.4
@@ -318,6 +319,33 @@ func take_damage(amount: float, from: Vector3) -> void:
 	hurt.emit(amount)
 	if health <= 0.0:
 		_die("bear")
+
+
+## Online respawn: fresh vitals, empty pockets.
+func respawn_at(pos: Vector3) -> void:
+	alive = true
+	health = MAX_HEALTH
+	stamina = MAX_STAMINA
+	hunger = MAX_HUNGER
+	thirst = MAX_THIRST
+	warmth = MAX_WARMTH
+	bleeding = 0.0
+	sick = 0.0
+	water_sips = 0
+	exhausted = false
+	for k in inv:
+		inv[k] = 0
+	tools.clear()
+	held = "rod"
+	hand.show_item("")
+	death_cause = ""
+	_death_t = 0.0
+	pitch = 0.0
+	_head_y = HEAD_STAND
+	head.position.y = HEAD_STAND
+	head.rotation = Vector3.ZERO
+	velocity = Vector3.ZERO
+	global_position = pos
 
 
 func _die(cause: String) -> void:

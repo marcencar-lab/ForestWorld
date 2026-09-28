@@ -9,7 +9,11 @@ const COUNT := 320
 const NEAR_SPAWN := 10          # guaranteed within easy reach of the start
 const RESPAWN_TIME := 90.0
 
+signal respawned(index, pos)
+
 var terrain: ForestTerrain
+## Only the host (or single player) decides where rocks reappear.
+var authority := true
 var mm: MultiMesh
 var positions := PackedVector3Array()
 var taken := PackedByteArray()
@@ -96,7 +100,13 @@ func take(i: int) -> void:
 		return
 	taken[i] = 1
 	mm.set_instance_transform(i, Transform3D(Basis().scaled(Vector3.ONE * 0.0001), positions[i]))
-	_respawn.append([i, RESPAWN_TIME])
+	if authority:
+		_respawn.append([i, RESPAWN_TIME])
+
+
+## Put a stone back (the host told us where).
+func place_at(i: int, p: Vector3) -> void:
+	_place(i, p)
 
 
 func available() -> int:
@@ -110,4 +120,5 @@ func _process(delta: float) -> void:
 			var p := terrain.random_walkable_point(_rng, 30)
 			if p != Vector3.ZERO:
 				_place(_respawn[k][0], p)
+				respawned.emit(_respawn[k][0], p)
 			_respawn.remove_at(k)

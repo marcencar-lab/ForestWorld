@@ -9,8 +9,8 @@ enum State { PATROL, STALK, CHASE, ATTACK, FEED, ROAR, FLEE, DEAD }
 
 signal struck(victim, at)
 signal made_kill(victim)
-signal noticed_player
-signal lost_player(reason)
+signal noticed_player(player)
+signal lost_player(reason, player)
 signal hurt(amount)
 signal died(bear)
 
@@ -50,6 +50,11 @@ var terrain: ForestTerrain
 var manager: WildlifeManager
 
 var state: int = State.PATROL
+var net_id := 0
+## Mirrors the host's bear instead of thinking for itself (online clients).
+var puppet := false
+var _net_pos := Vector3.ZERO
+var _net_yaw := 0.0
 ## An Animal or the PlayerController - anything with is_alive() / take_damage().
 var target: Node3D = null
 var _ignore_player_t := 0.0
@@ -106,6 +111,7 @@ func setup(t: ForestTerrain, m: WildlifeManager, spawn: Vector3) -> void:
 
 	position = spawn
 	_ground_y = spawn.y
+	_net_pos = spawn
 	move_target = spawn
 
 
@@ -142,17 +148,17 @@ func take_damage(amount: float, from: Vector3) -> void:
 		return
 	manager.bear_voice("growl", global_position)
 	# Provoked: turn on whoever hit it if that's the player.
-	var p: PlayerController = manager.player
-	if p != null and p.alive and from.distance_to(p.global_position) < 40.0 and not _hunting_player():
+	var p: Node3D = manager.nearest_player(from, 40.0)
+	if p != null and not _hunting_player():
 		_ignore_player_t = 0.0
 		target = p
-		noticed_player.emit()
+		noticed_player.emit(p)
 		if state == State.FEED or state == State.PATROL or state == State.ROAR:
 			state = State.CHASE
 
 
 func _start_flee(from: Vector3) -> void:
-	var was_player := _hunting_player()
+	var was: Node3D = target if _hunting_player() else null
 	state = State.FLEE
 	_flee_t = FLEE_TIME
 	_ignore_player_t = FLEE_IGNORE
@@ -167,8 +173,8 @@ func _start_flee(from: Vector3) -> void:
 	dest.z = clampf(dest.z, -ForestTerrain.PLAY_BOUND, ForestTerrain.PLAY_BOUND)
 	move_target = dest
 	manager.bear_voice("roar", global_position)
-	if was_player:
-		lost_player.emit("fled")
+	if was != null:
+		lost_player.emit("fled", was)
 
 
 func _die() -> void:
@@ -186,11 +192,42 @@ func _physics_process(delta: float) -> void:
 	if state == State.DEAD:
 		_death_anim(delta)
 		return
+	if puppet:
+		_puppet_step(delta)
+		return
 	_cooldown = maxf(_cooldown - delta, 0.0)
 	if state != State.FLEE and not _hunting_player():
 		health = minf(health + HEAL_RATE * delta, max_health)
 	_think(delta)
 	_move(delta)
+	_animate(delta)
+
+
+func net_update(pos: Vector3, yaw: float, st: int) -> void:
+	_net_pos = pos
+	_net_yaw = yaw
+	if st == state:
+		return
+	if st == State.ATTACK:
+		_attack_t = 0.0
+	elif st == State.ROAR:
+		_roar_t = 0.0
+	elif st == State.DEAD:
+		_death_t = 0.0
+		remove_from_group("hostile")
+	state = st
+
+
+func _puppet_step(delta: float) -> void:
+	var prev := global_position
+	var k := clampf(delta * 10.0, 0.0, 1.0)
+	global_position = global_position.lerp(_net_pos, k)
+	rotation.y = lerp_angle(rotation.y, _net_yaw, k)
+	var v := (global_position - prev) / maxf(delta, 0.0001)
+	v.y = 0.0
+	velocity = velocity.lerp(v, 0.3)
+	if state == State.ATTACK:
+		_attack_t = minf(_attack_t + delta, 0.75)
 	_animate(delta)
 
 
@@ -319,12 +356,13 @@ func _wall_toward_player(delta: float) -> bool:
 		_frustration = 0.0
 		_ignore_player_t = WALLED_OUT_IGNORE
 		_clawing = false
+		var was: Node3D = target
 		target = null
 		state = State.ROAR
 		_state_timer = 2.2
 		_roar_t = 0.0
 		manager.bear_voice("roar", global_position)
-		lost_player.emit("walls")
+		lost_player.emit("walls", was)
 		return true
 	if wall.path_distance(me, me) <= WALL_REACH:
 		if _cooldown <= 0.0:
@@ -345,43 +383,51 @@ static func _alive(n: Node3D) -> bool:
 
 
 func _hunting_player() -> bool:
-	return target != null and manager.player != null and target == manager.player
+	return target != null and is_instance_valid(target) and target.is_in_group("players")
 
 
-## Nearest animal, unless the player is close and loud enough to be worth it.
+## Nearest animal, unless a player is close and loud enough to be worth it.
 func _choose_target() -> void:
-	var was_player := _hunting_player()
+	var was: Node3D = target if _hunting_player() else null
 	var pick: Node3D = manager.nearest_prey(global_position, HUNT_RADIUS)
-	var pd := _player_distance(was_player)
-	if pd < INF:
-		var prey_d := INF
-		if pick != null:
-			prey_d = global_position.distance_to(pick.global_position)
-		# Once committed to the player it takes a much easier meal to distract it.
-		var pref := PLAYER_PREFERENCE * (2.5 if was_player else 1.0)
-		if pd < prey_d * pref:
-			pick = manager.player
+	var prey_d := INF
+	if pick != null:
+		prey_d = global_position.distance_to(pick.global_position)
+	var best_p: Node3D = null
+	var best_d := INF
+	var block := ""
+	for p in manager.players():
+		var d := _player_distance(p, p == was)
+		if p == was:
+			block = _player_block
+		if d < best_d:
+			best_d = d
+			best_p = p
+	if best_p != null:
+		# Once committed to a player it takes a much easier meal to distract it.
+		var pref := PLAYER_PREFERENCE * (2.5 if was != null else 1.0)
+		if best_d < prey_d * pref:
+			pick = best_p
 
 	if pick == target:
 		return
 	target = pick
 	if _hunting_player():
-		noticed_player.emit()
+		noticed_player.emit(target)
 		manager.bear_voice("roar", global_position)
-	elif was_player:
-		if _player_block == "water":
+	if was != null and target != was:
+		if block == "water":
 			# Pace the shoreline for a while rather than instantly re-locking.
 			_ignore_player_t = GIVE_UP_TIME
 			manager.bear_voice("roar", global_position)
-		lost_player.emit(_player_block)
+		lost_player.emit(block, was)
 
 
-## Distance to the player if the bear can sense and reach them, else INF.
+## Distance to a player if the bear can sense and reach them, else INF.
 ## Leaves the reason in _player_block when the player is out of reach.
-func _player_distance(tracking: bool) -> float:
+func _player_distance(p: Node3D, tracking: bool) -> float:
 	_player_block = ""
-	var p: PlayerController = manager.player
-	if p == null or not p.alive or p.god_mode:
+	if p == null or not is_instance_valid(p) or not p.alive or p.god_mode:
 		return INF
 	var pos := p.global_position
 	if not terrain.is_land(pos.x, pos.z, -WADE_DEPTH):
@@ -390,7 +436,7 @@ func _player_distance(tracking: bool) -> float:
 	if _ignore_player_t > 0.0:
 		return INF
 	var d := global_position.distance_to(pos)
-	var radius := PLAYER_DETECT * p.noise_level() + p.scent_bonus()
+	var radius: float = PLAYER_DETECT * p.noise_level() + p.scent_bonus()
 	if tracking:
 		radius *= PLAYER_TRACK
 	if d > radius:

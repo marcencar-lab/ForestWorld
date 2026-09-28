@@ -11,6 +11,8 @@ var cell := Vector2i.ZERO
 var base_y := 0.0
 var hp := 100.0
 var max_hp := 100.0
+var ruined := false
+var seg_ab: Array = []           # the [a, b] edge a wall or door was built on
 
 ## Wall segments in world XZ: [a: Vector2, b: Vector2, closes_with_door: bool]
 var segments: Array = []

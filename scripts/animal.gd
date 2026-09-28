@@ -12,6 +12,11 @@ enum State { IDLE, WANDER, FLEE, DEAD }
 signal died(animal)
 
 var species := "deer"
+var net_id := 0
+## Mirrors the host's copy instead of thinking for itself (online clients).
+var puppet := false
+var _net_pos := Vector3.ZERO
+var _net_yaw := 0.0
 var cfg: Dictionary
 var terrain: ForestTerrain
 var manager: WildlifeManager
@@ -71,17 +76,47 @@ func setup(species_name: String, t: ForestTerrain, m: WildlifeManager, spawn: Ve
 
 	position = spawn
 	_ground_y = spawn.y
+	_net_pos = spawn
 	rotation.y = _rng.randf_range(0.0, TAU)
 	_pick_wander_target()
 	_state_timer = _rng.randf_range(0.0, 3.0)
 
 
 func _physics_process(delta: float) -> void:
+	if puppet:
+		_puppet_step(delta)
+		return
 	if not alive:
 		_death_anim(delta)
 		return
 	_think(delta)
 	_move(delta)
+	_animate(delta)
+
+
+func net_update(pos: Vector3, yaw: float, st: int, dead: bool) -> void:
+	_net_pos = pos
+	_net_yaw = yaw
+	if dead:
+		if alive:
+			alive = false
+			state = State.DEAD
+			_death_t = 0.0
+	else:
+		state = st
+
+
+func _puppet_step(delta: float) -> void:
+	if not alive:
+		_death_anim(delta)
+		return
+	var prev := global_position
+	var k := clampf(delta * 10.0, 0.0, 1.0)
+	global_position = global_position.lerp(_net_pos, k)
+	rotation.y = lerp_angle(rotation.y, _net_yaw, k)
+	var v := (global_position - prev) / maxf(delta, 0.0001)
+	v.y = 0.0
+	velocity = velocity.lerp(v, 0.3)
 	_animate(delta)
 
 
