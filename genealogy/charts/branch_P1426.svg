@@ -8,7 +8,7 @@ svg.gchart{font-family:'DejaVu Sans','Noto Sans',Arial,sans-serif;--ink:#1d1b17;
 .g0,.g1{fill:var(--acc)}.gen{font-size:9px;fill:var(--acc)}
 </style>
 <text x="12" y="24" class="h ink">Branch: Sotero Valiente Muñasque (G2) and descendants to G4</text>
-<text x="12" y="40" class="cap">137 recorded descendants in this branch; boxes list spouse(s) and residence where the branch sheets give one. Dashed boxes/lines = low-confidence placement. Deeper generations: use the explorer.</text>
+<text x="12" y="40" class="cap">140 recorded descendants in this branch; boxes list spouse(s) and residence where the branch sheets give one. Dashed boxes/lines = low-confidence placement. Deeper generations: use the explorer.</text>
 <rect x="2007.6" y="50" width="168.4" height="40" rx="3" class="box"/>
 <text x="2091.8" y="64" text-anchor="middle" class="t ink">Sotero Valiente Muñasque</text>
 <text x="2091.8" y="78" text-anchor="middle" class="s sp">⚭ Sebirina Ynot</text>
@@ -28,7 +28,7 @@ svg.gchart{font-family:'DejaVu Sans','Noto Sans',Arial,sans-serif;--ink:#1d1b17;
 <rect x="173.0" y="218" width="161.8" height="52" rx="3" class="box"/>
 <text x="253.9" y="232" text-anchor="middle" class="t ink">Antonio N. Muñasque Sr.</text>
 <text x="253.9" y="246" text-anchor="middle" class="s sp">⚭ Dominga Abella</text>
-<text x="253.9" y="258" text-anchor="middle" class="s cap">+32 more below (see explorer)</text>
+<text x="253.9" y="258" text-anchor="middle" class="s cap">+35 more below (see explorer)</text>
 <text x="176.0" y="267" class="gen">G4</text>
 <path d="M973.5 174 V196.0 H419.8 V218" class="edge"/>
 <rect x="348.8" y="218" width="142.0" height="52" rx="3" class="box"/>

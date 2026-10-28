@@ -1484,12 +1484,12 @@ P1482,Thiarra L. Muñasque,Thiarra,L.,Muñasque,,,,7,sibling by colour level,per
 P1483,Eduardo A. Muñasque,Eduardo,A.,Muñasque,,,,5,sibling by colour level,person,P1444,P1445,P1484,P1485,,,,,1587,EDUARDO A. MUÑASQUE,,S1,moderate
 P1484,Chona Deloso,Chona,,Deloso,,,,5,spouse,spouse,,,P1483,P1485,,,,,1588,CHONA DELOSO,,S1,moderate
 P1485,Ed Christian D. Muñasque,Ed,Christian D.,Muñasque,,,,6,no colour; inferred child,person,P1483,P1484,,,,,,,1589,ED CHRISTIAN D. MUÑASQUE,no colour information; placed as child by position,S1,low
-P1486,Rosalia A. Muñasque,Rosalia,A.,Muñasque,,,,5,sibling by colour level,person,P1444,P1445,P1487,P1488,,,,,1591,ROSALIA A. MUÑASQUE,,S1,moderate
-P1487,Teotimo Rosalejos,Teotimo,,Rosalejos,,,,5,spouse,spouse,,,P1486,P1488,,,,,1592,TEOTIMO ROSALEJOS,,S1,moderate
-P1488,Cyril M. Ochotorena,Cyril,M.,Ochotorena,,,,6,colour depth,person,P1486,P1487,P1489|P1490|P1491,,,,,,1593,CYRIL M. OCHOTORENA,"name check surname-mismatch: child ""Cyril M. Ochotorena"" under Rosalia A. Muñasque & Teotimo Rosalejos",S1,low
-P1489,Jona Girl Muñasque,Jona,Girl,Muñasque,,,,6,spouse,spouse,,,P1488,,,,,,1594,JONA GIRL MUÑASQUE,,S1,moderate
-P1490,Rustom M. Rosalejos,Rustom,M.,Rosalejos,,,,6,spouse,spouse,,,P1488,,,,,,1595,RUSTOM M. ROSALEJOS,,S1,moderate
-P1491,Resty M. Rosalejos,Resty,M.,Rosalejos,,,,6,spouse,spouse,,,P1488,,,,,,1596,RESTY M. ROSALEJOS,,S1,moderate
+P1486,Rosalia A. Muñasque,Rosalia,A.,Muñasque,,,,5,sibling by colour level,person,P1444,P1445,P1487,P1488|P1489|P1490|P1491,,,,,1591,ROSALIA A. MUÑASQUE,,S1,moderate
+P1487,Teotimo Rosalejos,Teotimo,,Rosalejos,,,,5,spouse,spouse,,,P1486,P1488|P1489|P1490|P1491,,,,,1592,TEOTIMO ROSALEJOS,,S1,moderate
+P1488,Cyril M. Ochotorena,Cyril,M.,Ochotorena,,,,6,colour depth,person,P1486,P1487,,,,,,,1593,CYRIL M. OCHOTORENA,"name check surname-mismatch: child ""Cyril M. Ochotorena"" under Rosalia A. Muñasque & Teotimo Rosalejos",S1,low
+P1489,Jona Girl Muñasque,Jona,Girl,Muñasque,,,,6,"override: 'Jona Girl Muñasque': child of Rosalia A. Muñasque registered under the mother's name, not a spouse of Cyril",person,P1486,P1487,,,,,,,1594,JONA GIRL MUÑASQUE,"override: 'Jona Girl Muñasque': child of Rosalia A. Muñasque registered under the mother's name, not a spouse of Cyril",S1,low
+P1490,Rustom M. Rosalejos,Rustom,M.,Rosalejos,,,,6,override: 'Rustom M. Rosalejos': M. = Muñasque; child of Rosalia A. Muñasque & Teotimo Rosalejos,person,P1487,P1486,,,,,,,1595,RUSTOM M. ROSALEJOS,override: 'Rustom M. Rosalejos': M. = Muñasque; child of Rosalia A. Muñasque & Teotimo Rosalejos,S1,low
+P1491,Resty M. Rosalejos,Resty,M.,Rosalejos,,,,6,override: 'Resty M. Rosalejos': child of Rosalia A. Muñasque & Teotimo Rosalejos,person,P1487,P1486,,,,,,,1596,RESTY M. ROSALEJOS,override: 'Resty M. Rosalejos': child of Rosalia A. Muñasque & Teotimo Rosalejos,S1,low
 P1492,Zacarias N. Muñasque,Zacarias,N.,Muñasque,,,,4,sibling by colour level,person,P1428,P1429,P1493,P1494|P1495|P1496|P1498,,,,4,1598,ZACARIAS N. MUÑASQUE,,S1,moderate
 P1493,Remedios Dequiña,Remedios,,Dequiña,,,,4,spouse,spouse,,,P1492,P1494|P1495|P1496|P1498,,,,,1599,REMEDIOS DEQUIÑA,,S1,moderate
 P1494,Dominic D. Muñasque,Dominic,D.,Muñasque,,,,5,colour depth,person,P1492,P1493,,,,,,5,1600,DOMINIC D. MUÑASQUE,,S1,moderate

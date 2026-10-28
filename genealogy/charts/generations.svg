@@ -13,12 +13,12 @@ svg.gchart{font-family:'DejaVu Sans','Noto Sans',Arial,sans-serif;--ink:#1d1b17;
 <rect x="50" y="237.5" width="44" height="0.0" fill="var(--edge)" rx="2"/>
 <text x="72.0" y="233.5" text-anchor="middle" class="s ink">2+0</text>
 <text x="72.0" y="254" text-anchor="middle" class="s ink">G0</text>
-<text x="72.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 1790–1815</text>
+<text x="72.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 1795–1815</text>
 <rect x="102" y="239.8" width="44" height="0.2" fill="var(--acc)" rx="2"/>
 <rect x="102" y="237.5" width="44" height="0.2" fill="var(--edge)" rx="2"/>
 <text x="124.0" y="233.5" text-anchor="middle" class="s ink">1+1</text>
 <text x="124.0" y="254" text-anchor="middle" class="s ink">G1</text>
-<text x="124.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 1820–1835</text>
+<text x="124.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 1825–1835</text>
 <rect x="154" y="237.8" width="44" height="2.2" fill="var(--acc)" rx="2"/>
 <rect x="154" y="232.9" width="44" height="2.9" fill="var(--edge)" rx="2"/>
 <text x="176.0" y="228.9" text-anchor="middle" class="s ink">9+12</text>
@@ -39,9 +39,9 @@ svg.gchart{font-family:'DejaVu Sans','Noto Sans',Arial,sans-serif;--ink:#1d1b17;
 <text x="332.0" y="64.0" text-anchor="middle" class="s ink">524+178</text>
 <text x="332.0" y="254" text-anchor="middle" class="s ink">G5</text>
 <text x="332.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 1930–1970</text>
-<rect x="362" y="151.4" width="44" height="88.6" fill="var(--acc)" rx="2"/>
-<rect x="362" y="134.1" width="44" height="15.3" fill="var(--edge)" rx="2"/>
-<text x="384.0" y="130.1" text-anchor="middle" class="s ink">366+63</text>
+<rect x="362" y="150.6" width="44" height="89.4" fill="var(--acc)" rx="2"/>
+<rect x="362" y="134.1" width="44" height="14.5" fill="var(--edge)" rx="2"/>
+<text x="384.0" y="130.1" text-anchor="middle" class="s ink">369+60</text>
 <text x="384.0" y="254" text-anchor="middle" class="s ink">G6</text>
 <text x="384.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 1955–1995</text>
 <rect x="414" y="213.1" width="44" height="26.9" fill="var(--acc)" rx="2"/>

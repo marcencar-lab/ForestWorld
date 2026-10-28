@@ -1486,9 +1486,9 @@ R1484,P1483,P1485,parent-child,FERNANDO!A1589 (no colour; inferred child),ok,mod
 R1485,P1444,P1486,parent-child,FERNANDO!A1591 (sibling by colour level),ok,moderate
 R1486,P1486,P1487,spouse,"FERNANDO!A1592; same colour level, indented/unrelated surname",,moderate
 R1487,P1486,P1488,parent-child,FERNANDO!A1593 (colour depth),surname-mismatch,low
-R1488,P1488,P1489,spouse,"FERNANDO!A1594; same colour level, indented/unrelated surname",,moderate
-R1489,P1488,P1490,spouse,"FERNANDO!A1595; same colour level, indented/unrelated surname",,moderate
-R1490,P1488,P1491,spouse,"FERNANDO!A1596; same colour level, indented/unrelated surname",,moderate
+R1488,P1486,P1489,parent-child,"FERNANDO!A1594 (override: 'Jona Girl Muñasque': child of Rosalia A. Muñasque registered under the mother's name, not a spouse of Cyril)",n/a,low
+R1489,P1487,P1490,parent-child,FERNANDO!A1595 (override: 'Rustom M. Rosalejos': M. = Muñasque; child of Rosalia A. Muñasque & Teotimo Rosalejos),ok,moderate
+R1490,P1487,P1491,parent-child,FERNANDO!A1596 (override: 'Resty M. Rosalejos': child of Rosalia A. Muñasque & Teotimo Rosalejos),ok,moderate
 R1491,P1428,P1492,parent-child,FERNANDO!A1598 (sibling by colour level),ok,moderate
 R1492,P1492,P1493,spouse,"FERNANDO!A1599; same colour level, indented/unrelated surname",,moderate
 R1493,P1492,P1494,parent-child,FERNANDO!A1600 (colour depth),ok,moderate

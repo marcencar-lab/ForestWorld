@@ -51,3 +51,37 @@ Limitation: in this session almost every record website could not be opened (Fam
 4. Salimbangon marriage in Medellin; Benhur's official profile.
 5. Diocese of Marbel / CFI Cotabato files for the Nuñeza brothers; UCCP archives for Sulpicio.
 6. Ask the compiler for the 1857/1940 sources, colour conventions and each person's sex.
+
+## 2026-10-28 (session 2: second research round, verification, print and archive)
+
+### Research round 2 (three parallel agents, ~350 queries; page fetches still blocked except GitHub)
+| Question | Result |
+|---|---|
+| Photographs of family members | None reusable found. Benhur: obituary portrait (family copyright, Inquirer) and a 2016 Senate photo release (government work). Janice: 2022 official House portrait (Wikipedia). Mariquita, Milagros: society-page photos (copyright). Nothing for Fr. Rosalio, Atty. Benjamin, Sulpicio, Atty. Marnito Cosep. |
+| Historical images of Opon | Ortigas Foundation Library (Opon pier/church 1930s, ferry landing, Magellan monument 1915–19), Filipinas Heritage Library (Osmeña Gate 1914, Spanish gate c. 1915), USC/Calisphere lantern slides (Opon 1933; Curva, Medellin 1932), US Navy Opon airfield 1945. All permission-required except the US Navy photo; none downloadable here. |
+| Historical maps | Atlas de Filipinas 1899/1900 (Cebu plate with Mactan inset; Mindanao plates) on Commons/Rumsey, public domain. |
+| 1849 Catálogo | Open transcription (ruzcko/catalogo-1849, GitHub) opened and searched here: no "Muñasque", but p. 87 col. 6 row 60 reads "monasque/moñasque" between "monasca" and "moñascas". Umpad, Ynot, Pino, Valiente, Fernan, Dequiña, Olavides, Acaso present; Cosip, Gusat, Salimbangon, Patalinghug absent. Needs scan check. |
+| Gabriel Munasque | SCIPSI General Manager, G.R. 235569 (2023); probable match to Gabriel "Bob" D. Muñasque. |
+| Martin Salimbangon | Middle initial M. (school name); Curva barrio 1961; Mariquita married Carlos Yeung 1978. |
+| Ruel/Rowil Munasque | UCCP youth leader, Zamboanga del Sur, Amnesty 2007; possibly Rowel E. Muñasque (unproven). |
+| Milagros Lago | 2013 column names five children with spouses; death notice not found. |
+| Benhur official profile, House resolution, Diocese of Marbel necrology, UCCP Lanao histories | Not found. |
+
+### Fact-check of 17 dated statements
+8 verified, 6 partly (corrected), 3 not re-found (blocked hosts). Corrections applied: Glan founded 1914 (not surveyed 1912); Benjamin N. Muñasque's case is A.M. No. P-145 (31 Oct 1974), P-227 was his own complaint; Elmo Muñasque's contract date unconfirmed (cheque 9 Jan 1967); "American military rule reimposed 17 Jul 1901"; NLSA settlers landed 27 Feb 1939, eight (not ten) days before Sulpicio arrived, and before CA 441 (3 Jun 1939) chartered the NLSA; Fernando's birth estimate narrowed to c. 1825–1835 using 1903 marriage-age data. Full table: research/agent6_factcheck.md.
+
+### Automated verification (scripts/validate.py)
+0 structural errors; all 1,794 name rows accounted for (8 duplicates dropped); spouse pairs at equal generation; no cycles; 977 branch-sheet names all inside their expected branch. Fixed: three of Rosalia A. Muñasque's children mis-read as spouses of Cyril M. Ochotorena; "Lourdes Salili" entered twice (logged).
+
+### Deliverables added
+- Printable PDF (A4, 52 pages) with numbered descendant register.
+- Family Archive page (artifact with upload capability; db collection "contributions" verified empty after publish).
+- Report page republished with the corrections.
+
+### Not done
+- AI illustrations via Higgsfield: the account's unlimited allowance did not cover any image model from this session (gpt_image_2 and nano_banana_pro both refused "unlimited"); credits were not spent without the user's decision. Cost quoted: 2 credits per image at medium quality.
+
+### Open questions carried forward
+1. Verify "Moñasque" on the 1849 catalogue scan (Google Books p. 87 / Issuu p. 121).
+2. Opon parish registers on FamilySearch (5000324) for 1850–1860 baptisms carrying the new surname, and for Emiliano (1857) and Fernando.
+3. Obtain photographs: Salimbangon family, Ortigas/FHL/USC reproductions, Diocese of Marbel, UCCP South Cotabato.

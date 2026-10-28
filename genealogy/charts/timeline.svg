@@ -33,15 +33,15 @@ svg.gchart{font-family:'DejaVu Sans','Noto Sans',Arial,sans-serif;--ink:#1d1b17;
 <line x1="129.0" y1="52" x2="129.0" y2="96" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
 <circle cx="129.0" cy="96" r="4.5" fill="var(--acc2)"/>
 <text x="138.0" y="100" class="s ink"><tspan font-weight="bold">1857</tspan> Emiliano Valiente Muñasque born, 20 May <tspan class="cap">[S1]</tspan></text>
-<line x1="330.6" y1="52" x2="330.6" y2="122" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
-<circle cx="330.6" cy="122" r="4.5" fill="var(--acc)"/>
-<text x="339.6" y="126" class="s ink"><tspan font-weight="bold">1898</tspan> Spanish rule ends; US control of Cebu restored by 1901 <tspan class="cap">[S38]</tspan></text>
+<line x1="345.4" y1="52" x2="345.4" y2="122" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
+<circle cx="345.4" cy="122" r="4.5" fill="var(--acc)"/>
+<text x="354.4" y="126" class="s ink"><tspan font-weight="bold">1901</tspan> American military rule reimposed over Cebu, 17 Jul; Opon&#x27;s first municipal election 1905 <tspan class="cap">[S38]</tspan></text>
 <line x1="355.2" y1="52" x2="355.2" y2="148" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
 <circle cx="355.2" cy="148" r="4.5" fill="var(--acc)"/>
 <text x="364.2" y="152" class="s ink"><tspan font-weight="bold">1903</tspan> First US census: Opon 14,851 people <tspan class="cap">[S37]</tspan></text>
 <line x1="404.4" y1="52" x2="404.4" y2="174" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
 <circle cx="404.4" cy="174" r="4.5" fill="var(--acc)"/>
-<text x="413.4" y="178" class="s ink"><tspan font-weight="bold">1913</tspan> Government agricultural colonies in Cotabato (Pikit, Glan) settled largely by Cebuanos <tspan class="cap">[S39]</tspan></text>
+<text x="413.4" y="178" class="s ink"><tspan font-weight="bold">1913</tspan> Cebuano colonists found Pikit, Cotabato (17 Jun); Glan (Colony No. 9) follows in 1914 <tspan class="cap">[S39]</tspan></text>
 <line x1="414.2" y1="52" x2="414.2" y2="200" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
 <circle cx="414.2" cy="200" r="4.5" fill="var(--acc2)"/>
 <text x="423.2" y="204" class="s ink"><tspan font-weight="bold">1915</tspan> Milagros Lago (later Salimbangon) born, 8 Sep 1915/16 <tspan class="cap">[S16; S17]</tspan></text>
@@ -53,25 +53,25 @@ svg.gchart{font-family:'DejaVu Sans','Noto Sans',Arial,sans-serif;--ink:#1d1b17;
 <text x="497.0" y="256" class="s ink"><tspan font-weight="bold">1930</tspan> Civil Registry Law (Act 3753) creates municipal civil registers <tspan class="cap">[S42]</tspan></text>
 <line x1="532.2" y1="52" x2="532.2" y2="278" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
 <circle cx="532.2" cy="278" r="4.5" fill="var(--acc2)"/>
-<text x="541.2" y="282" class="s ink"><tspan font-weight="bold">1939</tspan> Sulpicio Y. Muñasque reaches Dadiangas (Gen. Santos) from Lala, Lanao del Norte, 7 Mar; NLSA settlement begins <tspan class="cap">[S29; S40]</tspan></text>
+<text x="541.2" y="282" class="s ink"><tspan font-weight="bold">1939</tspan> First NLSA settlers land at Sarangani Bay 27 Feb; Sulpicio Y. Muñasque reaches Dadiangas from Lala 7 Mar <tspan class="cap">[S40; S29]</tspan></text>
 <line x1="537.1" y1="52" x2="537.1" y2="304" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
 <circle cx="537.1" cy="304" r="4.5" fill="var(--acc2)"/>
 <text x="546.1" y="308" class="s ink"><tspan font-weight="bold">1940</tspan> Emiliano Valiente Muñasque dies, 19 Feb, aged 83 <tspan class="cap">[S1]</tspan></text>
 <line x1="542.0" y1="52" x2="542.0" y2="330" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
 <circle cx="542.0" cy="330" r="4.5" fill="var(--acc)"/>
-<text x="551.0" y="334" class="s ink"><tspan font-weight="bold">1941</tspan> Japanese air raids on Opon oil tanks (Dec); WWII <tspan class="cap">[S38]</tspan></text>
+<text x="551.0" y="334" class="s ink"><tspan font-weight="bold">1941</tspan> Japanese air raids on Opon oil tanks (Dec, per Wikipedia); WWII <tspan class="cap">[S38]</tspan></text>
 <line x1="561.7" y1="52" x2="561.7" y2="356" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
 <circle cx="561.7" cy="356" r="4.5" fill="var(--acc2)"/>
 <text x="552.7" y="360" text-anchor="end" class="s ink"><tspan font-weight="bold">1945</tspan> Benhur Lago Salimbangon born, 3 Jun (Medellin, Cebu) <tspan class="cap">[S10; S11]</tspan></text>
 <line x1="640.4" y1="52" x2="640.4" y2="382" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
 <circle cx="640.4" cy="382" r="4.5" fill="var(--acc)"/>
 <text x="631.4" y="386" text-anchor="end" class="s ink"><tspan font-weight="bold">1961</tspan> Opon becomes Lapu-Lapu City (RA 3134) <tspan class="cap">[S38]</tspan></text>
-<line x1="665.0" y1="52" x2="665.0" y2="408" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
-<circle cx="665.0" cy="408" r="4.5" fill="var(--acc2)"/>
-<text x="656.0" y="412" text-anchor="end" class="s ink"><tspan font-weight="bold">1966</tspan> Elmo Muñasque, Cebu building contractor, signs the contract later litigated (probable identity) <tspan class="cap">[S31]</tspan></text>
+<line x1="669.9" y1="52" x2="669.9" y2="408" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="669.9" cy="408" r="4.5" fill="var(--acc2)"/>
+<text x="660.9" y="412" text-anchor="end" class="s ink"><tspan font-weight="bold">1967</tspan> Galan &amp; Muñasque (Elmo) contract with Tropical Commercial Co., Cebu, later litigated (probable identity) <tspan class="cap">[S31]</tspan></text>
 <line x1="694.5" y1="52" x2="694.5" y2="434" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
 <circle cx="694.5" cy="434" r="4.5" fill="var(--acc2)"/>
-<text x="685.5" y="438" text-anchor="end" class="s ink"><tspan font-weight="bold">1972</tspan> Atty. Benjamin N. Muñasque, Clerk of Court, CFI Cotabato (probable identity) <tspan class="cap">[S25]</tspan></text>
+<text x="685.5" y="438" text-anchor="end" class="s ink"><tspan font-weight="bold">1972</tspan> Benjamin N. Muñasque, Clerk of Court, CFI Cotabato City, files a complaint (2 Feb); SC decision 1974 (probable identity) <tspan class="cap">[S25]</tspan></text>
 <line x1="699.4" y1="52" x2="699.4" y2="460" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
 <circle cx="699.4" cy="460" r="4.5" fill="var(--acc)"/>
 <text x="690.4" y="464" text-anchor="end" class="s ink"><tspan font-weight="bold">1973</tspan> Mactan–Mandaue Bridge opens, 4 Jul <tspan class="cap">[S43]</tspan></text>
