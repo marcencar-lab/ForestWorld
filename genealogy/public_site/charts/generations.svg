@@ -1,0 +1,67 @@
+<svg class="gchart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 300" width="620" height="300" role="img" aria-label="People per generation">
+<style>
+svg.gchart{font-family:'DejaVu Sans','Noto Sans',Arial,sans-serif;--ink:#1d1b17;--ink2:#5c5a55;--edge:#8f8c85;--box:#ffffff;--boxline:#9a9790;--acc:#2a78d6;--acc2:#eb6834;--warn:#b26a00;--grid:#e6e3dc;--bg:#faf9f6;background:var(--bg)}
+@media (prefers-color-scheme:dark){svg.gchart{--ink:#efede8;--ink2:#b8b5ad;--edge:#8a877f;--box:#23221f;--boxline:#6b6861;--acc:#3987e5;--acc2:#d95926;--warn:#fab219;--grid:#35332f;--bg:#1a1a19}}
+.ink{fill:var(--ink)}.ink2{fill:var(--ink2)}.box{fill:var(--box);stroke:var(--boxline);stroke-width:1}.box.low{stroke-dasharray:4 3;stroke:var(--warn)}
+.edge{fill:none;stroke:var(--edge);stroke-width:1.2}.edge.low{stroke-dasharray:4 3;stroke:var(--warn)}
+.sp{fill:var(--ink2)}.t{font-size:11px}.s{font-size:9.5px}.h{font-size:15px;font-weight:bold}.cap{font-size:10px;fill:var(--ink2)}
+.g0,.g1{fill:var(--acc)}.gen{font-size:9px;fill:var(--acc)}
+</style>
+<text x="12" y="24" class="h ink">People recorded per generation</text>
+<text x="12" y="40" class="cap">Blood descendants (blue) and spouses (grey) by generation from Fernando (G1). Estimated birth periods are given under each bar.</text>
+<rect x="50" y="239.5" width="44" height="0.5" fill="var(--acc)" rx="2"/>
+<rect x="50" y="237.5" width="44" height="0.0" fill="var(--edge)" rx="2"/>
+<text x="72.0" y="233.5" text-anchor="middle" class="s ink">2+0</text>
+<text x="72.0" y="254" text-anchor="middle" class="s ink">G0</text>
+<text x="72.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 1795–1815</text>
+<rect x="102" y="239.8" width="44" height="0.2" fill="var(--acc)" rx="2"/>
+<rect x="102" y="237.5" width="44" height="0.2" fill="var(--edge)" rx="2"/>
+<text x="124.0" y="233.5" text-anchor="middle" class="s ink">1+1</text>
+<text x="124.0" y="254" text-anchor="middle" class="s ink">G1</text>
+<text x="124.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 1825–1835</text>
+<rect x="154" y="237.8" width="44" height="2.2" fill="var(--acc)" rx="2"/>
+<rect x="154" y="232.9" width="44" height="2.9" fill="var(--edge)" rx="2"/>
+<text x="176.0" y="228.9" text-anchor="middle" class="s ink">9+12</text>
+<text x="176.0" y="254" text-anchor="middle" class="s ink">G2</text>
+<text x="176.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">1857 (Emiliano</text>
+<rect x="206" y="226.2" width="44" height="13.8" fill="var(--acc)" rx="2"/>
+<rect x="206" y="212.8" width="44" height="11.4" fill="var(--edge)" rx="2"/>
+<text x="228.0" y="208.8" text-anchor="middle" class="s ink">57+47</text>
+<text x="228.0" y="254" text-anchor="middle" class="s ink">G3</text>
+<text x="228.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 1880–1915</text>
+<rect x="258" y="186.7" width="44" height="53.3" fill="var(--acc)" rx="2"/>
+<rect x="258" y="150.1" width="44" height="34.6" fill="var(--edge)" rx="2"/>
+<text x="280.0" y="146.1" text-anchor="middle" class="s ink">220+143</text>
+<text x="280.0" y="254" text-anchor="middle" class="s ink">G4</text>
+<text x="280.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 1905–1945</text>
+<rect x="310" y="113.1" width="44" height="126.9" fill="var(--acc)" rx="2"/>
+<rect x="310" y="68.0" width="44" height="43.1" fill="var(--edge)" rx="2"/>
+<text x="332.0" y="64.0" text-anchor="middle" class="s ink">524+178</text>
+<text x="332.0" y="254" text-anchor="middle" class="s ink">G5</text>
+<text x="332.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 1930–1970</text>
+<rect x="362" y="150.6" width="44" height="89.4" fill="var(--acc)" rx="2"/>
+<rect x="362" y="134.1" width="44" height="14.5" fill="var(--edge)" rx="2"/>
+<text x="384.0" y="130.1" text-anchor="middle" class="s ink">369+60</text>
+<text x="384.0" y="254" text-anchor="middle" class="s ink">G6</text>
+<text x="384.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 1955–1995</text>
+<rect x="414" y="213.1" width="44" height="26.9" fill="var(--acc)" rx="2"/>
+<rect x="414" y="208.2" width="44" height="2.9" fill="var(--edge)" rx="2"/>
+<text x="436.0" y="204.2" text-anchor="middle" class="s ink">111+12</text>
+<text x="436.0" y="254" text-anchor="middle" class="s ink">G7</text>
+<text x="436.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 1980–2015</text>
+<rect x="466" y="232.0" width="44" height="8.0" fill="var(--acc)" rx="2"/>
+<rect x="466" y="229.0" width="44" height="1.0" fill="var(--edge)" rx="2"/>
+<text x="488.0" y="225.0" text-anchor="middle" class="s ink">33+4</text>
+<text x="488.0" y="254" text-anchor="middle" class="s ink">G8</text>
+<text x="488.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">c. 2000–2020</text>
+<rect x="518" y="239.3" width="44" height="0.7" fill="var(--acc)" rx="2"/>
+<rect x="518" y="237.3" width="44" height="0.0" fill="var(--edge)" rx="2"/>
+<text x="540.0" y="233.3" text-anchor="middle" class="s ink">3+0</text>
+<text x="540.0" y="254" text-anchor="middle" class="s ink">G9</text>
+<text x="540.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">after c. 2010</text>
+<rect x="570" y="239.5" width="44" height="0.5" fill="var(--acc)" rx="2"/>
+<rect x="570" y="237.5" width="44" height="0.0" fill="var(--edge)" rx="2"/>
+<text x="592.0" y="233.5" text-anchor="middle" class="s ink">2+0</text>
+<text x="592.0" y="254" text-anchor="middle" class="s ink">G10</text>
+<text x="592.0" y="267" text-anchor="middle" class="s cap" font-size="7.5">after c. 2015</text>
+</svg>
