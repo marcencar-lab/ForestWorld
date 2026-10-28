@@ -1,0 +1,278 @@
+<svg class="gchart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6918 348" width="6918" height="348" role="img" aria-label="Branch: Agripina Valiente Muñasque (G2) and descendants to G4">
+<style>
+svg.gchart{font-family:'DejaVu Sans','Noto Sans',Arial,sans-serif;--ink:#1d1b17;--ink2:#5c5a55;--edge:#8f8c85;--box:#ffffff;--boxline:#9a9790;--acc:#2a78d6;--acc2:#eb6834;--warn:#b26a00;--grid:#e6e3dc;--bg:#faf9f6;background:var(--bg)}
+@media (prefers-color-scheme:dark){svg.gchart{--ink:#efede8;--ink2:#b8b5ad;--edge:#8a877f;--box:#23221f;--boxline:#6b6861;--acc:#3987e5;--acc2:#d95926;--warn:#fab219;--grid:#35332f;--bg:#1a1a19}}
+.ink{fill:var(--ink)}.ink2{fill:var(--ink2)}.box{fill:var(--box);stroke:var(--boxline);stroke-width:1}.box.low{stroke-dasharray:4 3;stroke:var(--warn)}
+.edge{fill:none;stroke:var(--edge);stroke-width:1.2}.edge.low{stroke-dasharray:4 3;stroke:var(--warn)}
+.sp{fill:var(--ink2)}.t{font-size:11px}.s{font-size:9.5px}.h{font-size:15px;font-weight:bold}.cap{font-size:10px;fill:var(--ink2)}
+.g0,.g1{fill:var(--acc)}.gen{font-size:9px;fill:var(--acc)}
+</style>
+<text x="12" y="24" class="h ink">Branch: Agripina Valiente Muñasque (G2) and descendants to G4</text>
+<text x="12" y="40" class="cap">185 recorded descendants in this branch; boxes list spouse(s) and residence where the branch sheets give one. Dashed boxes/lines = low-confidence placement. Deeper generations: use the explorer.</text>
+<rect x="3446.1" y="50" width="181.6" height="40" rx="3" class="box"/>
+<text x="3536.9" y="64" text-anchor="middle" class="t ink">Agripina Valiente Muñasque</text>
+<text x="3536.9" y="78" text-anchor="middle" class="s sp">⚭ Ambrosio Salimbangon</text>
+<text x="3449.1" y="87" class="gen">G2</text>
+<path d="M3536.9 90 V112.0 H564.6 V134" class="edge"/>
+<rect x="467.2" y="134" width="194.8" height="40" rx="3" class="box"/>
+<text x="564.6" y="148" text-anchor="middle" class="t ink">Sabiana Muñasque Salimbangon</text>
+<text x="564.6" y="162" text-anchor="middle" class="s sp">⚭ Ciriaco Go</text>
+<text x="470.2" y="171" class="gen">G3</text>
+<path d="M564.6 174 V202.0 H94.6 V230" class="edge"/>
+<rect x="17.0" y="230" width="155.2" height="52" rx="3" class="box"/>
+<text x="94.6" y="244" text-anchor="middle" class="t ink">Lourdes Salimbangon Go</text>
+<text x="94.6" y="258" text-anchor="middle" class="s sp">⚭ Eugenio Porio</text>
+<text x="94.6" y="270" text-anchor="middle" class="s cap">+2 more below (see explorer)</text>
+<text x="20.0" y="279" class="gen">G4</text>
+<path d="M564.6 174 V202.0 H260.5 V230" class="edge"/>
+<rect x="186.2" y="230" width="148.6" height="52" rx="3" class="box"/>
+<text x="260.5" y="244" text-anchor="middle" class="t ink">Corazon Alimbangon Go</text>
+<text x="260.5" y="258" text-anchor="middle" class="s sp">⚭ Ireneo Buot</text>
+<text x="260.5" y="270" text-anchor="middle" class="s cap">+4 more below (see explorer)</text>
+<text x="189.2" y="279" class="gen">G4</text>
+<path d="M564.6 174 V202.0 H419.8 V230" class="edge"/>
+<rect x="348.8" y="230" width="142.0" height="52" rx="3" class="box low"/>
+<text x="419.8" y="244" text-anchor="middle" class="t ink">Romeo Salimbangon Go</text>
+<text x="419.8" y="258" text-anchor="middle" class="s sp">⚭ Marina</text>
+<text x="419.8" y="270" text-anchor="middle" class="s cap">+5 more below (see explorer)</text>
+<text x="351.8" y="279" class="gen">G4</text>
+<path d="M564.6 174 V202.0 H589.0 V230" class="edge"/>
+<rect x="504.8" y="230" width="168.4" height="52" rx="3" class="box"/>
+<text x="589.0" y="244" text-anchor="middle" class="t ink">Alejandra Salimbangon Go</text>
+<text x="589.0" y="258" text-anchor="middle" class="s sp">⚭ Wilfredo Rusell Sr.</text>
+<text x="589.0" y="270" text-anchor="middle" class="s cap">+6 more below (see explorer)</text>
+<text x="507.8" y="279" class="gen">G4</text>
+<path d="M564.6 174 V202.0 H761.5 V230" class="edge"/>
+<rect x="687.2" y="230" width="148.6" height="52" rx="3" class="box low"/>
+<text x="761.5" y="244" text-anchor="middle" class="t ink">Alicia Salimbangon Go</text>
+<text x="761.5" y="258" text-anchor="middle" class="s sp">⚭ Samuel</text>
+<text x="761.5" y="270" text-anchor="middle" class="s cap">+2 more below (see explorer)</text>
+<text x="690.2" y="279" class="gen">G4</text>
+<path d="M564.6 174 V202.0 H894.8 V230" class="edge low"/>
+<rect x="849.8" y="230" width="90.0" height="52" rx="3" class="box low"/>
+<text x="894.8" y="244" text-anchor="middle" class="t ink">Jesusa Go</text>
+<text x="894.8" y="258" text-anchor="middle" class="s sp">⚭ Michael Booc</text>
+<text x="894.8" y="270" text-anchor="middle" class="s cap">+3 more below (see explorer)</text>
+<text x="852.8" y="279" class="gen">G4</text>
+<path d="M564.6 174 V202.0 H1034.7 V230" class="edge"/>
+<rect x="953.8" y="230" width="161.8" height="52" rx="3" class="box"/>
+<text x="1034.7" y="244" text-anchor="middle" class="t ink">Teresita Salimbangon Go</text>
+<text x="1034.7" y="258" text-anchor="middle" class="s sp">⚭ Jesus Grande</text>
+<text x="1034.7" y="270" text-anchor="middle" class="s cap">+2 more below (see explorer)</text>
+<text x="956.8" y="279" class="gen">G4</text>
+<path d="M3536.9 90 V112.0 H1210.5 V134" class="edge"/>
+<rect x="1113.1" y="134" width="194.8" height="40" rx="3" class="box"/>
+<text x="1210.5" y="148" text-anchor="middle" class="t ink">Teodoro Muñasque Salimbangon</text>
+<text x="1210.5" y="162" text-anchor="middle" class="s sp">⚭ Petronila Almazon</text>
+<text x="1116.1" y="171" class="gen">G3</text>
+<path d="M1210.5 174 V202.0 H1210.5 V230" class="edge"/>
+<rect x="1129.6" y="230" width="161.8" height="52" rx="3" class="box"/>
+<text x="1210.5" y="244" text-anchor="middle" class="t ink">Cipriano A. Salimbangon</text>
+<text x="1210.5" y="258" text-anchor="middle" class="s sp">⚭ Loreta Alegado</text>
+<text x="1210.5" y="270" text-anchor="middle" class="s cap">+28 more below (see explorer)</text>
+<text x="1132.6" y="279" class="gen">G4</text>
+<path d="M3536.9 90 V112.0 H1798.5 V134" class="edge"/>
+<rect x="1697.8" y="134" width="201.4" height="40" rx="3" class="box"/>
+<text x="1798.5" y="148" text-anchor="middle" class="t ink">Teodulfo Muñasque Salimbangon</text>
+<text x="1798.5" y="162" text-anchor="middle" class="s sp">⚭ Felipa Gelig</text>
+<text x="1700.8" y="171" class="gen">G3</text>
+<path d="M1798.5 174 V202.0 H1402.8 V230" class="edge"/>
+<rect x="1338.4" y="230" width="128.8" height="52" rx="3" class="box"/>
+<text x="1402.8" y="244" text-anchor="middle" class="t ink">Paz G. Salimbangon</text>
+<text x="1402.8" y="258" text-anchor="middle" class="s sp">⚭ Dediderio Colima</text>
+<text x="1402.8" y="270" text-anchor="middle" class="s cap">+7 more below (see explorer)</text>
+<text x="1341.4" y="279" class="gen">G4</text>
+<path d="M1798.5 174 V202.0 H1548.9 V230" class="edge"/>
+<rect x="1481.2" y="230" width="135.4" height="52" rx="3" class="box low"/>
+<text x="1548.9" y="244" text-anchor="middle" class="t ink">Rudy G. Salimbangon</text>
+<text x="1548.9" y="258" text-anchor="middle" class="s sp">⚭ Pilar Avila</text>
+<text x="1548.9" y="270" text-anchor="middle" class="s cap">+9 more below (see explorer)</text>
+<text x="1484.2" y="279" class="gen">G4</text>
+<path d="M1798.5 174 V202.0 H1704.0 V230" class="edge low"/>
+<rect x="1630.6" y="230" width="146.8" height="52" rx="3" class="box low"/>
+<text x="1704.0" y="244" text-anchor="middle" class="t ink">Alice P. Salimbangon</text>
+<text x="1704.0" y="258" text-anchor="middle" class="s sp">⚭ Mac Arthur F. Abadiano</text>
+<text x="1704.0" y="270" text-anchor="middle" class="s cap">+8 more below (see explorer)</text>
+<text x="1633.6" y="279" class="gen">G4</text>
+<path d="M1798.5 174 V202.0 H1862.4 V230" class="edge low"/>
+<rect x="1791.4" y="230" width="142.0" height="52" rx="3" class="box low"/>
+<text x="1862.4" y="244" text-anchor="middle" class="t ink">Perla P. Salimbangon</text>
+<text x="1862.4" y="258" text-anchor="middle" class="s sp">⚭ Alex Pangandoyon</text>
+<text x="1862.4" y="270" text-anchor="middle" class="s cap">+3 more below (see explorer)</text>
+<text x="1794.4" y="279" class="gen">G4</text>
+<path d="M1798.5 174 V202.0 H2028.3 V230" class="edge low"/>
+<rect x="1947.4" y="230" width="161.8" height="52" rx="3" class="box low"/>
+<text x="2028.3" y="244" text-anchor="middle" class="t ink">Leonillo P. Salimbangon</text>
+<text x="2028.3" y="258" text-anchor="middle" class="s sp">⚭ Rosaline Go</text>
+<text x="2028.3" y="270" text-anchor="middle" class="s cap">+15 more below (see explorer)</text>
+<text x="1950.4" y="279" class="gen">G4</text>
+<path d="M1798.5 174 V202.0 H2194.2 V230" class="edge low"/>
+<rect x="2123.2" y="230" width="142.0" height="40" rx="3" class="box low"/>
+<text x="2194.2" y="244" text-anchor="middle" class="t ink">Sonia P. Salimbangon</text>
+<text x="2194.2" y="258" text-anchor="middle" class="s sp">⚭ Boy Casquejo</text>
+<text x="2126.2" y="267" class="gen">G4</text>
+<path d="M3536.9 90 V112.0 H2356.8 V134" class="edge"/>
+<rect x="2266.0" y="134" width="181.6" height="40" rx="3" class="box"/>
+<text x="2356.8" y="148" text-anchor="middle" class="t ink">Felix Muñasque Salimbangon</text>
+<text x="2356.8" y="162" text-anchor="middle" class="s sp">⚭ Estelita Esorio</text>
+<text x="2269.0" y="171" class="gen">G3</text>
+<path d="M2356.8 174 V202.0 H2356.8 V230" class="edge"/>
+<rect x="2279.2" y="230" width="155.2" height="28" rx="3" class="box"/>
+<text x="2356.8" y="244" text-anchor="middle" class="t ink">Rogelio E. Salimbangon</text>
+<text x="2282.2" y="255" class="gen">G4</text>
+<path d="M3536.9 90 V112.0 H3113.2 V134" class="edge"/>
+<rect x="3019.1" y="134" width="188.2" height="40" rx="3" class="box"/>
+<text x="3113.2" y="148" text-anchor="middle" class="t ink">Martin Muñasque Salimbangon</text>
+<text x="3113.2" y="162" text-anchor="middle" class="s sp">⚭ Milagros Lago</text>
+<text x="3022.1" y="171" class="gen">G3</text>
+<path d="M3113.2 174 V202.0 H2542.5 V230" class="edge"/>
+<rect x="2474.8" y="230" width="135.4" height="28" rx="3" class="box"/>
+<text x="2542.5" y="244" text-anchor="middle" class="t ink">Aida L. Salimbangon</text>
+<text x="2477.8" y="255" class="gen">G4</text>
+<path d="M3113.2 174 V202.0 H2698.5 V230" class="edge"/>
+<rect x="2624.2" y="230" width="148.6" height="52" rx="3" class="box"/>
+<text x="2698.5" y="244" text-anchor="middle" class="t ink">Ofelia L. Salimbangon</text>
+<text x="2698.5" y="258" text-anchor="middle" class="s sp">⚭ Jose Cue</text>
+<text x="2698.5" y="270" text-anchor="middle" class="s cap">+9 more below (see explorer)</text>
+<text x="2627.2" y="279" class="gen">G4</text>
+<path d="M3113.2 174 V202.0 H2861.1 V230" class="edge"/>
+<rect x="2786.8" y="230" width="148.6" height="64" rx="3" class="box"/>
+<text x="2861.1" y="244" text-anchor="middle" class="t ink">Benhur L. Salimbangon</text>
+<text x="2861.1" y="258" text-anchor="middle" class="s sp">⚭ Mariter Trocino</text>
+<text x="2861.1" y="270" text-anchor="middle" class="s sp">⚭ Janice Zamora</text>
+<text x="2861.1" y="282" text-anchor="middle" class="s cap">+7 more below (see explorer)</text>
+<text x="2789.8" y="291" class="gen">G4</text>
+<path d="M3113.2 174 V202.0 H3020.4 V230" class="edge"/>
+<rect x="2949.4" y="230" width="142.0" height="52" rx="3" class="box low"/>
+<text x="3020.4" y="244" text-anchor="middle" class="t ink">Cesar L. Salimbangon</text>
+<text x="3020.4" y="258" text-anchor="middle" class="s sp">⚭ Fely</text>
+<text x="3020.4" y="270" text-anchor="middle" class="s cap">+3 more below (see explorer)</text>
+<text x="2952.4" y="279" class="gen">G4</text>
+<path d="M3113.2 174 V202.0 H3189.6 V230" class="edge"/>
+<rect x="3105.4" y="230" width="168.4" height="52" rx="3" class="box"/>
+<text x="3189.6" y="244" text-anchor="middle" class="t ink">Mariquita L. Salimbangon</text>
+<text x="3189.6" y="258" text-anchor="middle" class="s sp">⚭ Carlos Teung</text>
+<text x="3189.6" y="270" text-anchor="middle" class="s cap">+3 more below (see explorer)</text>
+<text x="3108.4" y="279" class="gen">G4</text>
+<path d="M3113.2 174 V202.0 H3362.1 V230" class="edge"/>
+<rect x="3287.8" y="230" width="148.6" height="52" rx="3" class="box"/>
+<text x="3362.1" y="244" text-anchor="middle" class="t ink">Danilo L. Salimbangon</text>
+<text x="3362.1" y="258" text-anchor="middle" class="s sp">⚭ Ophie Rovabos</text>
+<text x="3362.1" y="270" text-anchor="middle" class="s cap">+2 more below (see explorer)</text>
+<text x="3290.8" y="279" class="gen">G4</text>
+<path d="M3113.2 174 V202.0 H3521.4 V230" class="edge"/>
+<rect x="3450.4" y="230" width="142.0" height="52" rx="3" class="box"/>
+<text x="3521.4" y="244" text-anchor="middle" class="t ink">Edwin L. Salimbangon</text>
+<text x="3521.4" y="258" text-anchor="middle" class="s sp">⚭ Edith Limalima</text>
+<text x="3521.4" y="270" text-anchor="middle" class="s cap">+4 more below (see explorer)</text>
+<text x="3453.4" y="279" class="gen">G4</text>
+<path d="M3113.2 174 V202.0 H3684.0 V230" class="edge"/>
+<rect x="3606.4" y="230" width="155.2" height="52" rx="3" class="box"/>
+<text x="3684.0" y="244" text-anchor="middle" class="t ink">Freddie L. Salimbangon</text>
+<text x="3684.0" y="258" text-anchor="middle" class="s sp">⚭ Jing Jing</text>
+<text x="3684.0" y="270" text-anchor="middle" class="s cap">+3 more below (see explorer)</text>
+<text x="3609.4" y="279" class="gen">G4</text>
+<path d="M3536.9 90 V112.0 H3869.7 V134" class="edge"/>
+<rect x="3775.6" y="134" width="188.2" height="52" rx="3" class="box"/>
+<text x="3869.7" y="148" text-anchor="middle" class="t ink">Vecing Muñasque Salimbangon</text>
+<text x="3869.7" y="162" text-anchor="middle" class="s sp">⚭ Julio Tumulak</text>
+<text x="3869.7" y="174" text-anchor="middle" class="s sp">⚭ Vicente Mejares</text>
+<text x="3778.6" y="183" class="gen">G3</text>
+<path d="M3536.9 90 V112.0 H4113.8 V134" class="edge"/>
+<rect x="4013.1" y="134" width="201.4" height="40" rx="3" class="box"/>
+<text x="4113.8" y="148" text-anchor="middle" class="t ink">Pulguera Muñasque Salimbangon</text>
+<text x="4113.8" y="162" text-anchor="middle" class="s sp">⚭ Sulficio Basmayor</text>
+<text x="4016.1" y="171" class="gen">G3</text>
+<path d="M4113.8 174 V202.0 H4042.2 V230" class="edge"/>
+<rect x="3977.8" y="230" width="128.8" height="52" rx="3" class="box"/>
+<text x="4042.2" y="244" text-anchor="middle" class="t ink">Alexis S. Basmayor</text>
+<text x="4042.2" y="258" text-anchor="middle" class="s sp">⚭ Babie</text>
+<text x="4042.2" y="270" text-anchor="middle" class="s cap">+1 more below (see explorer)</text>
+<text x="3980.8" y="279" class="gen">G4</text>
+<path d="M4113.8 174 V202.0 H4185.4 V230" class="edge"/>
+<rect x="4120.6" y="230" width="129.7" height="52" rx="3" class="box"/>
+<text x="4185.4" y="244" text-anchor="middle" class="t ink">Vilma S. Basmayor</text>
+<text x="4185.4" y="258" text-anchor="middle" class="s sp">⚭ Sabianiano Villegas</text>
+<text x="4185.4" y="270" text-anchor="middle" class="s cap">+5 more below (see explorer)</text>
+<text x="4123.6" y="279" class="gen">G4</text>
+<path d="M3536.9 90 V112.0 H4600.6 V134" class="edge"/>
+<rect x="4493.3" y="134" width="214.6" height="40" rx="3" class="box"/>
+<text x="4600.6" y="148" text-anchor="middle" class="t ink">Felicisimo Muñasque Salimbangon</text>
+<text x="4600.6" y="162" text-anchor="middle" class="s sp">⚭ Pascuala Yap</text>
+<text x="4496.3" y="171" class="gen">G3</text>
+<path d="M4600.6 174 V202.0 H4341.9 V230" class="edge"/>
+<rect x="4264.3" y="230" width="155.2" height="40" rx="3" class="box"/>
+<text x="4341.9" y="244" text-anchor="middle" class="t ink">Clinica Y. Salimbangon</text>
+<text x="4341.9" y="258" text-anchor="middle" class="s sp">⚭ George Dumas</text>
+<text x="4267.3" y="267" class="gen">G4</text>
+<path d="M4600.6 174 V202.0 H4504.5 V230" class="edge"/>
+<rect x="4433.5" y="230" width="142.0" height="52" rx="3" class="box"/>
+<text x="4504.5" y="244" text-anchor="middle" class="t ink">Perry Y. Salimbangon</text>
+<text x="4504.5" y="258" text-anchor="middle" class="s sp">⚭ Norma Pepito</text>
+<text x="4504.5" y="270" text-anchor="middle" class="s cap">+2 more below (see explorer)</text>
+<text x="4436.5" y="279" class="gen">G4</text>
+<path d="M4600.6 174 V202.0 H4677.0 V230" class="edge"/>
+<rect x="4589.5" y="230" width="175.0" height="28" rx="3" class="box"/>
+<text x="4677.0" y="244" text-anchor="middle" class="t ink">Fe Socorro Y. Salimbangon</text>
+<text x="4592.5" y="255" class="gen">G4</text>
+<path d="M4600.6 174 V202.0 H4859.4 V230" class="edge"/>
+<rect x="4778.5" y="230" width="161.8" height="52" rx="3" class="box low"/>
+<text x="4859.4" y="244" text-anchor="middle" class="t ink">Mary Lee Y. Salimbangon</text>
+<text x="4859.4" y="258" text-anchor="middle" class="s sp">⚭ Basilides Valencia</text>
+<text x="4859.4" y="270" text-anchor="middle" class="s cap">+2 more below (see explorer)</text>
+<text x="4781.5" y="279" class="gen">G4</text>
+<path d="M3536.9 90 V112.0 H5522.5 V134" class="edge"/>
+<rect x="5428.4" y="134" width="188.2" height="40" rx="3" class="box"/>
+<text x="5522.5" y="148" text-anchor="middle" class="t ink">Rosita Muñasque Salimbangon</text>
+<text x="5522.5" y="162" text-anchor="middle" class="s sp">⚭ Marciano Mondigo</text>
+<text x="5431.4" y="171" class="gen">G3</text>
+<path d="M5522.5 174 V202.0 H5041.8 V230" class="edge"/>
+<rect x="4954.3" y="230" width="175.0" height="28" rx="3" class="box"/>
+<text x="5041.8" y="244" text-anchor="middle" class="t ink">Joven Salimbangon Mondigo</text>
+<text x="4957.3" y="255" class="gen">G4</text>
+<path d="M5522.5 174 V202.0 H5234.1 V230" class="edge"/>
+<rect x="5143.3" y="230" width="181.6" height="28" rx="3" class="box"/>
+<text x="5234.1" y="244" text-anchor="middle" class="t ink">Cencio Salimbangon Mondigo</text>
+<text x="5146.3" y="255" class="gen">G4</text>
+<path d="M5522.5 174 V202.0 H5429.7 V230" class="edge"/>
+<rect x="5338.9" y="230" width="181.6" height="28" rx="3" class="box"/>
+<text x="5429.7" y="244" text-anchor="middle" class="t ink">Cerilo Salimbangon Mondigo</text>
+<text x="5341.9" y="255" class="gen">G4</text>
+<path d="M5522.5 174 V202.0 H5618.7 V230" class="edge"/>
+<rect x="5534.5" y="230" width="168.4" height="28" rx="3" class="box"/>
+<text x="5618.7" y="244" text-anchor="middle" class="t ink">Rudy Salimbangon Mondigo</text>
+<text x="5537.5" y="255" class="gen">G4</text>
+<path d="M5522.5 174 V202.0 H5804.4 V230" class="edge"/>
+<rect x="5716.9" y="230" width="175.0" height="28" rx="3" class="box"/>
+<text x="5804.4" y="244" text-anchor="middle" class="t ink">Susan Salimbangon Mondigo</text>
+<text x="5719.9" y="255" class="gen">G4</text>
+<path d="M5522.5 174 V202.0 H6003.3 V230" class="edge"/>
+<rect x="5905.9" y="230" width="194.8" height="28" rx="3" class="box"/>
+<text x="6003.3" y="244" text-anchor="middle" class="t ink">Expidito Salimbangon Mondigo</text>
+<text x="5908.9" y="255" class="gen">G4</text>
+<path d="M3536.9 90 V112.0 H6509.2 V134" class="edge"/>
+<rect x="6411.8" y="134" width="194.8" height="40" rx="3" class="box"/>
+<text x="6509.2" y="148" text-anchor="middle" class="t ink">Antonio Muñasque Salimbangon</text>
+<text x="6509.2" y="162" text-anchor="middle" class="s sp">⚭ Lucia Ikong</text>
+<text x="6414.8" y="171" class="gen">G3</text>
+<path d="M6509.2 174 V202.0 H6185.7 V230" class="edge"/>
+<rect x="6114.7" y="230" width="142.0" height="28" rx="3" class="box"/>
+<text x="6185.7" y="244" text-anchor="middle" class="t ink">Nixon I. Salimbangon</text>
+<text x="6117.7" y="255" class="gen">G4</text>
+<path d="M6509.2 174 V202.0 H6338.4 V230" class="edge"/>
+<rect x="6270.7" y="230" width="135.4" height="28" rx="3" class="box"/>
+<text x="6338.4" y="244" text-anchor="middle" class="t ink">Jude I. Salimbangon</text>
+<text x="6273.7" y="255" class="gen">G4</text>
+<path d="M6509.2 174 V202.0 H6501.0 V230" class="edge"/>
+<rect x="6420.1" y="230" width="161.8" height="28" rx="3" class="box"/>
+<text x="6501.0" y="244" text-anchor="middle" class="t ink">Maryjane I. Salimbangon</text>
+<text x="6423.1" y="255" class="gen">G4</text>
+<path d="M6509.2 174 V202.0 H6673.5 V230" class="edge"/>
+<rect x="6595.9" y="230" width="155.2" height="28" rx="3" class="box"/>
+<text x="6673.5" y="244" text-anchor="middle" class="t ink">Jureme I. Sdalimbangon</text>
+<text x="6598.9" y="255" class="gen">G4</text>
+<path d="M6509.2 174 V202.0 H6832.8 V230" class="edge"/>
+<rect x="6765.1" y="230" width="135.4" height="28" rx="3" class="box"/>
+<text x="6832.8" y="244" text-anchor="middle" class="t ink">Yuni I. Salimbangon</text>
+<text x="6768.1" y="255" class="gen">G4</text>
+</svg>

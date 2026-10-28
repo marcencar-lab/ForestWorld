@@ -1,0 +1,97 @@
+<svg class="gchart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 692" width="1000" height="692" role="img" aria-label="Timeline">
+<style>
+svg.gchart{font-family:'DejaVu Sans','Noto Sans',Arial,sans-serif;--ink:#1d1b17;--ink2:#5c5a55;--edge:#8f8c85;--box:#ffffff;--boxline:#9a9790;--acc:#2a78d6;--acc2:#eb6834;--warn:#b26a00;--grid:#e6e3dc;--bg:#faf9f6;background:var(--bg)}
+@media (prefers-color-scheme:dark){svg.gchart{--ink:#efede8;--ink2:#b8b5ad;--edge:#8a877f;--box:#23221f;--boxline:#6b6861;--acc:#3987e5;--acc2:#d95926;--warn:#fab219;--grid:#35332f;--bg:#1a1a19}}
+.ink{fill:var(--ink)}.ink2{fill:var(--ink2)}.box{fill:var(--box);stroke:var(--boxline);stroke-width:1}.box.low{stroke-dasharray:4 3;stroke:var(--warn)}
+.edge{fill:none;stroke:var(--edge);stroke-width:1.2}.edge.low{stroke-dasharray:4 3;stroke:var(--warn)}
+.sp{fill:var(--ink2)}.t{font-size:11px}.s{font-size:9.5px}.h{font-size:15px;font-weight:bold}.cap{font-size:10px;fill:var(--ink2)}
+.g0,.g1{fill:var(--acc)}.gen{font-size:9px;fill:var(--acc)}
+</style>
+<text x="12" y="24" class="h ink">Chronological timeline: family events (orange) and historical context (blue)</text>
+<line x1="70" y1="52" x2="960" y2="52" stroke="var(--edge)"/>
+<line x1="94.6" y1="48" x2="94.6" y2="56" stroke="var(--edge)"/><text x="94.6" y="44" text-anchor="middle" class="s cap">1850</text>
+<line x1="143.8" y1="48" x2="143.8" y2="56" stroke="var(--edge)"/><text x="143.8" y="44" text-anchor="middle" class="s cap">1860</text>
+<line x1="192.9" y1="48" x2="192.9" y2="56" stroke="var(--edge)"/><text x="192.9" y="44" text-anchor="middle" class="s cap">1870</text>
+<line x1="242.1" y1="48" x2="242.1" y2="56" stroke="var(--edge)"/><text x="242.1" y="44" text-anchor="middle" class="s cap">1880</text>
+<line x1="291.3" y1="48" x2="291.3" y2="56" stroke="var(--edge)"/><text x="291.3" y="44" text-anchor="middle" class="s cap">1890</text>
+<line x1="340.4" y1="48" x2="340.4" y2="56" stroke="var(--edge)"/><text x="340.4" y="44" text-anchor="middle" class="s cap">1900</text>
+<line x1="389.6" y1="48" x2="389.6" y2="56" stroke="var(--edge)"/><text x="389.6" y="44" text-anchor="middle" class="s cap">1910</text>
+<line x1="438.8" y1="48" x2="438.8" y2="56" stroke="var(--edge)"/><text x="438.8" y="44" text-anchor="middle" class="s cap">1920</text>
+<line x1="488.0" y1="48" x2="488.0" y2="56" stroke="var(--edge)"/><text x="488.0" y="44" text-anchor="middle" class="s cap">1930</text>
+<line x1="537.1" y1="48" x2="537.1" y2="56" stroke="var(--edge)"/><text x="537.1" y="44" text-anchor="middle" class="s cap">1940</text>
+<line x1="586.3" y1="48" x2="586.3" y2="56" stroke="var(--edge)"/><text x="586.3" y="44" text-anchor="middle" class="s cap">1950</text>
+<line x1="635.5" y1="48" x2="635.5" y2="56" stroke="var(--edge)"/><text x="635.5" y="44" text-anchor="middle" class="s cap">1960</text>
+<line x1="684.6" y1="48" x2="684.6" y2="56" stroke="var(--edge)"/><text x="684.6" y="44" text-anchor="middle" class="s cap">1970</text>
+<line x1="733.8" y1="48" x2="733.8" y2="56" stroke="var(--edge)"/><text x="733.8" y="44" text-anchor="middle" class="s cap">1980</text>
+<line x1="783.0" y1="48" x2="783.0" y2="56" stroke="var(--edge)"/><text x="783.0" y="44" text-anchor="middle" class="s cap">1990</text>
+<line x1="832.2" y1="48" x2="832.2" y2="56" stroke="var(--edge)"/><text x="832.2" y="44" text-anchor="middle" class="s cap">2000</text>
+<line x1="881.3" y1="48" x2="881.3" y2="56" stroke="var(--edge)"/><text x="881.3" y="44" text-anchor="middle" class="s cap">2010</text>
+<line x1="930.5" y1="48" x2="930.5" y2="56" stroke="var(--edge)"/><text x="930.5" y="44" text-anchor="middle" class="s cap">2020</text>
+<line x1="89.7" y1="52" x2="89.7" y2="70" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
+<circle cx="89.7" cy="70" r="4.5" fill="var(--acc)"/>
+<text x="98.7" y="74" class="s ink"><tspan font-weight="bold">1849</tspan> Claveria surname decree (21 Nov 1849); fixed surnames in records from 1850 <tspan class="cap">[S41; S42]</tspan></text>
+<line x1="129.0" y1="52" x2="129.0" y2="96" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="129.0" cy="96" r="4.5" fill="var(--acc2)"/>
+<text x="138.0" y="100" class="s ink"><tspan font-weight="bold">1857</tspan> Emiliano Valiente Muñasque born, 20 May <tspan class="cap">[S1]</tspan></text>
+<line x1="330.6" y1="52" x2="330.6" y2="122" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
+<circle cx="330.6" cy="122" r="4.5" fill="var(--acc)"/>
+<text x="339.6" y="126" class="s ink"><tspan font-weight="bold">1898</tspan> Spanish rule ends; US control of Cebu restored by 1901 <tspan class="cap">[S38]</tspan></text>
+<line x1="355.2" y1="52" x2="355.2" y2="148" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
+<circle cx="355.2" cy="148" r="4.5" fill="var(--acc)"/>
+<text x="364.2" y="152" class="s ink"><tspan font-weight="bold">1903</tspan> First US census: Opon 14,851 people <tspan class="cap">[S37]</tspan></text>
+<line x1="404.4" y1="52" x2="404.4" y2="174" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
+<circle cx="404.4" cy="174" r="4.5" fill="var(--acc)"/>
+<text x="413.4" y="178" class="s ink"><tspan font-weight="bold">1913</tspan> Government agricultural colonies in Cotabato (Pikit, Glan) settled largely by Cebuanos <tspan class="cap">[S39]</tspan></text>
+<line x1="414.2" y1="52" x2="414.2" y2="200" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="414.2" cy="200" r="4.5" fill="var(--acc2)"/>
+<text x="423.2" y="204" class="s ink"><tspan font-weight="bold">1915</tspan> Milagros Lago (later Salimbangon) born, 8 Sep 1915/16 <tspan class="cap">[S16; S17]</tspan></text>
+<line x1="429.0" y1="52" x2="429.0" y2="226" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
+<circle cx="429.0" cy="226" r="4.5" fill="var(--acc)"/>
+<text x="438.0" y="230" class="s ink"><tspan font-weight="bold">1918</tspan> Census: Opon 20,988 <tspan class="cap">[S37]</tspan></text>
+<line x1="488.0" y1="52" x2="488.0" y2="252" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
+<circle cx="488.0" cy="252" r="4.5" fill="var(--acc)"/>
+<text x="497.0" y="256" class="s ink"><tspan font-weight="bold">1930</tspan> Civil Registry Law (Act 3753) creates municipal civil registers <tspan class="cap">[S42]</tspan></text>
+<line x1="532.2" y1="52" x2="532.2" y2="278" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="532.2" cy="278" r="4.5" fill="var(--acc2)"/>
+<text x="541.2" y="282" class="s ink"><tspan font-weight="bold">1939</tspan> Sulpicio Y. Muñasque reaches Dadiangas (Gen. Santos) from Lala, Lanao del Norte, 7 Mar; NLSA settlement begins <tspan class="cap">[S29; S40]</tspan></text>
+<line x1="537.1" y1="52" x2="537.1" y2="304" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="537.1" cy="304" r="4.5" fill="var(--acc2)"/>
+<text x="546.1" y="308" class="s ink"><tspan font-weight="bold">1940</tspan> Emiliano Valiente Muñasque dies, 19 Feb, aged 83 <tspan class="cap">[S1]</tspan></text>
+<line x1="542.0" y1="52" x2="542.0" y2="330" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
+<circle cx="542.0" cy="330" r="4.5" fill="var(--acc)"/>
+<text x="551.0" y="334" class="s ink"><tspan font-weight="bold">1941</tspan> Japanese air raids on Opon oil tanks (Dec); WWII <tspan class="cap">[S38]</tspan></text>
+<line x1="561.7" y1="52" x2="561.7" y2="356" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="561.7" cy="356" r="4.5" fill="var(--acc2)"/>
+<text x="552.7" y="360" text-anchor="end" class="s ink"><tspan font-weight="bold">1945</tspan> Benhur Lago Salimbangon born, 3 Jun (Medellin, Cebu) <tspan class="cap">[S10; S11]</tspan></text>
+<line x1="640.4" y1="52" x2="640.4" y2="382" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
+<circle cx="640.4" cy="382" r="4.5" fill="var(--acc)"/>
+<text x="631.4" y="386" text-anchor="end" class="s ink"><tspan font-weight="bold">1961</tspan> Opon becomes Lapu-Lapu City (RA 3134) <tspan class="cap">[S38]</tspan></text>
+<line x1="665.0" y1="52" x2="665.0" y2="408" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="665.0" cy="408" r="4.5" fill="var(--acc2)"/>
+<text x="656.0" y="412" text-anchor="end" class="s ink"><tspan font-weight="bold">1966</tspan> Elmo Muñasque, Cebu building contractor, signs the contract later litigated (probable identity) <tspan class="cap">[S31]</tspan></text>
+<line x1="694.5" y1="52" x2="694.5" y2="434" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="694.5" cy="434" r="4.5" fill="var(--acc2)"/>
+<text x="685.5" y="438" text-anchor="end" class="s ink"><tspan font-weight="bold">1972</tspan> Atty. Benjamin N. Muñasque, Clerk of Court, CFI Cotabato (probable identity) <tspan class="cap">[S25]</tspan></text>
+<line x1="699.4" y1="52" x2="699.4" y2="460" stroke="var(--acc)" stroke-width="1" opacity=".35"/>
+<circle cx="699.4" cy="460" r="4.5" fill="var(--acc)"/>
+<text x="690.4" y="464" text-anchor="end" class="s ink"><tspan font-weight="bold">1973</tspan> Mactan–Mandaue Bridge opens, 4 Jul <tspan class="cap">[S43]</tspan></text>
+<line x1="709.2" y1="52" x2="709.2" y2="486" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="709.2" cy="486" r="4.5" fill="var(--acc2)"/>
+<text x="700.2" y="490" text-anchor="end" class="s ink"><tspan font-weight="bold">1975</tspan> Fr. Rosalio N. Muñasque rector of Marbel seminary; parish priest of Banga 1975–78 <tspan class="cap">[S21; S22]</tspan></text>
+<line x1="846.9" y1="52" x2="846.9" y2="512" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="846.9" cy="512" r="4.5" fill="var(--acc2)"/>
+<text x="837.9" y="516" text-anchor="end" class="s ink"><tspan font-weight="bold">2003</tspan> Fr. Rosalio N. Muñasque dies, 2 Dec <tspan class="cap">[S24]</tspan></text>
+<line x1="861.7" y1="52" x2="861.7" y2="538" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="861.7" cy="538" r="4.5" fill="var(--acc2)"/>
+<text x="852.7" y="542" text-anchor="end" class="s ink"><tspan font-weight="bold">2006</tspan> Compiler interviews Amador Piligro (97) at Opon about the surname; Milagros Lago turns 90 <tspan class="cap">[S3; S16]</tspan></text>
+<line x1="866.6" y1="52" x2="866.6" y2="564" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="866.6" cy="564" r="4.5" fill="var(--acc2)"/>
+<text x="857.6" y="568" text-anchor="end" class="s ink"><tspan font-weight="bold">2007</tspan> Benhur Salimbangon enters Congress (Cebu 4th District), serves to 2019 <tspan class="cap">[S10]</tspan></text>
+<line x1="901.0" y1="52" x2="901.0" y2="590" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="901.0" cy="590" r="4.5" fill="var(--acc2)"/>
+<text x="892.0" y="594" text-anchor="end" class="s ink"><tspan font-weight="bold">2014</tspan> Family spreadsheet created (14 Sep) <tspan class="cap">[S4]</tspan></text>
+<line x1="930.5" y1="52" x2="930.5" y2="616" stroke="var(--acc2)" stroke-width="1" opacity=".35"/>
+<circle cx="930.5" cy="616" r="4.5" fill="var(--acc2)"/>
+<text x="921.5" y="620" text-anchor="end" class="s ink"><tspan font-weight="bold">2020</tspan> Spreadsheet last edited (12 Jun); Benhur Salimbangon dies 24 Dec <tspan class="cap">[S4; S12]</tspan></text>
+<text x="12" y="682" class="s cap">Only the 1857/1940 dates come from the family file; all other dates come from outside sources listed in the bibliography.</text>
+</svg>

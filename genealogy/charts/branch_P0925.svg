@@ -1,0 +1,285 @@
+<svg class="gchart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6401 360" width="6401" height="360" role="img" aria-label="Branch: Marcos Valiente Muñasque (G2) and descendants to G4">
+<style>
+svg.gchart{font-family:'DejaVu Sans','Noto Sans',Arial,sans-serif;--ink:#1d1b17;--ink2:#5c5a55;--edge:#8f8c85;--box:#ffffff;--boxline:#9a9790;--acc:#2a78d6;--acc2:#eb6834;--warn:#b26a00;--grid:#e6e3dc;--bg:#faf9f6;background:var(--bg)}
+@media (prefers-color-scheme:dark){svg.gchart{--ink:#efede8;--ink2:#b8b5ad;--edge:#8a877f;--box:#23221f;--boxline:#6b6861;--acc:#3987e5;--acc2:#d95926;--warn:#fab219;--grid:#35332f;--bg:#1a1a19}}
+.ink{fill:var(--ink)}.ink2{fill:var(--ink2)}.box{fill:var(--box);stroke:var(--boxline);stroke-width:1}.box.low{stroke-dasharray:4 3;stroke:var(--warn)}
+.edge{fill:none;stroke:var(--edge);stroke-width:1.2}.edge.low{stroke-dasharray:4 3;stroke:var(--warn)}
+.sp{fill:var(--ink2)}.t{font-size:11px}.s{font-size:9.5px}.h{font-size:15px;font-weight:bold}.cap{font-size:10px;fill:var(--ink2)}
+.g0,.g1{fill:var(--acc)}.gen{font-size:9px;fill:var(--acc)}
+</style>
+<text x="12" y="24" class="h ink">Branch: Marcos Valiente Muñasque (G2) and descendants to G4</text>
+<text x="12" y="40" class="cap">154 recorded descendants in this branch; boxes list spouse(s) and residence where the branch sheets give one. Dashed boxes/lines = low-confidence placement. Deeper generations: use the explorer.</text>
+<rect x="3200.2" y="50" width="168.4" height="64" rx="3" class="box"/>
+<text x="3284.4" y="64" text-anchor="middle" class="t ink">Marcos Valiente Muñasque</text>
+<text x="3284.4" y="78" text-anchor="middle" class="s sp">⚭ Matildi Perez</text>
+<text x="3284.4" y="90" text-anchor="middle" class="s sp">⚭ Faustina Ynot</text>
+<text x="3284.4" y="102" text-anchor="middle" class="s sp">⚭ Basilia</text>
+<text x="3203.2" y="111" class="gen">G2</text>
+<path d="M3284.4 114 V136.0 H239.1 V158" class="edge"/>
+<rect x="154.9" y="158" width="168.4" height="40" rx="3" class="box low"/>
+<text x="239.1" y="172" text-anchor="middle" class="t ink">Purification P. Muñasque</text>
+<text x="239.1" y="186" text-anchor="middle" class="s sp">⚭ Renato Espinosa</text>
+<text x="157.9" y="195" class="gen">G3</text>
+<path d="M239.1 198 V226.0 H78.1 V254" class="edge"/>
+<rect x="17.0" y="254" width="122.2" height="52" rx="3" class="box low"/>
+<text x="78.1" y="268" text-anchor="middle" class="t ink">Linda M. Espinosa</text>
+<text x="78.1" y="282" text-anchor="middle" class="s sp">⚭ Don Villa</text>
+<text x="78.1" y="294" text-anchor="middle" class="s cap">+2 more below (see explorer)</text>
+<text x="20.0" y="303" class="gen">G4</text>
+<path d="M239.1 198 V226.0 H230.8 V254" class="edge"/>
+<rect x="153.2" y="254" width="155.2" height="52" rx="3" class="box low"/>
+<text x="230.8" y="268" text-anchor="middle" class="t ink">Maria Nori M. Espinosa</text>
+<text x="230.8" y="282" text-anchor="middle" class="s sp">⚭ Christopher Romero</text>
+<text x="230.8" y="294" text-anchor="middle" class="s cap">+1 more below (see explorer)</text>
+<text x="156.2" y="303" class="gen">G4</text>
+<path d="M239.1 198 V226.0 H400.0 V254" class="edge"/>
+<rect x="322.4" y="254" width="155.2" height="52" rx="3" class="box low"/>
+<text x="400.0" y="268" text-anchor="middle" class="t ink">Renato M. Espinosa Jr.</text>
+<text x="400.0" y="282" text-anchor="middle" class="s sp">⚭ Anita Tan</text>
+<text x="400.0" y="294" text-anchor="middle" class="s cap">+1 more below (see explorer)</text>
+<text x="325.4" y="303" class="gen">G4</text>
+<path d="M3284.4 114 V136.0 H1072.9 V158" class="edge"/>
+<rect x="995.3" y="158" width="155.2" height="40" rx="3" class="box low"/>
+<text x="1072.9" y="172" text-anchor="middle" class="t ink">Coronacion P. Muñasque</text>
+<text x="1072.9" y="186" text-anchor="middle" class="s sp">⚭ Jesus Cabahug</text>
+<text x="998.3" y="195" class="gen">G3</text>
+<path d="M1072.9 198 V226.0 H559.3 V254" class="edge"/>
+<rect x="491.6" y="254" width="135.4" height="28" rx="3" class="box low"/>
+<text x="559.3" y="268" text-anchor="middle" class="t ink">Teresita M. Cabahug</text>
+<text x="494.6" y="279" class="gen">G4</text>
+<path d="M1072.9 198 V226.0 H721.9 V254" class="edge"/>
+<rect x="641.0" y="254" width="161.8" height="52" rx="3" class="box low"/>
+<text x="721.9" y="268" text-anchor="middle" class="t ink">Maria Gracia M. Cabahug</text>
+<text x="721.9" y="282" text-anchor="middle" class="s sp">⚭ James Schultz</text>
+<text x="721.9" y="294" text-anchor="middle" class="s cap">+1 more below (see explorer)</text>
+<text x="644.0" y="303" class="gen">G4</text>
+<path d="M1072.9 198 V226.0 H881.2 V254" class="edge"/>
+<rect x="816.8" y="254" width="128.8" height="40" rx="3" class="box low"/>
+<text x="881.2" y="268" text-anchor="middle" class="t ink">Alfredo M. Cabahug</text>
+<text x="881.2" y="282" text-anchor="middle" class="s cap">+1 more below (see explorer)</text>
+<text x="819.8" y="291" class="gen">G4</text>
+<path d="M1072.9 198 V226.0 H1041.5 V254" class="edge"/>
+<rect x="959.6" y="254" width="163.9" height="52" rx="3" class="box low"/>
+<text x="1041.5" y="268" text-anchor="middle" class="t ink">Jose Marcos M. Cabahug</text>
+<text x="1041.5" y="282" text-anchor="middle" class="s sp">⚭ Maria Luisa Delos Angeles</text>
+<text x="1041.5" y="294" text-anchor="middle" class="s cap">+6 more below (see explorer)</text>
+<text x="962.6" y="303" class="gen">G4</text>
+<path d="M1072.9 198 V226.0 H1225.0 V254" class="edge"/>
+<rect x="1137.5" y="254" width="175.0" height="52" rx="3" class="box low"/>
+<text x="1225.0" y="268" text-anchor="middle" class="t ink">Josefina Muñasque Cabahug</text>
+<text x="1225.0" y="282" text-anchor="middle" class="s sp">⚭ Paul Y. Heyrana</text>
+<text x="1225.0" y="294" text-anchor="middle" class="s cap">+2 more below (see explorer)</text>
+<text x="1140.5" y="303" class="gen">G4</text>
+<path d="M1072.9 198 V226.0 H1410.7 V254" class="edge"/>
+<rect x="1326.5" y="254" width="168.4" height="52" rx="3" class="box low"/>
+<text x="1410.7" y="268" text-anchor="middle" class="t ink">Corazon Muñasque Cabahug</text>
+<text x="1410.7" y="282" text-anchor="middle" class="s sp">⚭ Eduardo Corbo</text>
+<text x="1410.7" y="294" text-anchor="middle" class="s cap">+2 more below (see explorer)</text>
+<text x="1329.5" y="303" class="gen">G4</text>
+<path d="M1072.9 198 V226.0 H1586.5 V254" class="edge"/>
+<rect x="1508.9" y="254" width="155.2" height="52" rx="3" class="box low"/>
+<text x="1586.5" y="268" text-anchor="middle" class="t ink">Jaime Muñasque Cabahug</text>
+<text x="1586.5" y="282" text-anchor="middle" class="s sp">⚭ Arlene Alvarico</text>
+<text x="1586.5" y="294" text-anchor="middle" class="s cap">+3 more below (see explorer)</text>
+<text x="1511.9" y="303" class="gen">G4</text>
+<path d="M3284.4 114 V136.0 H2185.8 V158" class="edge"/>
+<rect x="2104.8" y="158" width="161.8" height="40" rx="3" class="box low"/>
+<text x="2185.8" y="172" text-anchor="middle" class="t ink">Palexina Perez Muñasque</text>
+<text x="2185.8" y="186" text-anchor="middle" class="s sp">⚭ Antonio Serra Ty</text>
+<text x="2107.8" y="195" class="gen">G3</text>
+<path d="M2185.8 198 V226.0 H1745.8 V254" class="edge"/>
+<rect x="1678.1" y="254" width="135.4" height="52" rx="3" class="box low"/>
+<text x="1745.8" y="268" text-anchor="middle" class="t ink">Adelita Muñasque Ty</text>
+<text x="1745.8" y="282" text-anchor="middle" class="s sp">⚭ Tomas Lugod</text>
+<text x="1745.8" y="294" text-anchor="middle" class="s cap">+6 more below (see explorer)</text>
+<text x="1681.1" y="303" class="gen">G4</text>
+<path d="M2185.8 198 V226.0 H1898.5 V254" class="edge"/>
+<rect x="1827.5" y="254" width="142.0" height="52" rx="3" class="box low"/>
+<text x="1898.5" y="268" text-anchor="middle" class="t ink">Franklyn Muñasque Ty</text>
+<text x="1898.5" y="282" text-anchor="middle" class="s sp">⚭ Annie Oro</text>
+<text x="1898.5" y="294" text-anchor="middle" class="s cap">+4 more below (see explorer)</text>
+<text x="1830.5" y="303" class="gen">G4</text>
+<path d="M2185.8 198 V226.0 H2047.9 V254" class="edge"/>
+<rect x="1983.5" y="254" width="128.8" height="28" rx="3" class="box low"/>
+<text x="2047.9" y="268" text-anchor="middle" class="t ink">Andrew Muñasque Ty</text>
+<text x="1986.5" y="279" class="gen">G4</text>
+<path d="M2185.8 198 V226.0 H2187.4 V254" class="edge"/>
+<rect x="2126.3" y="254" width="122.2" height="28" rx="3" class="box low"/>
+<text x="2187.4" y="268" text-anchor="middle" class="t ink">Elmer Muñasque Ty</text>
+<text x="2129.3" y="279" class="gen">G4</text>
+<path d="M2185.8 198 V226.0 H2326.9 V254" class="edge"/>
+<rect x="2262.5" y="254" width="128.8" height="28" rx="3" class="box low"/>
+<text x="2326.9" y="268" text-anchor="middle" class="t ink">Joseph Muñasque Ty</text>
+<text x="2265.5" y="279" class="gen">G4</text>
+<path d="M2185.8 198 V226.0 H2476.3 V254" class="edge"/>
+<rect x="2405.3" y="254" width="142.0" height="52" rx="3" class="box low"/>
+<text x="2476.3" y="268" text-anchor="middle" class="t ink">Diosdado Muñasque Ty</text>
+<text x="2476.3" y="282" text-anchor="middle" class="s sp">⚭ Desiree Grace Oraiz</text>
+<text x="2476.3" y="294" text-anchor="middle" class="s cap">+1 more below (see explorer)</text>
+<text x="2408.3" y="303" class="gen">G4</text>
+<path d="M2185.8 198 V226.0 H2625.7 V254" class="edge"/>
+<rect x="2561.3" y="254" width="128.8" height="52" rx="3" class="box low"/>
+<text x="2625.7" y="268" text-anchor="middle" class="t ink">Arnold Muñasque Ty</text>
+<text x="2625.7" y="282" text-anchor="middle" class="s sp">⚭ Hilda Murakami</text>
+<text x="2625.7" y="294" text-anchor="middle" class="s cap">+1 more below (see explorer)</text>
+<text x="2564.3" y="303" class="gen">G4</text>
+<path d="M3284.4 114 V136.0 H2839.9 V158" class="edge"/>
+<rect x="2735.9" y="158" width="208.0" height="52" rx="3" class="box low"/>
+<text x="2839.9" y="172" text-anchor="middle" class="t ink">Coronado Perez Muñasque (STIM)</text>
+<text x="2839.9" y="186" text-anchor="middle" class="s sp">⚭ Narcessa Bondoc Vivera</text>
+<text x="2839.9" y="198" text-anchor="middle" class="s sp">⚭ Linda Jimenez</text>
+<text x="2738.9" y="207" class="gen">G3</text>
+<path d="M2839.9 210 V232.0 H2761.9 V254" class="edge"/>
+<rect x="2704.1" y="254" width="115.6" height="28" rx="3" class="box low"/>
+<text x="2761.9" y="268" text-anchor="middle" class="t ink">Marc V. Muñasque</text>
+<text x="2707.1" y="279" class="gen">G4</text>
+<path d="M2839.9 210 V232.0 H2917.9 V254" class="edge"/>
+<rect x="2833.7" y="254" width="168.4" height="52" rx="3" class="box low"/>
+<text x="2917.9" y="268" text-anchor="middle" class="t ink">Jim J. Muñasque (Jimboy)</text>
+<text x="2917.9" y="282" text-anchor="middle" class="s sp">⚭ Lea Briones</text>
+<text x="2917.9" y="294" text-anchor="middle" class="s cap">+3 more below (see explorer)</text>
+<text x="2836.7" y="303" class="gen">G4</text>
+<path d="M3284.4 114 V136.0 H3292.8 V158" class="edge"/>
+<rect x="3221.8" y="158" width="142.0" height="40" rx="3" class="box low"/>
+<text x="3292.8" y="172" text-anchor="middle" class="t ink">Leonarda Y. Muñasque</text>
+<text x="3292.8" y="186" text-anchor="middle" class="s sp">⚭ Tiburcio Booc</text>
+<text x="3224.8" y="195" class="gen">G3</text>
+<path d="M3292.8 198 V226.0 H3077.2 V254" class="edge"/>
+<rect x="3016.1" y="254" width="122.2" height="28" rx="3" class="box"/>
+<text x="3077.2" y="268" text-anchor="middle" class="t ink">Mae Muñasque Booc</text>
+<text x="3019.1" y="279" class="gen">G4</text>
+<path d="M3292.8 198 V226.0 H3216.7 V254" class="edge"/>
+<rect x="3152.3" y="254" width="128.8" height="40" rx="3" class="box"/>
+<text x="3216.7" y="268" text-anchor="middle" class="t ink">Aida Muñasque Booc</text>
+<text x="3216.7" y="282" text-anchor="middle" class="s cap">+8 more below (see explorer)</text>
+<text x="3155.3" y="291" class="gen">G4</text>
+<path d="M3292.8 198 V226.0 H3369.4 V254" class="edge"/>
+<rect x="3295.1" y="254" width="148.6" height="52" rx="3" class="box"/>
+<text x="3369.4" y="268" text-anchor="middle" class="t ink">Melinda M. Booc (MAE)</text>
+<text x="3369.4" y="282" text-anchor="middle" class="s sp">⚭ Rogelio De Misa</text>
+<text x="3369.4" y="294" text-anchor="middle" class="s cap">+5 more below (see explorer)</text>
+<text x="3298.1" y="303" class="gen">G4</text>
+<path d="M3292.8 198 V226.0 H3508.3 V254" class="edge"/>
+<rect x="3457.7" y="254" width="101.2" height="52" rx="3" class="box"/>
+<text x="3508.3" y="268" text-anchor="middle" class="t ink">Fe M. Booc</text>
+<text x="3508.3" y="282" text-anchor="middle" class="s sp">⚭ Oscar Quirante</text>
+<text x="3508.3" y="294" text-anchor="middle" class="s cap">+13 more below (see explorer)</text>
+<text x="3460.7" y="303" class="gen">G4</text>
+<path d="M3284.4 114 V136.0 H3643.9 V158" class="edge"/>
+<rect x="3572.9" y="158" width="142.0" height="40" rx="3" class="box"/>
+<text x="3643.9" y="172" text-anchor="middle" class="t ink">Gregoria Y. Muñasque</text>
+<text x="3643.9" y="186" text-anchor="middle" class="s sp">⚭ Steve Mendoza</text>
+<text x="3575.9" y="195" class="gen">G3</text>
+<path d="M3284.4 114 V136.0 H4085.5 V158" class="edge"/>
+<rect x="4014.5" y="158" width="142.0" height="40" rx="3" class="box"/>
+<text x="4085.5" y="172" text-anchor="middle" class="t ink">Fernando Y. Muñasque</text>
+<text x="4085.5" y="186" text-anchor="middle" class="s sp">⚭ Candida Sajonia</text>
+<text x="4017.5" y="195" class="gen">G3</text>
+<path d="M4085.5 198 V226.0 H3793.3 V254" class="edge"/>
+<rect x="3728.9" y="254" width="128.8" height="28" rx="3" class="box"/>
+<text x="3793.3" y="268" text-anchor="middle" class="t ink">Vivian S. Muñasque</text>
+<text x="3731.9" y="279" class="gen">G4</text>
+<path d="M4085.5 198 V226.0 H3932.8 V254" class="edge"/>
+<rect x="3871.7" y="254" width="122.2" height="52" rx="3" class="box"/>
+<text x="3932.8" y="268" text-anchor="middle" class="t ink">Myrna S. Muñasque</text>
+<text x="3932.8" y="282" text-anchor="middle" class="s sp">⚭ Leo Metillo</text>
+<text x="3932.8" y="294" text-anchor="middle" class="s cap">+3 more below (see explorer)</text>
+<text x="3874.7" y="303" class="gen">G4</text>
+<path d="M4085.5 198 V226.0 H4072.3 V254" class="edge"/>
+<rect x="4007.9" y="254" width="128.8" height="52" rx="3" class="box"/>
+<text x="4072.3" y="268" text-anchor="middle" class="t ink">Marcos S. Muñasque</text>
+<text x="4072.3" y="282" text-anchor="middle" class="s sp">⚭ Haydee Dela Torre</text>
+<text x="4072.3" y="294" text-anchor="middle" class="s cap">+2 more below (see explorer)</text>
+<text x="4010.9" y="303" class="gen">G4</text>
+<path d="M4085.5 198 V226.0 H4225.0 V254" class="edge"/>
+<rect x="4150.7" y="254" width="148.6" height="52" rx="3" class="box"/>
+<text x="4225.0" y="268" text-anchor="middle" class="t ink">Ferdinand S. Muñasque</text>
+<text x="4225.0" y="282" text-anchor="middle" class="s sp">⚭ Evangelyn R. Dayanan</text>
+<text x="4225.0" y="294" text-anchor="middle" class="s cap">+4 more below (see explorer)</text>
+<text x="4153.7" y="303" class="gen">G4</text>
+<path d="M4085.5 198 V226.0 H4377.7 V254" class="edge"/>
+<rect x="4313.3" y="254" width="128.8" height="52" rx="3" class="box"/>
+<text x="4377.7" y="268" text-anchor="middle" class="t ink">Carlos S. Muñasque</text>
+<text x="4377.7" y="282" text-anchor="middle" class="s sp">⚭ Erenia Jacozalem</text>
+<text x="4377.7" y="294" text-anchor="middle" class="s cap">+10 more below (see explorer)</text>
+<text x="4316.3" y="303" class="gen">G4</text>
+<path d="M3284.4 114 V136.0 H4849.0 V158" class="edge low"/>
+<rect x="4791.2" y="158" width="115.6" height="40" rx="3" class="box low"/>
+<text x="4849.0" y="172" text-anchor="middle" class="t ink">Antonio Muñasque</text>
+<text x="4849.0" y="186" text-anchor="middle" class="s sp">⚭ Gavina Booc</text>
+<text x="4794.2" y="195" class="gen">G3</text>
+<path d="M4849.0 198 V226.0 H4540.3 V254" class="edge"/>
+<rect x="4456.1" y="254" width="168.4" height="28" rx="3" class="box"/>
+<text x="4540.3" y="268" text-anchor="middle" class="t ink">Presentacion B. Muñasque</text>
+<text x="4459.1" y="279" class="gen">G4</text>
+<path d="M4849.0 198 V226.0 H4706.2 V254" class="edge"/>
+<rect x="4638.5" y="254" width="135.4" height="52" rx="3" class="box"/>
+<text x="4706.2" y="268" text-anchor="middle" class="t ink">Andrea B. Muñasque</text>
+<text x="4706.2" y="282" text-anchor="middle" class="s sp">⚭ Paquito Montilla Sr.</text>
+<text x="4706.2" y="294" text-anchor="middle" class="s cap">+8 more below (see explorer)</text>
+<text x="4641.5" y="303" class="gen">G4</text>
+<path d="M4849.0 198 V226.0 H4852.3 V254" class="edge"/>
+<rect x="4787.9" y="254" width="128.8" height="52" rx="3" class="box"/>
+<text x="4852.3" y="268" text-anchor="middle" class="t ink">Maximo B. Muñasque</text>
+<text x="4852.3" y="282" text-anchor="middle" class="s sp">⚭ Pacita Ybañez</text>
+<text x="4852.3" y="294" text-anchor="middle" class="s cap">+1 more below (see explorer)</text>
+<text x="4790.9" y="303" class="gen">G4</text>
+<path d="M4849.0 198 V226.0 H4998.4 V254" class="edge"/>
+<rect x="4930.7" y="254" width="135.4" height="52" rx="3" class="box"/>
+<text x="4998.4" y="268" text-anchor="middle" class="t ink">Falcone B. Muñasque</text>
+<text x="4998.4" y="282" text-anchor="middle" class="s sp">⚭ Nimfa Cañedo</text>
+<text x="4998.4" y="294" text-anchor="middle" class="s cap">+3 more below (see explorer)</text>
+<text x="4933.7" y="303" class="gen">G4</text>
+<path d="M4849.0 198 V226.0 H5157.7 V254" class="edge"/>
+<rect x="5080.1" y="254" width="155.2" height="52" rx="3" class="box"/>
+<text x="5157.7" y="268" text-anchor="middle" class="t ink">Evangeline B. Muñasque</text>
+<text x="5157.7" y="282" text-anchor="middle" class="s sp">⚭ Wenceslao Estrella</text>
+<text x="5157.7" y="294" text-anchor="middle" class="s cap">+4 more below (see explorer)</text>
+<text x="5083.1" y="303" class="gen">G4</text>
+<path d="M3284.4 114 V136.0 H5753.6 V158" class="edge low"/>
+<rect x="5695.8" y="158" width="115.6" height="40" rx="3" class="box low"/>
+<text x="5753.6" y="172" text-anchor="middle" class="t ink">Timotea Muñasque</text>
+<text x="5753.6" y="186" text-anchor="middle" class="s sp">⚭ Alipio Bontilao</text>
+<text x="5698.8" y="195" class="gen">G3</text>
+<path d="M5753.6 198 V226.0 H5310.4 V254" class="edge"/>
+<rect x="5249.3" y="254" width="122.2" height="40" rx="3" class="box"/>
+<text x="5310.4" y="268" text-anchor="middle" class="t ink">Tirso M. Bontilao</text>
+<text x="5310.4" y="282" text-anchor="middle" class="s sp">⚭ Vicenta Ynot</text>
+<text x="5252.3" y="291" class="gen">G4</text>
+<path d="M5753.6 198 V226.0 H5456.5 V254" class="edge"/>
+<rect x="5385.5" y="254" width="142.0" height="40" rx="3" class="box"/>
+<text x="5456.5" y="268" text-anchor="middle" class="t ink">Cipirino M. Bontilao</text>
+<text x="5456.5" y="282" text-anchor="middle" class="s sp">⚭ Celsa Moniño</text>
+<text x="5388.5" y="291" class="gen">G4</text>
+<path d="M5753.6 198 V226.0 H5605.9 V254" class="edge"/>
+<rect x="5541.5" y="254" width="128.8" height="52" rx="3" class="box"/>
+<text x="5605.9" y="268" text-anchor="middle" class="t ink">Rosita M. Bontilao</text>
+<text x="5605.9" y="282" text-anchor="middle" class="s sp">⚭ Jaime Poole</text>
+<text x="5605.9" y="294" text-anchor="middle" class="s cap">+1 more below (see explorer)</text>
+<text x="5544.5" y="303" class="gen">G4</text>
+<path d="M5753.6 198 V226.0 H5758.6 V254" class="edge"/>
+<rect x="5684.3" y="254" width="148.6" height="40" rx="3" class="box"/>
+<text x="5758.6" y="268" text-anchor="middle" class="t ink">Natividad M. Bontilao</text>
+<text x="5758.6" y="282" text-anchor="middle" class="s sp">⚭ Felix</text>
+<text x="5687.3" y="291" class="gen">G4</text>
+<path d="M5753.6 198 V226.0 H5908.0 V254" class="edge"/>
+<rect x="5846.9" y="254" width="122.2" height="52" rx="3" class="box"/>
+<text x="5908.0" y="268" text-anchor="middle" class="t ink">Oscar M. Bontilao</text>
+<text x="5908.0" y="282" text-anchor="middle" class="s sp">⚭ Tarcela</text>
+<text x="5908.0" y="294" text-anchor="middle" class="s cap">+4 more below (see explorer)</text>
+<text x="5849.9" y="303" class="gen">G4</text>
+<path d="M5753.6 198 V226.0 H6050.8 V254" class="edge"/>
+<rect x="5983.1" y="254" width="135.4" height="28" rx="3" class="box"/>
+<text x="6050.8" y="268" text-anchor="middle" class="t ink">Paterno M. Bontilao</text>
+<text x="5986.1" y="279" class="gen">G4</text>
+<path d="M5753.6 198 V226.0 H6196.9 V254" class="edge"/>
+<rect x="6132.5" y="254" width="128.8" height="52" rx="3" class="box"/>
+<text x="6196.9" y="268" text-anchor="middle" class="t ink">Alicia M. Bontilao</text>
+<text x="6196.9" y="282" text-anchor="middle" class="s sp">⚭ Paquito Tamosa</text>
+<text x="6196.9" y="294" text-anchor="middle" class="s cap">+4 more below (see explorer)</text>
+<text x="6135.5" y="303" class="gen">G4</text>
+<path d="M3284.4 114 V136.0 H6329.8 V158" class="edge low"/>
+<rect x="6275.3" y="158" width="109.0" height="28" rx="3" class="box low"/>
+<text x="6329.8" y="172" text-anchor="middle" class="t ink">Gavino Muñasque</text>
+<text x="6278.3" y="183" class="gen">G3</text>
+</svg>

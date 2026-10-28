@@ -1,0 +1,23 @@
+person_id,full_name,fact_type,fact,source_ids,confidence,notes
+P0003,Fernando Umpad Muñasque,identity,Progenitor of the family as compiled; parents named in the sheet header as Alejandro Muñasque and Saturnina Umpad,S1,low,header only; no dates
+P0005,Emiliano Valiente Muñasque,birth,"20 May 1857 (place not stated; family of Opon, Cebu)",S1,moderate,only date in file; secondhand family record
+P0005,Emiliano Valiente Muñasque,death,"19 Feb 1940, aged 83 (place not stated)",S1,moderate,age consistent with birth date
+P0696,Martin Muñasque Salimbangon,occupation,"Schoolteacher; barangay captain (""Kapitan"") and village elder of Barangay Curva, Medellin, Cebu; a TESDA training centre and a high school in Curva are named after him",S14; S15,moderate,identity link to the spreadsheet rests on the Benhur/Milagros match
+P0697,Milagros Lago,birth,"8 September 1915 or 1916 (press reports: ""turned 90"" on 8 Sep 2006; ""turns 98"" in Oct 2013)",S16; S17,moderate,year conflicts between two reports
+P0697,Milagros Lago,family,Seven children reported in 2006 (spreadsheet lists eight); daughter Ophelia Cue already deceased in 2006,S16,moderate,discrepancy logged
+P0699,Ofelia L. Salimbangon,death,"Deceased before September 2006 (""Ophelia Cue"")",S16,moderate,spelling Ofelia/Ophelia
+P0697,Milagros Lago,residence,"Barangay Curva, Medellin, northern Cebu (not Opon)",S15; S14,moderate,the Martin Salimbangon branch lived in Medellin
+P0710,Benhur L. Salimbangon,birth,"3 June 1945; Medellin, Cebu (Geni, news) or Cebu City (Simple Wikipedia)",S10; S11; S12,high,birthplace conflict logged
+P0710,Benhur L. Salimbangon,parents,Son of Martin Salimbangon and Milagros Lago (independent of the spreadsheet),S11; S15,moderate,Geni is unsourced; corroborated by press profiles of his sister
+P0710,Benhur L. Salimbangon,career,"Cebu Provincial Board Member 1992–1998; Representative, 4th District of Cebu, 2007–2010 and 2010–2019",S10,high,
+P0710,Benhur L. Salimbangon,death,"24 December 2020, aged 75, lung cancer; requiem at Lahug, Cebu City; buried 30 Dec 2020 at Mactan Island Memorial Garden, Lapu-Lapu City",S12; S13; S11,high,place of death: Quezon City (Geni) vs Cebu City (Wikipedia)
+P0710,Benhur L. Salimbangon,spouse,"Second wife Janice Zamora Salimbangon (the ""# Janice Zamora"" row), who succeeded him in Congress 2019–2025",S10,high,
+P0725,Mariquita L. Salimbangon,identity,"Mariquita ""Kit"" Salimbangon Yeung; husband Carlos Yeung (spreadsheet: ""Teung""); born c. 3 March 1952 (40th birthday 3 Mar 1992); University of San Carlos graduate",S15; S18,moderate,spelling correction Teung → Yeung
+P0734,Edwin L. Salimbangon,career,"Barangay captain of Curva (2018); elected Mayor of Medellin, Cebu, May 2025",S19; S20,moderate,
+P1544,Rosalio N. Muñasque,career,"Diocesan priest, Diocese of Marbel (Koronadal, South Cotabato): seminary rector c. 1975; parish priest of Banga 1975–1978; spiritual director, Notre Dame of Kiamba",S21; S22; S23,moderate,identity by unusual name + title; parents not named online
+P1544,Rosalio N. Muñasque,death,2 December 2003,S24,moderate,
+P1430,Benjamin N. Muñasque,career,"Probably the ""Benjamin N. Muñasque, Clerk of Court, Court of First Instance of Cotabato, Cotabato City"" named in Supreme Court records of 1972–1979",S25; S26,moderate,same middle initial N. (Nuñeza) and title; parents not named in the records
+P0254,Marnito B. Cosip,career,"Atty. Marnito B. Cosep (spelled Cosep online), Provincial Legal Officer of South Cotabato, Koronadal City",S27; S28,moderate,spreadsheet spells Cosip; residence Koronadal in S2 matches
+P1597,Sulpicio Ynot Muñasque,career,"Very probably the ""Evangelist Sulpicio Y. Munasque of the United Evangelical Church"" who arrived in General Santos (then Dadiangas) from Lala, Lanao del Norte on 7 March 1939; in 1941 he and his wife asked Gen. Paulino Santos for a church site; Sulpicio Muñasque Street in Dadiangas North is named for him",S29; S30,moderate,Y. = Ynot matches his mother Sebirina Ynot; fits the Lanao del Norte cluster of the family
+P1770,Elmo D. Muñasque,career,"Probably the Elmo Muñasque, Cebu building contractor, party to a 1966 contract litigated to the Supreme Court in 1985",S31,low,name match only
+P1620,Cosmiano Valiente Muñasque,family,"Second family with Sarip Arabia Omar in Mindanao; descendants (Tambingag, Pangolima, Marohombsar, Hassan) carry Maranao/Maguindanao Muslim names; Tambingag surname clusters in General Santos City / Sarangani",S1; S2,low,no outside record of the named individuals found

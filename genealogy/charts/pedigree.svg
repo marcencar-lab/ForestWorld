@@ -1,0 +1,32 @@
+<svg class="gchart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 300" width="780" height="300" role="img" aria-label="Pedigree of Emiliano Valiente Muñasque">
+<style>
+svg.gchart{font-family:'DejaVu Sans','Noto Sans',Arial,sans-serif;--ink:#1d1b17;--ink2:#5c5a55;--edge:#8f8c85;--box:#ffffff;--boxline:#9a9790;--acc:#2a78d6;--acc2:#eb6834;--warn:#b26a00;--grid:#e6e3dc;--bg:#faf9f6;background:var(--bg)}
+@media (prefers-color-scheme:dark){svg.gchart{--ink:#efede8;--ink2:#b8b5ad;--edge:#8a877f;--box:#23221f;--boxline:#6b6861;--acc:#3987e5;--acc2:#d95926;--warn:#fab219;--grid:#35332f;--bg:#1a1a19}}
+.ink{fill:var(--ink)}.ink2{fill:var(--ink2)}.box{fill:var(--box);stroke:var(--boxline);stroke-width:1}.box.low{stroke-dasharray:4 3;stroke:var(--warn)}
+.edge{fill:none;stroke:var(--edge);stroke-width:1.2}.edge.low{stroke-dasharray:4 3;stroke:var(--warn)}
+.sp{fill:var(--ink2)}.t{font-size:11px}.s{font-size:9.5px}.h{font-size:15px;font-weight:bold}.cap{font-size:10px;fill:var(--ink2)}
+.g0,.g1{fill:var(--acc)}.gen{font-size:9px;fill:var(--acc)}
+</style>
+<text x="12" y="24" class="h ink">Direct ancestral pedigree (all generations known)</text>
+<text x="12" y="40" class="cap">Earliest named ancestors: Alejandro Muñasque and Saturnina Umpad. No dates survive for them. Dashed = low confidence (header entry only).</text>
+<rect x="20" y="120" width="200" height="60" rx="3" class="box"/>
+<text x="120.0" y="136" text-anchor="middle" class="t ink">Emiliano Valiente Muñasque</text>
+<text x="120.0" y="150" text-anchor="middle" class="s sp">b. 20 May 1857 – d. 19 Feb 1940</text>
+<text x="120.0" y="162" text-anchor="middle" class="s sp">G2 · m. Irenea Gusat</text>
+<rect x="250" y="70" width="180" height="46" rx="3" class="box"/>
+<text x="340.0" y="86" text-anchor="middle" class="t ink">Fernando Umpad Muñasque</text>
+<text x="340.0" y="100" text-anchor="middle" class="s sp">G1 · progenitor · b. c. 1820–1835 (est.)</text>
+<rect x="250" y="170" width="180" height="46" rx="3" class="box"/>
+<text x="340.0" y="186" text-anchor="middle" class="t ink">Saturnina N. Valiente</text>
+<text x="340.0" y="200" text-anchor="middle" class="s sp">G1 · 1st wife · parents unknown</text>
+<rect x="460" y="30" width="170" height="46" rx="3" class="box low"/>
+<text x="545.0" y="46" text-anchor="middle" class="t ink">Alejandro Muñasque</text>
+<text x="545.0" y="60" text-anchor="middle" class="s sp">G0 · named in header only</text>
+<rect x="460" y="110" width="170" height="46" rx="3" class="box low"/>
+<text x="545.0" y="126" text-anchor="middle" class="t ink">Saturnina Umpad</text>
+<text x="545.0" y="140" text-anchor="middle" class="s sp">G0 · named in header only</text>
+<path d="M220 150 H235 V93 H250 M235 150 V193 H250" class="edge"/>
+<path d="M430 93 H445 V53 H460 M445 93 V133 H460" class="edge low"/>
+<text x="250" y="250" class="s cap">Fernando's 8 siblings, if any, are unknown. Saturnina Valiente's middle initial "N." is the only clue to her mother's surname.</text>
+<text x="250" y="266" class="s cap">Sources: S1 (sheet FERNANDO rows 1–5). Estimated birth of Fernando assumes a first child born 1857.</text>
+</svg>

@@ -1,0 +1,53 @@
+<svg class="gchart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1224 324" width="1224" height="324" role="img" aria-label="Branch: Cruz Valiente Muñasque (G2) and descendants to G4">
+<style>
+svg.gchart{font-family:'DejaVu Sans','Noto Sans',Arial,sans-serif;--ink:#1d1b17;--ink2:#5c5a55;--edge:#8f8c85;--box:#ffffff;--boxline:#9a9790;--acc:#2a78d6;--acc2:#eb6834;--warn:#b26a00;--grid:#e6e3dc;--bg:#faf9f6;background:var(--bg)}
+@media (prefers-color-scheme:dark){svg.gchart{--ink:#efede8;--ink2:#b8b5ad;--edge:#8a877f;--box:#23221f;--boxline:#6b6861;--acc:#3987e5;--acc2:#d95926;--warn:#fab219;--grid:#35332f;--bg:#1a1a19}}
+.ink{fill:var(--ink)}.ink2{fill:var(--ink2)}.box{fill:var(--box);stroke:var(--boxline);stroke-width:1}.box.low{stroke-dasharray:4 3;stroke:var(--warn)}
+.edge{fill:none;stroke:var(--edge);stroke-width:1.2}.edge.low{stroke-dasharray:4 3;stroke:var(--warn)}
+.sp{fill:var(--ink2)}.t{font-size:11px}.s{font-size:9.5px}.h{font-size:15px;font-weight:bold}.cap{font-size:10px;fill:var(--ink2)}
+.g0,.g1{fill:var(--acc)}.gen{font-size:9px;fill:var(--acc)}
+</style>
+<text x="12" y="24" class="h ink">Branch: Cruz Valiente Muñasque (G2) and descendants to G4</text>
+<text x="12" y="40" class="cap">16 recorded descendants in this branch; boxes list spouse(s) and residence where the branch sheets give one. Dashed boxes/lines = low-confidence placement. Deeper generations: use the explorer.</text>
+<rect x="290.8" y="50" width="155.2" height="40" rx="3" class="box"/>
+<text x="368.4" y="64" text-anchor="middle" class="t ink">Cruz Valiente Muñasque</text>
+<text x="368.4" y="78" text-anchor="middle" class="s sp">⚭ Remedios Dela Piña</text>
+<text x="293.8" y="87" class="gen">G2</text>
+<path d="M368.4 90 V112.0 H74.8 V134" class="edge"/>
+<rect x="17.0" y="134" width="115.6" height="28" rx="3" class="box"/>
+<text x="74.8" y="148" text-anchor="middle" class="t ink">Elmo D. Muñasque</text>
+<text x="20.0" y="159" class="gen">G3</text>
+<path d="M368.4 90 V112.0 H662.0 V134" class="edge"/>
+<rect x="594.3" y="134" width="135.4" height="40" rx="3" class="box"/>
+<text x="662.0" y="148" text-anchor="middle" class="t ink">Mariano D. Muñasque</text>
+<text x="662.0" y="162" text-anchor="middle" class="s sp">⚭ Burgos</text>
+<text x="597.3" y="171" class="gen">G3</text>
+<path d="M662.0 174 V196.0 H211.0 V218" class="edge low"/>
+<rect x="146.6" y="218" width="128.8" height="28" rx="3" class="box low"/>
+<text x="211.0" y="232" text-anchor="middle" class="t ink">Michaelb. Muñasque</text>
+<text x="149.6" y="243" class="gen">G4</text>
+<path d="M662.0 174 V196.0 H376.9 V218" class="edge"/>
+<rect x="289.4" y="218" width="175.0" height="28" rx="3" class="box"/>
+<text x="376.9" y="232" text-anchor="middle" class="t ink">Maria Rosario B. Muñasque</text>
+<text x="292.4" y="243" class="gen">G4</text>
+<path d="M662.0 174 V196.0 H585.7 V218" class="edge"/>
+<rect x="478.4" y="218" width="214.6" height="52" rx="3" class="box"/>
+<text x="585.7" y="232" text-anchor="middle" class="t ink">Frank Luis Fernando B. Muñasque</text>
+<text x="585.7" y="246" text-anchor="middle" class="s sp">⚭ Patricia Matthews</text>
+<text x="585.7" y="258" text-anchor="middle" class="s cap">+4 more below (see explorer)</text>
+<text x="481.4" y="267" class="gen">G4</text>
+<path d="M662.0 174 V196.0 H774.7 V218" class="edge"/>
+<rect x="707.0" y="218" width="135.4" height="52" rx="3" class="box"/>
+<text x="774.7" y="232" text-anchor="middle" class="t ink">Antonio B. Muñasque</text>
+<text x="774.7" y="246" text-anchor="middle" class="s sp">⚭ Amalia G. Montebon</text>
+<text x="774.7" y="258" text-anchor="middle" class="s cap">+4 more below (see explorer)</text>
+<text x="710.0" y="267" class="gen">G4</text>
+<path d="M662.0 174 V196.0 H930.7 V218" class="edge"/>
+<rect x="856.4" y="218" width="148.6" height="28" rx="3" class="box"/>
+<text x="930.7" y="232" text-anchor="middle" class="t ink">Elizabeth B. Muñasque</text>
+<text x="859.4" y="243" class="gen">G4</text>
+<path d="M662.0 174 V196.0 H1113.1 V218" class="edge"/>
+<rect x="1019.0" y="218" width="188.2" height="28" rx="3" class="box"/>
+<text x="1113.1" y="232" text-anchor="middle" class="t ink">Carmen Monalisa B. Muñasque</text>
+<text x="1022.0" y="243" class="gen">G4</text>
+</svg>
